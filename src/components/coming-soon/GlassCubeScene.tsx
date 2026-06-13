@@ -153,10 +153,10 @@ export default function GlassCubeScene() {
   return (
     <Canvas
       className="cs-canvas"
-      camera={{ position: [0, 0, 5], fov: 50 }}
-      dpr={isMobile ? 1 : Math.min(window.devicePixelRatio, 1.5)}
-      gl={{ antialias: !isMobile, alpha: true, powerPreference: "low-power" }}
-      style={{ background: "transparent" }}
+      camera={{ position: [0, 0, 8], fov: 45 }}
+      dpr={isMobile ? [1, 1.5] : [1, 2]}
+      gl={{ antialias: true, alpha: true }}
+      style={{ background: "transparent", pointerEvents: "none" }}
     >
       <WireframeShape />
       <OrbitRing radius={3.2} speed={0.08} opacity={0.08} />

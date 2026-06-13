@@ -55,6 +55,33 @@
   background-size: 120px 120px;
 }
 
+/* ── Background Glow Effects ── */
+.cs-bg-glow {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform, opacity;
+}
+
+.cs-bg-glow-1 {
+  top: -150px;
+  right: -150px;
+  background: radial-gradient(circle, var(--accent-primary) 0%, transparent 65%);
+  animation: cs-pulse-glow 8s infinite alternate;
+}
+
+.cs-bg-glow-2 {
+  bottom: -150px;
+  left: -150px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 65%);
+  opacity: 0.25;
+  animation: cs-pulse-glow 10s infinite alternate-reverse;
+}
+
 /* ── Watermark Background ── */
 .cs-watermark {
   position: absolute;
@@ -424,8 +451,19 @@
   to { opacity: 1; }
 }
 
+@keyframes cs-pulse-glow {
+  0% { transform: scale(1); opacity: 0.15; }
+  100% { transform: scale(1.1); opacity: 0.35; }
+}
+
 /* ── Mobile Responsive ── */
 @media (max-width: 768px) {
+  .cs-bg-glow {
+    width: 400px;
+    height: 400px;
+    opacity: 0.1;
+  }
+  
   .cs-sub-quote {
     text-align: center;
     margin-left: 0;

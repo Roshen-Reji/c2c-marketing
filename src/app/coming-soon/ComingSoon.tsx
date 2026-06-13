@@ -50,7 +50,9 @@ export default function ComingSoonPage() {
 
   return (
     <div className="cs-page">
-
+      {/* Background Glows */}
+      <div className="cs-bg-glow cs-bg-glow-1" />
+      <div className="cs-bg-glow cs-bg-glow-2" />
 
       {/* Background Watermark */}
       <div className="cs-watermark">
@@ -113,19 +115,22 @@ export default function ComingSoonPage() {
             <div className="cs-footer-col">
               <span className="cs-footer-label">Follow Us</span>
               <div className="cs-footer-links">
-                <a href="#" className="cs-footer-link">LinkedIn</a>
-                <a href="#" className="cs-footer-link">WhatsApp</a>
-                <a href="#" className="cs-footer-link">Instagram</a>
+                <a href="https://www.linkedin.com/company/ieeesbcekidangoor/" className="cs-footer-link">LinkedIn</a>
+                <a href="https://ieee.ce-kgr.org/" className="cs-footer-link">Web</a>
+                <a href="https://www.instagram.com/ieeesbcekgr?igsh=MWczc3o1d21hdGxzcg==" className="cs-footer-link">Instagram</a>
               </div>
             </div>
 
             <div className="cs-footer-col">
               <span className="cs-footer-label">For Enquiries</span>
               <div className="cs-footer-links">
-                <a href="mailto:contact@example.com" className="cs-footer-link">contact@example.com</a>
                 <span className="cs-footer-text">
-                  +91 123 456 7890 <br/>
-                  <span className="cs-contact-name">(John Doe)</span>
+                  +91 7592 815 138 <br />
+                  <span className="cs-contact-name">(Arya C Anish)</span>
+                </span>
+                <span className="cs-footer-text" style={{ marginTop: '0.25rem' }}>
+                  +91 94000 78625 <br />
+                  <span className="cs-contact-name">(Malavika C Biju)</span>
                 </span>
               </div>
             </div>

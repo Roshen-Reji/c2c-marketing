@@ -338,25 +338,60 @@ function FooterCTA() {
 function Footer() {
   return (
     <footer className="footer" id="footer">
-      <div className="container footer-inner">
-        <div className="footer-logo">
-          C<span>2</span>C
+      <div className="container">
+        <div className="footer-motto-wrapper">
+          <div className="footer-motto">
+            <span className="footer-dot">•</span>
+            SMALL STEPS PAVE THE WAY
+            <span className="footer-dot">•</span>
+          </div>
         </div>
-        <div className="footer-links">
-          <a href="#phases" className="footer-link">
-            Phases
-          </a>
-          <a href="#features" className="footer-link">
-            Features
-          </a>
-          <a href="#fees" className="footer-link">
-            Fees
-          </a>
-          <Link href="/register" className="footer-link">
-            Register
-          </Link>
+
+        <div className="footer-top">
+          <div className="footer-col">
+            <span className="footer-label">Navigate</span>
+            <div className="footer-links">
+              <a href="#phases" className="footer-link">Phases</a>
+              <a href="#features" className="footer-link">Features</a>
+              <a href="#fees" className="footer-link">Fees</a>
+              <Link href="/register" className="footer-link">Register</Link>
+            </div>
+          </div>
+
+          <div className="footer-col">
+            <span className="footer-label">Follow Us</span>
+            <div className="footer-links">
+              <a href="https://www.linkedin.com/company/ieeesbcekidangoor/" className="footer-link">LinkedIn</a>
+              <a href="https://ieee.ce-kgr.org/" className="footer-link">Web</a>
+              <a href="https://www.instagram.com/ieeesbcekgr?igsh=MWczc3o1d21hdGxzcg==" className="footer-link">Instagram</a>
+            </div>
+          </div>
+
+          <div className="footer-col">
+            <span className="footer-label">For Enquiries</span>
+            <div className="footer-links">
+              <span className="footer-text">
+                +91 123 456 7890 <br/>
+                <span className="footer-contact-name">(John Doe)</span>
+              </span>
+              <span className="footer-text" style={{ marginTop: '0.25rem' }}>
+                +91 987 654 3210 <br/>
+                <span className="footer-contact-name">(Jane Smith)</span>
+              </span>
+            </div>
+          </div>
+
+          <div className="footer-col">
+            <div className="footer-logos">
+              <img src="/ieee-sb-cek.png" alt="IEEE CE Kidangoor Student Branch" className="footer-logo-img" />
+              <img src="/ieee-logo.png" alt="IEEE" className="footer-logo-img" />
+              <img src="/ieee-wie.png" alt="IEEE WIE" className="footer-logo-img" />
+            </div>
+            <div style={{ marginTop: '1rem', color: 'var(--text-muted)', fontSize: '10px' }}>
+              © 2026 Campus 2 Corporate.
+            </div>
+          </div>
         </div>
-        <div className="footer-copy">© 2026 Campus 2 Corporate.  WIE IEEE CEK.</div>
       </div>
     </footer>
   );
