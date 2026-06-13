@@ -50,9 +50,11 @@ export default function ComingSoonPage() {
 
   return (
     <div className="cs-page">
-      {/* Background Glows */}
-      <div className="cs-bg-glow cs-bg-glow-1" />
-      <div className="cs-bg-glow cs-bg-glow-2" />
+      {/* Background Glows (contained to prevent scroll overflow) */}
+      <div className="cs-bg-glow-container">
+        <div className="cs-bg-glow cs-bg-glow-1" />
+        <div className="cs-bg-glow cs-bg-glow-2" />
+      </div>
 
       {/* Background Watermark */}
       <div className="cs-watermark">
