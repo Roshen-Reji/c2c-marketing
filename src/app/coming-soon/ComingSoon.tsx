@@ -52,81 +52,92 @@ export default function ComingSoonPage() {
     <div className="cs-page">
 
 
-      {/* Top Header */}
-      <header className="cs-header">
-        <div className="cs-c2c-badge">[ C2C ]</div>
-        <h1 className="cs-header-title">
-          <span className="cs-title-word">Campus</span>
-          <span className="cs-title-accent">2</span>
-          <span className="cs-title-word">Corporate</span>
-        </h1>
-        <div className="cs-header-tagline-wrapper">
-          <span className="cs-tagline-prefix">LOG //</span>
-          <p className="cs-header-tagline">
-            <span className="cs-tagline-dim">From</span> Theory <span className="cs-tagline-dim">To</span> Legacy<span className="cs-tagline-dots">.....</span>
-          </p>
-        </div>
-      </header>
-
-      {/* 3D Scene + Timer */}
-      <div className="cs-scene-wrapper">
-        {/* Corner technical text */}
-        <div className="cs-corner cs-corner--tl">
-          SYS.ACTIVE<br />
-          09°56′N 76°20′E
-        </div>
-        <div className="cs-corner cs-corner--tr">
-          2026<br />
-          BUILD.007
-        </div>
-        <div className="cs-corner cs-corner--bl">
-          IEEE SB CEK<br />
-          WOMEN IN ENG.
-        </div>
-        <div className="cs-corner cs-corner--br">
-          TRANSMISSION<br />
-          STATUS: PENDING
-        </div>
-
-        {/* HTML timer behind the 3D canvas as visual anchor / fallback */}
-        <div className="cs-timer-overlay">
-          <span className="cs-timer-text">{timeStr}</span>
-        </div>
-        {/* WebGL canvas with wireframe geometry (overlays the timer) */}
-        <GlassCubeScene />
+      {/* Background Watermark */}
+      <div className="cs-watermark">
+        <div>CAMPUS</div>
+        <div>CORPORATE</div>
       </div>
 
-      {/* Pre-Registration */}
-      <PreRegisterForm />
-
-      {/* Footer */}
-      <footer className="cs-footer">
-        <div className="cs-footer-col">
-          <span className="cs-footer-label">Follow Us</span>
-          <div className="cs-footer-links">
-            <a href="#" className="cs-footer-link">LinkedIn</a>
-            <a href="#" className="cs-footer-link">WhatsApp</a>
-            <a href="#" className="cs-footer-link">Instagram</a>
-          </div>
-        </div>
-
-        <div className="cs-footer-col">
-          <span className="cs-footer-label">For Enquiries</span>
-          <div className="cs-footer-links">
-            <a href="mailto:contact@example.com" className="cs-footer-link">contact@example.com</a>
-            <span className="cs-footer-text">
-              +91 123 456 7890 <br/>
-              <span className="cs-contact-name">(John Doe)</span>
+      <div className="cs-content-wrapper">
+        <header className="cs-hero-header">
+          <h1 className="cs-hero-title">
+            <span className="line">
+              <span>CAMPUS</span>
+              <span className="cs-accent-2">2</span>
             </span>
+            <span className="line">
+              <span>CORPORATE</span>
+            </span>
+          </h1>
+
+          <div className="cs-sub-quote">
+            WHERE LEARNING ENDS, <br />
+            THE <span className="text-mint">REAL JOURNEY</span> BEGINS.
+          </div>
+        </header>
+
+        <div className="cs-main-body">
+          <div className="cs-graphic-area">
+            {/* Using the GlassCubeScene in place of the chair graphic */}
+            <GlassCubeScene />
+          </div>
+
+          <div className="cs-info-area">
+            <div className="cs-coming-soon-block">
+              <div className="cs-vertical-line" />
+              <div className="cs-coming-soon-text">
+                <span className="cs-cs-top">C O M I N G</span>
+                <span className="cs-cs-mid">SOON</span>
+                <span className="cs-cs-bot">STAY TUNED FOR MORE</span>
+              </div>
+            </div>
+            <div className="cs-timer-small">{timeStr}</div>
           </div>
         </div>
 
-        <div className="cs-footer-right">
-          <img src="/ieee-sb-cek.png" alt="IEEE CE Kidangoor Student Branch" className="cs-footer-logo" />
-          <img src="/ieee-logo.png" alt="IEEE" className="cs-footer-logo" />
-          <img src="/ieee-wie.png" alt="IEEE WIE" className="cs-footer-logo" />
+        <div className="cs-register-wrapper">
+          <PreRegisterForm />
         </div>
-      </footer>
+
+
+        <footer className="cs-footer">
+          <div className="cs-minimal-footer">
+            <div className="cs-footer-motto">
+              <span className="cs-dot">•</span>
+              SMALL STEPS PAVE THE WAY
+              <span className="cs-dot">•</span>
+            </div>
+          </div>
+
+          <div className="cs-footer-top">
+            <div className="cs-footer-col">
+              <span className="cs-footer-label">Follow Us</span>
+              <div className="cs-footer-links">
+                <a href="#" className="cs-footer-link">LinkedIn</a>
+                <a href="#" className="cs-footer-link">WhatsApp</a>
+                <a href="#" className="cs-footer-link">Instagram</a>
+              </div>
+            </div>
+
+            <div className="cs-footer-col">
+              <span className="cs-footer-label">For Enquiries</span>
+              <div className="cs-footer-links">
+                <a href="mailto:contact@example.com" className="cs-footer-link">contact@example.com</a>
+                <span className="cs-footer-text">
+                  +91 123 456 7890 <br/>
+                  <span className="cs-contact-name">(John Doe)</span>
+                </span>
+              </div>
+            </div>
+
+            <div className="cs-footer-right">
+              <img src="/ieee-sb-cek.png" alt="IEEE CE Kidangoor Student Branch" className="cs-footer-logo" />
+              <img src="/ieee-logo.png" alt="IEEE" className="cs-footer-logo" />
+              <img src="/ieee-wie.png" alt="IEEE WIE" className="cs-footer-logo" />
+            </div>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }
