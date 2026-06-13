@@ -79,7 +79,7 @@ export default function RegisterPage() {
   useEffect(() => {
     const endStr = process.env.NEXT_PUBLIC_REG_END_DATE;
     if (endStr && Date.now() > new Date(endStr).getTime()) {
-      setIsClosed(true);
+      setTimeout(() => setIsClosed(true), 0);
     }
   }, []);
 

@@ -11,11 +11,13 @@ export default function MarketingRoot() {
     const launchDateStr = process.env.NEXT_PUBLIC_LAUNCH_DATE;
     const targetDate = launchDateStr ? new Date(launchDateStr).getTime() : 0;
     
-    if (Date.now() < targetDate) {
-      setIsPreLaunch(true);
-    } else {
-      setIsPreLaunch(false);
-    }
+    setTimeout(() => {
+      if (Date.now() < targetDate) {
+        setIsPreLaunch(true);
+      } else {
+        setIsPreLaunch(false);
+      }
+    }, 0);
 
     const interval = setInterval(() => {
       if (targetDate > 0 && Date.now() >= targetDate) {

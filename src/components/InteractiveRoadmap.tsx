@@ -308,130 +308,130 @@ export default function InteractiveRoadmap() {
               padding: isMobile ? "0 20px" : "0 40px",
             }}
           >
-          {/* SVG Line Canvas */}
-          <svg
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              pointerEvents: "none",
-              zIndex: 1,
-            }}
-            preserveAspectRatio="none"
-          >
-            <path
-              ref={bgPathRef}
-              d={generatePath()}
-              fill="none"
-              stroke="var(--border-strong)"
-              strokeWidth="2"
-            />
-            <path
-              ref={pathRef}
-              d={generatePath()}
-              fill="none"
-              stroke="var(--accent-primary)"
-              strokeWidth="4"
-              style={{ filter: "drop-shadow(0 0 8px var(--accent-primary))" }}
-            />
-          </svg>
+            {/* SVG Line Canvas */}
+            <svg
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                pointerEvents: "none",
+                zIndex: 1,
+              }}
+              preserveAspectRatio="none"
+            >
+              <path
+                ref={bgPathRef}
+                d={generatePath()}
+                fill="none"
+                stroke="var(--border-strong)"
+                strokeWidth="2"
+              />
+              <path
+                ref={pathRef}
+                d={generatePath()}
+                fill="none"
+                stroke="var(--accent-primary)"
+                strokeWidth="4"
+                style={{ filter: "drop-shadow(0 0 8px var(--accent-primary))" }}
+              />
+            </svg>
 
-          {/* Nodes and Content Blocks */}
-          {activePhase.days.map((dayObj, i) => {
-            let xPos, yPos, cardLeft, cardTop;
+            {/* Nodes and Content Blocks */}
+            {activePhase.days.map((dayObj, i) => {
+              let xPos, yPos, cardLeft, cardTop;
 
-            if (isMobile) {
-              const canvasHeight = Math.max(600, numDays * 180);
-              const step = (canvasHeight - 160) / (numDays - 1 || 1);
-              xPos = 40;
-              yPos = i * step + 80;
-              cardLeft = xPos + 40;
-              cardTop = yPos - 30; // Center card vertically with node
-            } else {
-              const step = 380;
-              const computedWidth = (numDays - 1) * step + 280;
-              const canvasWidth = Math.max(containerWidth, computedWidth);
-              const startOffsetX = 140;
-              const isTop = i % 2 === 0;
-              xPos = i * step + startOffsetX;
-              yPos = 200; // centerY
-              cardLeft = xPos - 120; // Center card (width 240) horizontally
-              cardTop = isTop ? yPos - 160 : yPos + 40;
-            }
+              if (isMobile) {
+                const canvasHeight = Math.max(600, numDays * 180);
+                const step = (canvasHeight - 160) / (numDays - 1 || 1);
+                xPos = 40;
+                yPos = i * step + 80;
+                cardLeft = xPos + 40;
+                cardTop = yPos - 30; // Center card vertically with node
+              } else {
+                const step = 380;
+                const computedWidth = (numDays - 1) * step + 280;
+                const canvasWidth = Math.max(containerWidth, computedWidth);
+                const startOffsetX = 140;
+                const isTop = i % 2 === 0;
+                xPos = i * step + startOffsetX;
+                yPos = 200; // centerY
+                cardLeft = xPos - 120; // Center card (width 240) horizontally
+                cardTop = isTop ? yPos - 160 : yPos + 40;
+              }
 
-            return (
-              <div key={`${activePhaseIdx}-${i}`} style={{ position: "absolute", zIndex: 5, left: 0, top: 0 }}>
-                {/* Milestone Node */}
-                <div
-                  className="day-node"
-                  style={{
-                    position: "absolute",
-                    left: xPos - 12,
-                    top: yPos - 12,
-                    width: 24,
-                    height: 24,
-                    borderRadius: "50%",
-                    background: "var(--bg-primary)",
-                    border: "4px solid var(--accent-primary)",
-                    boxShadow: "0 0 16px var(--accent-primary)",
-                    transition: "transform 0.3s, box-shadow 0.3s",
-                    cursor: "pointer",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "scale(1.3)";
-                    e.currentTarget.style.boxShadow = "0 0 30px var(--accent-primary)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "scale(1)";
-                    e.currentTarget.style.boxShadow = "0 0 16px var(--accent-primary)";
-                  }}
-                />
+              return (
+                <div key={`${activePhaseIdx}-${i}`} style={{ position: "absolute", zIndex: 5, left: 0, top: 0 }}>
+                  {/* Milestone Node */}
+                  <div
+                    className="day-node"
+                    style={{
+                      position: "absolute",
+                      left: xPos - 12,
+                      top: yPos - 12,
+                      width: 24,
+                      height: 24,
+                      borderRadius: "50%",
+                      background: "var(--bg-primary)",
+                      border: "4px solid var(--accent-primary)",
+                      boxShadow: "0 0 16px var(--accent-primary)",
+                      transition: "transform 0.3s, box-shadow 0.3s",
+                      cursor: "pointer",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "scale(1.3)";
+                      e.currentTarget.style.boxShadow = "0 0 30px var(--accent-primary)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "scale(1)";
+                      e.currentTarget.style.boxShadow = "0 0 16px var(--accent-primary)";
+                    }}
+                  />
 
-                {/* Content Block */}
-                <div
-                  className="day-card"
-                  style={{
-                    position: "absolute",
-                    left: cardLeft,
-                    top: cardTop,
-                    width: isMobile ? "calc(100vw - 120px)" : 240,
-                    maxWidth: 320,
-                    background: "var(--surface-glass)",
-                    backdropFilter: "blur(12px)",
-                    WebkitBackdropFilter: "blur(12px)",
-                    border: "1px solid var(--border-subtle)",
-                    borderRadius: "var(--radius-xl)",
-                    padding: "20px",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
-                    borderTop: `2px solid var(--accent-primary)`,
-                    transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-4px)";
-                    e.currentTarget.style.boxShadow = "0 15px 35px rgba(0,0,0,0.2)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.15)";
-                  }}
-                >
-                  <div className="mono-text" style={{ fontSize: 12, color: "var(--accent-primary)", marginBottom: 12 }}>
-                    {dayObj.day}
+                  {/* Content Block */}
+                  <div
+                    className="day-card"
+                    style={{
+                      position: "absolute",
+                      left: cardLeft,
+                      top: cardTop,
+                      width: isMobile ? "calc(100vw - 120px)" : 240,
+                      maxWidth: 320,
+                      background: "var(--surface-glass)",
+                      backdropFilter: "blur(12px)",
+                      WebkitBackdropFilter: "blur(12px)",
+                      border: "1px solid var(--border-subtle)",
+                      borderRadius: "var(--radius-xl)",
+                      padding: "20px",
+                      boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+                      borderTop: `2px solid var(--accent-primary)`,
+                      transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-4px)";
+                      e.currentTarget.style.boxShadow = "0 15px 35px rgba(0,0,0,0.2)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.15)";
+                    }}
+                  >
+                    <div className="mono-text" style={{ fontSize: 12, color: "var(--accent-primary)", marginBottom: 12 }}>
+                      {dayObj.day}
+                    </div>
+                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                      {dayObj.topics.map((topic, tIdx) => (
+                        <li key={tIdx} style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)", marginBottom: 8, display: "flex", alignItems: "flex-start", gap: 8 }}>
+                          <span style={{ color: "var(--accent-primary)", fontSize: 10, marginTop: 4 }}>▹</span>
+                          <span style={{ lineHeight: 1.4 }}>{topic}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                    {dayObj.topics.map((topic, tIdx) => (
-                      <li key={tIdx} style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)", marginBottom: 8, display: "flex", alignItems: "flex-start", gap: 8 }}>
-                        <span style={{ color: "var(--accent-primary)", fontSize: 10, marginTop: 4 }}>▹</span>
-                        <span style={{ lineHeight: 1.4 }}>{topic}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
           </div>
         </div>
 

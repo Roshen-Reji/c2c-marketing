@@ -9,7 +9,7 @@ interface IconProps {
   style?: React.CSSProperties;
 }
 
-const defaultProps: IconProps = { size: 20, color: "currentColor" };
+
 
 // ─── Navigation ────────────────────────────────────────────
 

@@ -21,7 +21,7 @@ const SHEETS = {
   },
   preRegistrations: {
     title: "Pre-Registrations",
-    headers: ["Email", "Requested At", "Status"],
+    headers: ["Name", "Email", "Phone", "Requested At", "Status"],
   },
   submissions: {
     title: "Submissions",

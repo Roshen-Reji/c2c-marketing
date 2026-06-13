@@ -14,7 +14,7 @@ function getAuth() {
 }
 
 // Lazy initialization of the drive client
-let driveClient: any = null;
+let driveClient: ReturnType<typeof google.drive> | null = null;
 
 function getDrive() {
   if (!driveClient) {
@@ -61,7 +61,7 @@ export async function findOrCreateFolder(folderName: string, parentId?: string):
   }
 
   // If not found, create it
-  const fileMetadata: any = {
+  const fileMetadata: Record<string, string | string[]> = {
     name: folderName,
     mimeType: "application/vnd.google-apps.folder",
   };
@@ -90,7 +90,7 @@ export async function uploadFileToDrive(
 ): Promise<{ webViewLink: string; webContentLink: string }> {
   const drive = getDrive();
   
-  const fileMetadata: any = {
+  const fileMetadata: Record<string, string | string[]> = {
     name: fileName,
   };
 

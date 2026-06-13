@@ -89,7 +89,7 @@ export default function CurriculumOrbit() {
         pin: true,
         scrub: 1.5,
         start: "top top",
-        end: "+=2500", 
+        end: "+=2500",
       }
     });
 
@@ -141,11 +141,11 @@ export default function CurriculumOrbit() {
     return () => ScrollTrigger.getAll().forEach(t => t.kill());
   }, { scope: containerRef });
 
-  const orbitRadius = isMobile ? 140 : 280; 
+  const orbitRadius = isMobile ? 140 : 280;
   const cardWidth = isMobile ? 140 : 240;
 
   return (
-    <section 
+    <section
       ref={containerRef}
       style={{
         height: "100vh",
@@ -167,9 +167,9 @@ export default function CurriculumOrbit() {
 
       {/* Animation Area */}
       <div style={{ flex: 1, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", marginTop: 140 }}>
-        
+
         {/* Orbit Group */}
-        <div 
+        <div
           ref={orbitGroupRef}
           style={{
             position: "absolute",
@@ -195,7 +195,7 @@ export default function CurriculumOrbit() {
                   height: cardWidth * 0.7,
                 }}
               >
-                <div 
+                <div
                   className="orbit-card-inner"
                   style={{
                     width: "100%",
@@ -225,7 +225,7 @@ export default function CurriculumOrbit() {
         </div>
 
         {/* Center Logo */}
-        <div 
+        <div
           ref={logoRef}
           style={{
             position: "absolute",
@@ -249,7 +249,7 @@ export default function CurriculumOrbit() {
         </div>
 
         {/* Horizontal Array (Inactive Cards) */}
-        <div 
+        <div
           ref={gridGroupRef}
           style={{
             position: "absolute",
@@ -270,7 +270,7 @@ export default function CurriculumOrbit() {
             paddingRight: isMobile ? 0 : 24,
           }}>
             {NEW_FEATURES.map((feature, i) => (
-              <div 
+              <div
                 key={i}
                 className="horizontal-feature-card"
                 style={{
@@ -301,19 +301,19 @@ export default function CurriculumOrbit() {
                 }}
               >
                 {/* Top: Center SVG Icon */}
-                <div style={{ 
-                  width: 64, height: 64, 
+                <div style={{
+                  width: 64, height: 64,
                   margin: "0 auto 24px auto",
                   color: "var(--accent-primary)",
                   display: "flex", alignItems: "center", justifyContent: "center"
                 }}>
                   {feature.icon}
                 </div>
-                
+
                 {/* Middle: Brutalist Title */}
-                <h3 style={{ 
-                  fontFamily: "var(--font-heading)", 
-                  fontSize: 24, 
+                <h3 style={{
+                  fontFamily: "var(--font-heading)",
+                  fontSize: 24,
                   lineHeight: 1.1,
                   textAlign: "center",
                   color: "var(--text-primary)",
@@ -323,11 +323,11 @@ export default function CurriculumOrbit() {
                 }}>
                   {feature.title}
                 </h3>
-                
+
                 {/* Bottom: Description */}
-                <div style={{ 
-                  color: "var(--text-secondary)", 
-                  fontSize: 14, 
+                <div style={{
+                  color: "var(--text-secondary)",
+                  fontSize: 14,
                   lineHeight: 1.6,
                   textAlign: "center"
                 }}>

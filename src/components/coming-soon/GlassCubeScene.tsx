@@ -87,17 +87,17 @@ function GridDots() {
   const count = 150;
   const pointsRef = useRef<THREE.Points>(null!);
 
-  const geometry = useMemo(() => {
-    const geo = new THREE.BufferGeometry();
+  const geometry = useMemo(() => new THREE.BufferGeometry(), []);
+
+  useEffect(() => {
     const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       pos[i * 3] = (Math.random() - 0.5) * 18;
       pos[i * 3 + 1] = (Math.random() - 0.5) * 10;
       pos[i * 3 + 2] = -3 + Math.random() * -8;
     }
-    geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-    return geo;
-  }, []);
+    geometry.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  }, [geometry]);
 
   useFrame((_, delta) => {
     if (!pointsRef.current) return;
@@ -141,7 +141,7 @@ export default function GlassCubeScene() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    setTimeout(() => setMounted(true), 0);
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
     window.addEventListener("resize", check);

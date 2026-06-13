@@ -87,8 +87,9 @@ export async function POST(request: NextRequest) {
         });
         userId = userRecord.uid;
         createdPasswordUser = true;
-      } catch (authErr: any) {
-        if (authErr.code === 'auth/email-already-exists') {
+      } catch (authErr: unknown) {
+        const error = authErr as { code?: string };
+        if (error.code === 'auth/email-already-exists') {
           return NextResponse.json(
             { error: "Email is already registered. Please log in instead." },
             { status: 400 }

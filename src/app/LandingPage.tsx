@@ -78,7 +78,7 @@ function Header() {
   useEffect(() => {
     // Explicitly enforce dark mode on load
     document.body.classList.remove("theme-light");
-    setIsLightMode(false);
+    setTimeout(() => setIsLightMode(false), 0);
 
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -179,15 +179,11 @@ function HeroSection() {
         <div className="hero-left">
           <h1 className="hero-title">
             <span className="line">
-              <span>Campus</span>
+              <span>CAMPUS</span>
+              <span className="accent-2">2</span>
             </span>
             <span className="line">
-              <span>
-                <span className="accent-yellow">2</span>
-              </span>
-            </span>
-            <span className="line">
-              <span>Corporate</span>
+              <span>CORPORATE</span>
             </span>
           </h1>
 

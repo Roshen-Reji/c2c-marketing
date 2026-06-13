@@ -174,15 +174,18 @@
   font-family: var(--font-display);
   font-size: var(--text-hero);
   font-weight: 900;
-  line-height: 0.9;
+  line-height: 0.85;
   letter-spacing: -0.06em;
   text-transform: uppercase;
   margin-bottom: var(--space-6);
+  position: relative;
 }
 
 .hero-title .line {
   display: block;
   overflow: hidden;
+  padding-bottom: 0.3em;
+  margin-bottom: -0.3em;
 }
 
 .hero-title .line span {
@@ -194,7 +197,14 @@
 
 .hero-title .line:nth-child(1) span { animation-delay: 0.1s; }
 .hero-title .line:nth-child(2) span { animation-delay: 0.25s; }
-.hero-title .line:nth-child(3) span { animation-delay: 0.4s; }
+
+.accent-2 {
+  color: var(--accent-primary);
+  font-size: 1.15em;
+  position: relative;
+  top: 0.12em;
+  margin-left: 2px;
+}
 
 @keyframes slide-up {
   to {
