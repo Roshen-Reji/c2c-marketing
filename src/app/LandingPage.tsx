@@ -403,19 +403,23 @@ function Footer() {
                 <span className="footer-contact-name">(Arya C Anish)</span>
               </span>
               <span className="footer-text" style={{ marginTop: '0.25rem' }}>
-                +91 94000 78625 <br/>
-                <span className="footer-contact-name">(Malavika C Biju)</span>
+                +91 79071 97146 <br/>
+                <span className="footer-contact-name">(Nidha Najeeb)</span>
+              </span>
+              <span className="footer-text" style={{ marginTop: '0.25rem' }}>
+                +91 884 827 5740 <br/>
+                <span className="footer-contact-name">(A Ansila Safrin)</span>
               </span>
             </div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid var(--border-subtle)' }}>
+        <div className="footer-bottom">
           <div className="footer-logos" style={{ display: 'flex', gap: '3rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <img src="/ieee-sb-cek.png" alt="IEEE CE Kidangoor Student Branch" className="footer-logo-img" />
             <img src="/ieee-wie.png" alt="IEEE WIE" className="footer-logo-img" />
           </div>
-          <div style={{ marginTop: '2rem', color: 'var(--text-muted)', fontSize: '12px' }}>
+          <div className="footer-copyright">
             © 2026 Campus 2 Corporate.
           </div>
         </div>

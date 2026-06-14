@@ -134,14 +134,18 @@ export default function ComingSoonPage() {
                   <span className="cs-contact-name">(Arya C Anish)</span>
                 </span>
                 <span className="cs-footer-text" style={{ marginTop: '0.25rem' }}>
-                  +91 94000 78625 <br />
-                  <span className="cs-contact-name">(Malavika C Biju)</span>
+                  +91 79071 97146 <br />
+                  <span className="cs-contact-name">(Nidha Najeeb)</span>
+                </span>
+                <span className="cs-footer-text" style={{ marginTop: '0.25rem' }}>
+                  +91 884 827 5740 <br />
+                  <span className="cs-contact-name">(A Ansila Safrin)</span>
                 </span>
               </div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', flexWrap: 'wrap', padding: '2rem 0 1rem 0', borderTop: '1px solid var(--grid-line)' }}>
+          <div className="cs-footer-bottom">
             <img src="/ieee-sb-cek.png" alt="IEEE CE Kidangoor Student Branch" className="cs-footer-logo" />
             <img src="/ieee-wie.png" alt="IEEE WIE" className="cs-footer-logo" />
           </div>
