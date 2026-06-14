@@ -43,50 +43,79 @@ export default function PreRegisterForm() {
 
   return (
     <div className="cs-register">
-      <form 
-        className="cs-register-row" 
-        style={{ flexDirection: "column", gap: "0.5rem" }} 
-        onSubmit={handleSubmit}
-      >
-        <input
-          type="text"
-          className="cs-register-input"
-          style={{ borderRight: "1px solid rgba(255, 255, 255, 0.12)" }}
-          placeholder="enter name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          disabled={status === "loading" || status === "success"}
-          required
-        />
-        <input
-          type="email"
-          className="cs-register-input"
-          style={{ borderRight: "1px solid rgba(255, 255, 255, 0.12)" }}
-          placeholder="enter email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          disabled={status === "loading" || status === "success"}
-          required
-        />
-        <input
-          type="tel"
-          className="cs-register-input"
-          style={{ borderRight: "1px solid rgba(255, 255, 255, 0.12)" }}
-          placeholder="enter phone number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          disabled={status === "loading" || status === "success"}
-          required
-        />
-        <button
-          type="submit"
-          className="cs-register-btn"
-          style={{ width: "100%", marginTop: "0.5rem" }}
-          disabled={status === "loading" || status === "success"}
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center", justifyContent: "center" }}>
+        
+        {/* Top Badge */}
+        <div 
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(0, 102, 255, 0.05)",
+            border: "1px solid rgba(0, 102, 255, 0.2)",
+            borderRadius: "100px",
+            padding: "0.25rem 1rem",
+            textAlign: "center",
+          }}
         >
-          {status === "loading" ? "..." : status === "success" ? "✓ DONE" : "NOTIFY ME"}
-        </button>
-      </form>
+          <span style={{ 
+            color: "var(--accent-light)", 
+            fontFamily: "var(--font-mono, monospace)", 
+            fontSize: "0.75rem", 
+            fontWeight: 600, 
+            letterSpacing: "1px",
+            whiteSpace: "nowrap"
+          }}>
+            NOTIFY ME
+          </span>
+        </div>
+
+        {/* Form Below */}
+        <form 
+          className="cs-register-row" 
+          style={{ flexDirection: "column", gap: "0.5rem", width: "100%", maxWidth: "400px" }} 
+          onSubmit={handleSubmit}
+        >
+          <input
+            type="text"
+            className="cs-register-input"
+            style={{ borderRight: "1px solid rgba(255, 255, 255, 0.12)", width: "100%" }}
+            placeholder="enter name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            disabled={status === "loading" || status === "success"}
+            required
+          />
+          <input
+            type="email"
+            className="cs-register-input"
+            style={{ borderRight: "1px solid rgba(255, 255, 255, 0.12)", width: "100%" }}
+            placeholder="enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={status === "loading" || status === "success"}
+            required
+          />
+          <input
+            type="tel"
+            className="cs-register-input"
+            style={{ borderRight: "1px solid rgba(255, 255, 255, 0.12)", width: "100%" }}
+            placeholder="enter phone number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            disabled={status === "loading" || status === "success"}
+            required
+          />
+          <button
+            type="submit"
+            className="cs-register-btn"
+            style={{ width: "100%", marginTop: "0.5rem" }}
+            disabled={status === "loading" || status === "success"}
+          >
+            {status === "loading" ? "..." : status === "success" ? "✓ DONE" : "NOTIFY ME"}
+          </button>
+        </form>
+      </div>
       <div className={`cs-register-msg ${status === "success" ? "success" : status === "error" ? "error" : ""}`}>
         {message}
       </div>

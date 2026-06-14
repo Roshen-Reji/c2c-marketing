@@ -408,16 +408,15 @@ function Footer() {
               </span>
             </div>
           </div>
+        </div>
 
-          <div className="footer-col">
-            <div className="footer-logos">
-              <img src="/ieee-sb-cek.png" alt="IEEE CE Kidangoor Student Branch" className="footer-logo-img" />
-              <img src="/ieee-logo.png" alt="IEEE" className="footer-logo-img" />
-              <img src="/ieee-wie.png" alt="IEEE WIE" className="footer-logo-img" />
-            </div>
-            <div style={{ marginTop: '1rem', color: 'var(--text-muted)', fontSize: '10px' }}>
-              © 2026 Campus 2 Corporate.
-            </div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid var(--border-subtle)' }}>
+          <div className="footer-logos" style={{ display: 'flex', gap: '3rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <img src="/ieee-sb-cek.png" alt="IEEE CE Kidangoor Student Branch" className="footer-logo-img" />
+            <img src="/ieee-wie.png" alt="IEEE WIE" className="footer-logo-img" />
+          </div>
+          <div style={{ marginTop: '2rem', color: 'var(--text-muted)', fontSize: '12px' }}>
+            © 2026 Campus 2 Corporate.
           </div>
         </div>
       </div>
