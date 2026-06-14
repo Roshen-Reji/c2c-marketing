@@ -15,6 +15,7 @@ import "./register.css";
 /* ===== Types ===== */
 interface FormData {
   fullName: string;
+  phone: string;
   batch: string;
   year: string;
   email: string;
@@ -24,6 +25,7 @@ interface FormData {
 
 interface FormErrors {
   fullName?: string;
+  phone?: string;
   batch?: string;
   year?: string;
   email?: string;
@@ -41,6 +43,10 @@ function validateStep1(data: FormData): FormErrors {
   if (!data.fullName.trim()) errors.fullName = "Full name is required";
   else if (data.fullName.trim().length < 3)
     errors.fullName = "Name must be at least 3 characters";
+
+  if (!data.phone.trim()) errors.phone = "Phone number is required";
+  else if (!/^\d{10}$/.test(data.phone.replace(/\D/g, '')))
+    errors.phone = "Please enter a valid 10-digit phone number";
   
   if (!data.batch) errors.batch = "Please select your branch";
   if (!data.year) errors.year = "Please select your year";
@@ -63,6 +69,7 @@ export default function RegisterPage() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
+    phone: "",
     batch: "",
     year: "",
     email: "",
@@ -154,6 +161,7 @@ export default function RegisterPage() {
       // Build FormData for server submission
       const submitData = new FormData();
       submitData.append("fullName", formData.fullName.trim());
+      submitData.append("phone", formData.phone.trim());
       submitData.append("batch", formData.batch);
       submitData.append("year", formData.year);
       submitData.append("email", formData.email.trim().toLowerCase());
@@ -178,8 +186,15 @@ export default function RegisterPage() {
       });
 
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Registration failed");
+        let data;
+        let errorMessage = "Registration failed";
+        try {
+          data = await res.json();
+          errorMessage = data.error || errorMessage;
+        } catch (parseErr) {
+          errorMessage = `Server error (${res.status}: ${res.statusText}). If you attached a large image, it might be too big.`;
+        }
+        throw new Error(errorMessage);
       }
 
       setIsSuccess(true);
@@ -354,6 +369,21 @@ export default function RegisterPage() {
                   disabled={!!formData.googleUid}
                 />
                 {errors.fullName && <div className="form-error">{errors.fullName}</div>}
+              </div>
+
+              <div className="input-group">
+                <label className="input-label" htmlFor="phone">
+                  Phone Number <span style={{ color: "var(--accent-tertiary)" }}>*</span>
+                </label>
+                <input
+                  id="phone"
+                  type="tel"
+                  className="input"
+                  placeholder="Enter your 10-digit WhatsApp number"
+                  value={formData.phone}
+                  onChange={(e) => updateField("phone", e.target.value)}
+                />
+                {errors.phone && <div className="form-error">{errors.phone}</div>}
               </div>
 
               <div className="form-row">
@@ -559,6 +589,10 @@ export default function RegisterPage() {
               <div className="confirm-row">
                 <span className="confirm-label">Full Name</span>
                 <span className="confirm-value">{formData.fullName}</span>
+              </div>
+              <div className="confirm-row">
+                <span className="confirm-label">Phone</span>
+                <span className="confirm-value">{formData.phone}</span>
               </div>
               <div className="confirm-row">
                 <span className="confirm-label">Branch</span>

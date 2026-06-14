@@ -10,6 +10,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
 
     const fullName = formData.get("fullName") as string;
+    const phone = formData.get("phone") as string;
     const batch = formData.get("batch") as string;
     const year = formData.get("year") as string;
     const email = formData.get("email") as string;
@@ -19,7 +20,7 @@ export async function POST(request: NextRequest) {
     const screenshot = formData.get("screenshot") as File | null;
 
     // Validate required fields
-    if (!fullName || !batch || !year || !email) {
+    if (!fullName || !phone || !batch || !year || !email) {
       return NextResponse.json(
         { error: "All fields are required" },
         { status: 400 }
@@ -104,6 +105,7 @@ export async function POST(request: NextRequest) {
       await adminDb.collection("students").doc(userId).set({
         fullName: fullName.trim(),
         email: email.toLowerCase().trim(),
+        phone: phone.trim(),
         batch,
         year,
         status: "pending",
@@ -129,6 +131,7 @@ export async function POST(request: NextRequest) {
         userId,
         fullName.trim(),
         email.toLowerCase().trim(),
+        phone.trim(),
         batch,
         year,
         screenshotUrl,
