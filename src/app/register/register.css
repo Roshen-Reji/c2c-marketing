@@ -3,45 +3,16 @@
    =================================================== */
 
 .register-page {
-  /* Registration Palette Overrides */
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #111111; 
-  --bg-card: #141414; 
-  --bg-card-hover: #1c1c1c;
-  
-  --text-primary: #FFF4E1;
-  --text-secondary: rgba(255, 244, 225, 0.8);
-  --text-tertiary: rgba(255, 244, 225, 0.6);
-  --text-muted: rgba(255, 244, 225, 0.4);
-  
-  --accent-primary: #89D7B7;
-  --accent-secondary: #428475;
-  --accent-tertiary: #FFF4E1;
-  
-  --border-subtle: rgba(137, 215, 183, 0.15);
-  --border-default: rgba(137, 215, 183, 0.3);
-  --border-strong: rgba(137, 215, 183, 0.5);
-
   background-color: var(--bg-primary);
   color: var(--text-primary);
   
   min-height: 100vh;
-  padding: 100px 0 var(--space-16);
+  padding: 40px 0 var(--space-8);
   position: relative;
 }
 
 .register-page::before {
-  content: '';
-  position: absolute;
-  top: -200px;
-  right: -300px;
-  width: 700px;
-  height: 700px;
-  background: var(--accent-primary);
-  border-radius: 50%;
-  filter: blur(200px);
-  opacity: 0.06;
-  pointer-events: none;
+  display: none;
 }
 
 .register-container {
@@ -58,7 +29,7 @@
   color: var(--text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-4);
   transition: color var(--duration-fast) var(--ease-out);
 }
 
@@ -68,17 +39,17 @@
 
 .register-title {
   font-family: var(--font-display);
-  font-size: var(--text-4xl);
+  font-size: var(--text-3xl);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.04em;
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
 .register-subtitle {
   font-size: var(--text-base);
   color: var(--text-secondary);
-  margin-bottom: var(--space-10);
+  margin-bottom: var(--space-6);
 }
 
 /* Steps Indicator */
@@ -86,7 +57,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  margin-bottom: var(--space-10);
+  margin-bottom: var(--space-6);
 }
 
 .step-dot {
@@ -154,9 +125,10 @@
 /* Form Card */
 .register-card {
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-2xl);
-  padding: var(--space-10);
+  padding: var(--space-6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   position: relative;
   overflow: hidden;
 }
@@ -175,7 +147,7 @@
 .register-form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-4);
 }
 
 .form-row {

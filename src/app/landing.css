@@ -280,6 +280,33 @@
   line-height: 1.7;
 }
 
+.hero-info-list {
+  margin-top: 1rem;
+}
+.hero-info-list li {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.btn-cta {
+  background: var(--accent-cyan);
+  color: #000;
+  font-weight: 800;
+  border: 1px solid var(--accent-cyan);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+  transition: all 0.3s var(--ease-out);
+}
+.btn-cta:hover {
+  background: #00f2ff;
+  border-color: #00f2ff;
+  color: #000;
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
+}
+
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -299,9 +326,9 @@
 }
 
 .hero-stat:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--accent-primary);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 .hero-stat:nth-child(1) { animation-delay: 0.7s; }
@@ -326,30 +353,14 @@
 }
 
 /* Background decorations */
-.hero-bg-glow {
+.hero-grid-bg {
   position: absolute;
-  width: 700px;
-  height: 700px;
-  border-radius: 50%;
-  filter: blur(140px);
-  opacity: 0.3;
+  inset: 0;
   pointer-events: none;
   z-index: 0;
-}
-
-.hero-bg-glow-1 {
-  top: -150px;
-  right: -150px;
-  background: var(--accent-primary);
-  animation: pulse-glow 8s infinite alternate;
-}
-
-.hero-bg-glow-2 {
-  bottom: -150px;
-  left: -150px;
-  background: var(--accent-secondary);
-  opacity: 0.2;
-  animation: pulse-glow 10s infinite alternate-reverse;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 16v8M16 20h8' stroke='rgba(255,255,255,0.06)' stroke-width='1' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+  mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
 }
 
 @keyframes pulse-glow {
@@ -756,15 +767,18 @@
 }
 
 .fees-card {
-  max-width: 600px;
+  max-width: 660px;
   margin: 0 auto;
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-2xl);
-  padding: var(--space-12);
+  padding: var(--space-16) var(--space-12);
   text-align: center;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
 }
 
 .fees-card::before {

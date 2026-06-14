@@ -158,9 +158,9 @@ export default function CurriculumOrbit() {
       }}
     >
       {/* Title */}
-      <div style={{ position: "absolute", top: isMobile ? 40 : 80, left: 0, width: "100%", textAlign: "center", zIndex: 20 }}>
-        <p className="mono-text" style={{ color: "var(--accent-primary)", fontSize: "var(--text-xs)", letterSpacing: 4, marginBottom: 16 }}>THE REASON</p>
-        <h2 className="display-text" style={{ fontSize: isMobile ? "clamp(3rem, 10vw, 4rem)" : "clamp(4.5rem, 8vw, 7rem)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 0.85, textTransform: "uppercase" }}>
+      <div style={{ position: "absolute", top: isMobile ? 40 : 80, left: 0, width: "100%", textAlign: "center", zIndex: 1 }}>
+        <p className="mono-text" style={{ color: "var(--accent-primary)", fontSize: "var(--text-xs)", letterSpacing: 4, marginBottom: 16, opacity: 0.8 }}>THE REASON</p>
+        <h2 className="display-text" style={{ fontSize: isMobile ? "clamp(3rem, 10vw, 4rem)" : "clamp(4.5rem, 8vw, 7rem)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 0.85, textTransform: "uppercase", opacity: 0.15 }}>
           WHY <span className="accent-green">C2C</span>
         </h2>
       </div>
@@ -276,9 +276,9 @@ export default function CurriculumOrbit() {
                 style={{
                   width: isMobile ? 280 : 360,
                   flex: "0 0 auto",
-                  background: "var(--surface-glass)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
+                  background: "var(--bg-card)",
+                  backdropFilter: "none",
+                  WebkitBackdropFilter: "none",
                   border: "1px solid var(--border-strong)",
                   borderRadius: "var(--radius-2xl)",
                   padding: "32px 24px",
@@ -286,6 +286,7 @@ export default function CurriculumOrbit() {
                   flexDirection: "column",
                   transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, box-shadow 0.4s",
                   cursor: "default",
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-12px)";

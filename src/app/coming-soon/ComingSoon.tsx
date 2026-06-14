@@ -99,13 +99,13 @@ export default function ComingSoonPage() {
           </div>
         </div>
 
-        <div style={{ width: '100%', height: '1px', background: 'var(--grid-line)', margin: '4rem 0' }} />
+        <div style={{ width: '100%', height: '1px', background: 'var(--grid-line)', margin: '2rem 0' }} />
 
         <div className="cs-register-wrapper">
           <PreRegisterForm />
         </div>
 
-        <div style={{ width: '100%', height: '1px', background: 'var(--grid-line)', margin: '4rem 0 0 0' }} />
+        <div style={{ width: '100%', height: '1px', background: 'var(--grid-line)', margin: '2rem 0 0 0' }} />
 
         <footer className="cs-footer">
           <div className="cs-minimal-footer">

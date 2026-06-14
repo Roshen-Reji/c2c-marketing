@@ -74,8 +74,15 @@ function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isLightMode, setIsLightMode] = useState(false);
+  const [isRegistered, setIsRegistered] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("c2c_registered") === "true") {
+        setIsRegistered(true);
+      }
+    }
+
     // Explicitly enforce dark mode on load
     document.body.classList.remove("theme-light");
     setTimeout(() => setIsLightMode(false), 0);
@@ -113,9 +120,15 @@ function Header() {
             Fees
           </a>
 
-          <Link href="/register" className="btn btn-primary hide-desktop" style={{ marginTop: 'var(--space-2)' }} onClick={() => setMobileOpen(false)}>
-            Register
-          </Link>
+          {isRegistered ? (
+            <span className="hide-desktop" style={{ marginTop: 'var(--space-2)', padding: '8px 16px', background: 'rgba(255,255,255,0.05)', borderRadius: '20px', fontSize: '12px', color: 'var(--text-secondary)', border: '1px solid rgba(255,255,255,0.1)' }}>
+              Registration Complete
+            </span>
+          ) : (
+            <Link href="/register" className="btn btn-primary hide-desktop" style={{ marginTop: 'var(--space-2)' }} onClick={() => setMobileOpen(false)}>
+              Register
+            </Link>
+          )}
         </nav>
 
         <div className="header-actions">
@@ -128,9 +141,15 @@ function Header() {
           >
             {isLightMode ? "☾" : "☀"}
           </button>
-          <Link href="/register" className="btn btn-primary hide-mobile" id="nav-register-btn">
-            Register
-          </Link>
+          {isRegistered ? (
+            <span className="hide-mobile" style={{ padding: '10px 20px', background: 'rgba(255,255,255,0.05)', borderRadius: '100px', fontSize: '14px', color: 'var(--text-secondary)', border: '1px solid rgba(255,255,255,0.1)' }}>
+              ✓ Registration Complete
+            </span>
+          ) : (
+            <Link href="/register" className="btn btn-primary hide-mobile" id="nav-register-btn">
+              Register
+            </Link>
+          )}
           <button
             className="mobile-menu-btn hide-desktop"
             id="mobile-menu-btn"
@@ -172,8 +191,7 @@ function ScrollIndicator() {
 function HeroSection() {
   return (
     <section className="hero" id="hero">
-      <div className="hero-bg-glow hero-bg-glow-1" />
-      <div className="hero-bg-glow hero-bg-glow-2" />
+      <div className="hero-grid-bg" />
 
       <div className="container">
         <div className="hero-left">
@@ -191,8 +209,8 @@ function HeroSection() {
             4 to 6 Weeks Online Training Program — B.Tech Students
           </p>
 
-          <div className="hero-cta-group">
-            <Link href="/register" className="btn btn-primary btn-large" id="hero-register-btn">
+          <div className="hero-cta-group" style={{ marginTop: '4rem' }}>
+            <Link href="/register" className="btn btn-cta btn-large" id="hero-register-btn">
               Register Now
             </Link>
             <a href="#phases" className="btn btn-secondary btn-large" id="hero-explore-btn">
@@ -206,12 +224,16 @@ function HeroSection() {
             <h2 className="hero-info-title">
               Your Bridge to the <span className="accent-blue">Industry</span>
             </h2>
-            <p className="hero-info-text">
-              A comprehensive multi-session online program organised by the Women In Engineering Branch of IEEE CEK designed specifically for 2nd-year,
-              3rd-year, and final-year B.Tech students in CSE, ECE, EEE, CE &amp; EL. Prepare
-              for placements with structured learning, practical tasks, and real interview
-              simulations across 5 intensive phases.
-            </p>
+            <div className="hero-info-text">
+              <p style={{ marginBottom: '1rem' }}>
+                A comprehensive online program by IEEE CEK WIE designed for B.Tech students in CSE, ECE, EEE, CE & EL.
+              </p>
+              <ul className="hero-info-list" style={{ listStyle: 'none', padding: 0 }}>
+                <li><span style={{ color: 'var(--accent-primary)' }}>▹</span> <strong>Structured Learning:</strong> From basics to advanced concepts.</li>
+                <li><span style={{ color: 'var(--accent-primary)' }}>▹</span> <strong>Mock Interviews:</strong> Real-world simulations with industry experts.</li>
+                <li><span style={{ color: 'var(--accent-primary)' }}>▹</span> <strong>Professional Skills:</strong> GDs, resumes, and LinkedIn prep.</li>
+              </ul>
+            </div>
           </div>
 
           <div className="hero-stats">
@@ -295,7 +317,7 @@ function FeesSection() {
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "baseline", gap: "0.5rem" }}>
                   <span>₹399 <span style={{ fontSize: "1rem", color: "var(--text-secondary)" }}>(Non-IEEE)</span></span>
                   <span style={{ fontSize: "2rem", color: "var(--text-muted)", margin: "0 0.5rem" }}>/</span>
-                  <span>₹299 <span style={{ fontSize: "1rem", color: "var(--text-secondary)" }}>(IEEE)</span></span>
+                  <span style={{ color: "var(--accent-cyan)", fontSize: "3rem", fontWeight: 900 }}>₹299 <span style={{ fontSize: "1.2rem", color: "var(--accent-cyan)" }}>(IEEE)</span></span>
                 </div>
                 <div style={{ fontSize: "0.875rem", color: "var(--accent-blue)", fontWeight: "bold", marginTop: "0.5rem" }}>Early Bird Pricing Active!</div>
               </>
@@ -454,9 +476,13 @@ export default function LandingPage() {
     <main>
       <Header />
       <HeroSection />
+      <div className="section-divider" />
       <MarqueeSection />
+      <div className="section-divider" />
       <div id="phases"><InteractiveRoadmap /></div>
+      <div className="section-divider" />
       <div id="features"><CurriculumOrbit /></div>
+      <div className="section-divider" />
       <FeesSection />
       <FooterCTA />
       <Footer />
