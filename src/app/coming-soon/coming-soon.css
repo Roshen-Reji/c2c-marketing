@@ -37,10 +37,10 @@
     linear-gradient(var(--grid-dot) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-dot) 1px, transparent 1px);
   background-size:
-    120px 120px,
-    120px 120px,
-    24px 24px,
-    24px 24px;
+    240px 240px,
+    240px 240px,
+    48px 48px,
+    48px 48px;
 }
 
 .cs-page::after {
@@ -50,7 +50,7 @@
   pointer-events: none;
   z-index: 2;
   background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-  background-size: 120px 120px;
+  background-size: 240px 240px;
 }
 
 /* ── Background Glow Effects ── */

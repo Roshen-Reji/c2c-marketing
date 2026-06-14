@@ -13,7 +13,7 @@ const GlassCubeScene = dynamic(
 
 /* ── Countdown logic ── */
 function useCountdown() {
-  const [timeStr, setTimeStr] = useState("0day : 00hrs : 00 min : 00 sec");
+  const [timeStr, setTimeStr] = useState("0 days : 00 hrs : 00 min : 00 sec");
 
   useEffect(() => {
     const launchDateStr = process.env.NEXT_PUBLIC_LAUNCH_DATE;
@@ -24,7 +24,7 @@ function useCountdown() {
       const diff = targetDate - now;
 
       if (diff <= 0) {
-        setTimeStr("0day : 00hrs : 00 min : 00 sec");
+        setTimeStr("0 days : 00 hrs : 00 min : 00 sec");
         if (targetDate > 0) window.location.reload();
         return;
       }
@@ -34,7 +34,8 @@ function useCountdown() {
       const m = Math.floor((diff / (1000 * 60)) % 60);
       const s = Math.floor((diff / 1000) % 60);
       const pad = (n: number) => n.toString().padStart(2, "0");
-      setTimeStr(`${d}day : ${pad(h)}hrs : ${pad(m)} min : ${pad(s)} sec`);
+      const dayLabel = d === 1 ? "day" : "days";
+      setTimeStr(`${d} ${dayLabel} : ${pad(h)} hrs : ${pad(m)} min : ${pad(s)} sec`);
     };
 
     tick();
