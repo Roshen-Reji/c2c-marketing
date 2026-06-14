@@ -268,6 +268,7 @@ function MarqueeSection() {
 
 function FeesSection() {
   const ref = useScrollReveal();
+  const IS_EARLY_BIRD = true; // Toggle for early bird pricing
 
   return (
     <section className="fees-section" id="fees" ref={ref}>
@@ -284,9 +285,28 @@ function FeesSection() {
 
         <div className="fees-card animate-reveal">
           <span className="badge badge-green fees-badge">Limited Seats</span>
-          <div className="fees-price">
-            ₹300
-            <div className="fees-price-sub">One-time payment • Full access</div>
+          <div className="fees-price" style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+            {IS_EARLY_BIRD ? (
+              <>
+                <div style={{ fontSize: "1rem", textDecoration: "line-through", color: "var(--text-muted)", marginBottom: "0.5rem", display: "flex", justifyContent: "center", gap: "1rem" }}>
+                  <span>Non-IEEE: ₹499</span>
+                  <span>IEEE: ₹399</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "baseline", gap: "0.5rem" }}>
+                  <span>₹399 <span style={{ fontSize: "1rem", color: "var(--text-secondary)" }}>(Non-IEEE)</span></span>
+                  <span style={{ fontSize: "2rem", color: "var(--text-muted)", margin: "0 0.5rem" }}>/</span>
+                  <span>₹299 <span style={{ fontSize: "1rem", color: "var(--text-secondary)" }}>(IEEE)</span></span>
+                </div>
+                <div style={{ fontSize: "0.875rem", color: "var(--accent-blue)", fontWeight: "bold", marginTop: "0.5rem" }}>Early Bird Pricing Active!</div>
+              </>
+            ) : (
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "baseline", gap: "0.5rem" }}>
+                <span>₹499 <span style={{ fontSize: "1rem", color: "var(--text-secondary)" }}>(Non-IEEE)</span></span>
+                <span style={{ fontSize: "2rem", color: "var(--text-muted)", margin: "0 0.5rem" }}>/</span>
+                <span>₹399 <span style={{ fontSize: "1rem", color: "var(--text-secondary)" }}>(IEEE)</span></span>
+              </div>
+            )}
+            <div className="fees-price-sub" style={{ marginTop: "1rem" }}>One-time payment • Full access</div>
           </div>
           <p className="fees-description">
             Get complete access to all 5 phases, live sessions, hands-on tasks,
@@ -300,6 +320,14 @@ function FeesSection() {
                 {feature}
               </li>
             ))}
+            <li>
+              <span className="fees-check">✓</span>
+              <strong>100% REFUND</strong>
+            </li>
+            <li>
+              <span className="fees-check">✓</span>
+              <strong>100% SCHOLARSHIP AVAILABLE*</strong>
+            </li>
           </ul>
           <Link href="/register" className="btn btn-primary btn-large w-full" id="fees-register-btn">
             Register Now
