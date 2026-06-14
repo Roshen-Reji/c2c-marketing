@@ -429,8 +429,17 @@
 }
 .cs-footer-logo:hover {
   opacity: 1;
-  filter: grayscale(0) invert(0);
+  filter: grayscale(0);
   transform: scale(1.05);
+}
+
+.cs-footer-bottom {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  padding: 2rem 0 1rem 0;
+  border-top: 1px solid var(--grid-line);
 }
 
 .cs-minimal-footer {
@@ -532,5 +541,17 @@
   }
   .cs-footer-links {
     align-items: center;
+  }
+
+  .cs-footer {
+    width: calc(100% - 2rem);
+    margin-left: 1rem;
+    margin-right: 1rem;
+    padding: 0 1.5rem;
+  }
+
+  .cs-footer-bottom {
+    gap: 1.5rem;
+    padding: 1.5rem 0 0.5rem 0;
   }
 }
