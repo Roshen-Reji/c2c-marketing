@@ -80,7 +80,7 @@ export default function PreRegisterForm() {
             type="text"
             className="cs-register-input"
             style={{ borderRight: "1px solid rgba(255, 255, 255, 0.12)", width: "100%" }}
-            placeholder="enter name"
+            placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             disabled={status === "loading" || status === "success"}
@@ -90,7 +90,7 @@ export default function PreRegisterForm() {
             type="email"
             className="cs-register-input"
             style={{ borderRight: "1px solid rgba(255, 255, 255, 0.12)", width: "100%" }}
-            placeholder="enter email"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={status === "loading" || status === "success"}
@@ -100,7 +100,7 @@ export default function PreRegisterForm() {
             type="tel"
             className="cs-register-input"
             style={{ borderRight: "1px solid rgba(255, 255, 255, 0.12)", width: "100%" }}
-            placeholder="enter phone number"
+            placeholder="Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             disabled={status === "loading" || status === "success"}
