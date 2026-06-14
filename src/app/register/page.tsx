@@ -177,7 +177,41 @@ export default function RegisterPage() {
         }
       }
       if (screenshot) {
-        submitData.append("screenshot", screenshot);
+        // Vercel limit is 4.5MB. Compress images larger than 1.5MB.
+        if (screenshot.size > 1.5 * 1024 * 1024 && screenshot.type.startsWith("image/")) {
+          try {
+            const compressedBlob = await new Promise<Blob>((resolve, reject) => {
+              const img = new Image();
+              img.onload = () => {
+                const canvas = document.createElement("canvas");
+                let { width, height } = img;
+                const maxDim = 1200;
+                
+                if (width > height && width > maxDim) {
+                  height = Math.round(height * (maxDim / width));
+                  width = maxDim;
+                } else if (height >= width && height > maxDim) {
+                  width = Math.round(width * (maxDim / height));
+                  height = maxDim;
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext("2d");
+                ctx?.drawImage(img, 0, 0, width, height);
+                canvas.toBlob((b) => b ? resolve(b) : reject(), "image/jpeg", 0.7);
+              };
+              img.onerror = reject;
+              img.src = URL.createObjectURL(screenshot);
+            });
+            submitData.append("screenshot", compressedBlob, "screenshot.jpg");
+          } catch (compressErr) {
+            console.warn("Image compression failed, using original file", compressErr);
+            submitData.append("screenshot", screenshot);
+          }
+        } else {
+          submitData.append("screenshot", screenshot);
+        }
       }
 
       const res = await fetch("/api/register", {
