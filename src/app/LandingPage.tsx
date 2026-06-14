@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import Footer from "@/components/Footer";
 import "./landing.css";
 
 const InteractiveRoadmap = dynamic(() => import("@/components/InteractiveRoadmap"), { ssr: false });
@@ -385,70 +386,6 @@ function FooterCTA() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="footer" id="footer">
-      <div className="container">
-        <div className="footer-motto-wrapper">
-          <div className="footer-motto">
-            <span className="footer-dot">•</span>
-            SMALL <span className="accent-blue">STEPS</span> PAVE THE WAY
-            <span className="footer-dot">•</span>
-          </div>
-        </div>
-
-        <div className="footer-top">
-          <div className="footer-col">
-            <span className="footer-label">Navigate</span>
-            <div className="footer-links">
-              <a href="#phases" className="footer-link">Phases</a>
-              <a href="#features" className="footer-link">Features</a>
-              <a href="#fees" className="footer-link">Fees</a>
-              <Link href="/register" className="footer-link">Register</Link>
-            </div>
-          </div>
-
-          <div className="footer-col">
-            <span className="footer-label">Follow Us</span>
-            <div className="footer-links">
-              <a href="https://www.linkedin.com/company/ieeesbcekidangoor/" className="footer-link">LinkedIn</a>
-              <a href="https://ieee.ce-kgr.org/" className="footer-link">Web</a>
-              <a href="https://www.instagram.com/ieeesbcekgr?igsh=MWczc3o1d21hdGxzcg==" className="footer-link">Instagram</a>
-            </div>
-          </div>
-
-          <div className="footer-col">
-            <span className="footer-label">For Enquiries</span>
-            <div className="footer-links">
-              <span className="footer-text">
-                +91 7592 815 138 <br/>
-                <span className="footer-contact-name">(Arya C Anish)</span>
-              </span>
-              <span className="footer-text" style={{ marginTop: '0.25rem' }}>
-                +91 79071 97146 <br/>
-                <span className="footer-contact-name">(Nidha Najeeb)</span>
-              </span>
-              <span className="footer-text" style={{ marginTop: '0.25rem' }}>
-                +91 884 827 5740 <br/>
-                <span className="footer-contact-name">(A Ansila Safrin)</span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="footer-bottom">
-          <div className="footer-logos" style={{ display: 'flex', gap: '3rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <img src="/ieee-sb-cek.png" alt="IEEE CE Kidangoor Student Branch" className="footer-logo-img" />
-            <img src="/ieee-wie.png" alt="IEEE WIE" className="footer-logo-img" />
-          </div>
-          <div className="footer-copyright">
-            © 2026 Campus 2 Corporate.
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
 
 /* ===== Main Page ===== */
 export default function LandingPage() {

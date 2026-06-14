@@ -389,14 +389,20 @@
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--grid-line);
-  border-radius: 12px;
+  background: rgba(15, 15, 15, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  border-radius: 16px;
   padding: 0 2rem;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2rem;
+  position: relative;
+  z-index: 10;
 }
 
 .cs-footer-top {
@@ -418,11 +424,11 @@
 }
 
 .cs-footer-col:nth-child(2) {
-  align-items: center;
+  align-items: flex-end;
 }
 
 .cs-footer-col:nth-child(2) .cs-footer-text {
-  text-align: center;
+  text-align: right;
 }
 
 .cs-footer-label {
@@ -473,13 +479,11 @@
   transform: scale(1.05);
 }
 
-.cs-footer-bottom {
+.cs-footer-logos {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 1.5rem;
-  flex-wrap: wrap;
-  padding: 1rem 0 0.5rem 0;
-  border-top: 1px solid var(--grid-line);
 }
 
 .cs-minimal-footer {
@@ -617,34 +621,52 @@
   }
 
   .cs-footer-top {
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
 
   .cs-footer-col {
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
   }
 
   .cs-footer-links {
-    align-items: center;
+    align-items: flex-start;
+  }
+  
+  .cs-footer-col:nth-child(2) {
+    align-items: flex-end;
+  }
+  
+  .cs-footer-col:nth-child(2) .cs-footer-links {
+    align-items: flex-end;
   }
 
   .cs-footer {
     width: calc(100% - 2rem);
     margin-left: 1rem;
     margin-right: 1rem;
-    padding: 0 1.5rem;
+    padding: 1.5rem;
     margin-bottom: 1rem;
   }
 
-  .cs-footer-bottom {
-    flex-direction: row;
+  .cs-footer-col:first-child {
+    order: 1;
+  }
+
+  .cs-footer-col:last-child {
+    order: 2;
+  }
+
+  .cs-footer-logos {
+    order: 3;
+    width: 100%;
+    margin-top: 1.5rem;
     justify-content: center;
-    align-items: center;
-    gap: 0 rem;
-    padding: 0 0 0 0;
+    gap: 0.75rem;
   }
 
   .cs-footer-logo {
