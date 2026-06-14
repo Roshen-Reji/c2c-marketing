@@ -111,7 +111,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Could not save your registration." }, { status: 500 });
     }
 
-    void appendSheetRecord("registrations", [
+    try {
+      await appendSheetRecord("registrations", [
         userId,
         fullName.trim(),
         email.toLowerCase().trim(),
@@ -121,7 +122,10 @@ export async function POST(request: NextRequest) {
         screenshotUrl,
         timestamp,
         "pending",
-      ]).catch((sheetsErr) => console.warn("Google Sheets registration sync failed:", sheetsErr));
+      ]);
+    } catch (sheetsErr) {
+      console.warn("Google Sheets registration sync failed:", sheetsErr);
+    }
 
     return NextResponse.json({
       success: true,

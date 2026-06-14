@@ -204,7 +204,7 @@ function HeroSection() {
         <div className="hero-right">
           <div className="hero-info-card">
             <h2 className="hero-info-title">
-              Your Bridge to the <span className="accent-green">Industry</span>
+              Your Bridge to the <span className="accent-blue">Industry</span>
             </h2>
             <p className="hero-info-text">
               A comprehensive multi-session online program organised by the Women In Engineering Branch of IEEE CEK designed specifically for 2nd-year,
@@ -278,7 +278,7 @@ function FeesSection() {
             className="section-title"
             style={{ textAlign: "center", maxWidth: "900px", margin: "0 auto var(--space-6)" }}
           >
-            One <span className="accent-purple">Program</span>, Complete <span className="accent-yellow">Transformation</span>
+            One <span className="accent-blue">Program</span>, Complete <span className="accent-blue">Transformation</span>
           </h2>
         </div>
 
@@ -342,7 +342,7 @@ function Footer() {
         <div className="footer-motto-wrapper">
           <div className="footer-motto">
             <span className="footer-dot">•</span>
-            SMALL STEPS PAVE THE WAY
+            SMALL <span className="accent-blue">STEPS</span> PAVE THE WAY
             <span className="footer-dot">•</span>
           </div>
         </div>
@@ -371,12 +371,12 @@ function Footer() {
             <span className="footer-label">For Enquiries</span>
             <div className="footer-links">
               <span className="footer-text">
-                +91 123 456 7890 <br/>
-                <span className="footer-contact-name">(John Doe)</span>
+                +91 7592 815 138 <br/>
+                <span className="footer-contact-name">(Arya C Anish)</span>
               </span>
               <span className="footer-text" style={{ marginTop: '0.25rem' }}>
-                +91 987 654 3210 <br/>
-                <span className="footer-contact-name">(Jane Smith)</span>
+                +91 94000 78625 <br/>
+                <span className="footer-contact-name">(Malavika C Biju)</span>
               </span>
             </div>
           </div>
