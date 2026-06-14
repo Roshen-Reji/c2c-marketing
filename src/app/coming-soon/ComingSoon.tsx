@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import Footer from "@/components/Footer";
 import "./coming-soon.css";
 import PreRegisterForm from "@/components/coming-soon/PreRegisterForm";
 
@@ -108,49 +109,7 @@ export default function ComingSoonPage() {
 
         <div className="cs-divider cs-divider-bottom" />
 
-        <footer className="cs-footer">
-          <div className="cs-minimal-footer">
-            <div className="cs-footer-motto">
-              <span className="cs-dot">•</span>
-              SMALL <span className="text-blue">STEPS</span> PAVE THE WAY
-              <span className="cs-dot">•</span>
-            </div>
-          </div>
-
-          <div className="cs-footer-top">
-            <div className="cs-footer-col">
-              <span className="cs-footer-label">Follow Us</span>
-              <div className="cs-footer-links">
-                <a href="https://www.linkedin.com/company/ieeesbcekidangoor/" className="cs-footer-link">LinkedIn</a>
-                <a href="https://ieee.ce-kgr.org/" className="cs-footer-link">Web</a>
-                <a href="https://www.instagram.com/ieeesbcekgr?igsh=MWczc3o1d21hdGxzcg==" className="cs-footer-link">Instagram</a>
-              </div>
-            </div>
-
-            <div className="cs-footer-col">
-              <span className="cs-footer-label">For Enquiries</span>
-              <div className="cs-footer-links">
-                <span className="cs-footer-text">
-                  +91 75928 15138 <br />
-                  <span className="cs-contact-name">(Arya C Anish)</span>
-                </span>
-                <span className="cs-footer-text" style={{ marginTop: '0.25rem' }}>
-                  +91 79071 97146 <br />
-                  <span className="cs-contact-name">(Nidha Najeeb)</span>
-                </span>
-                <span className="cs-footer-text" style={{ marginTop: '0.25rem' }}>
-                  +91 88482 75740 <br />
-                  <span className="cs-contact-name">(A Ansila Safrin)</span>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="cs-footer-bottom">
-            <img src="/C2C/ieee-sb-cek.png" alt="IEEE CE Kidangoor Student Branch" className="cs-footer-logo" />
-            <img src="/C2C/ieee-wie.png" alt="IEEE WIE" className="cs-footer-logo" />
-          </div>
-        </footer>
+        <Footer />
       </div>
     </div>
   );
