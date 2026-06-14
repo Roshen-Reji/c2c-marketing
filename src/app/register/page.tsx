@@ -290,7 +290,7 @@ export default function RegisterPage() {
           data = await res.json();
           errorMessage = data.error || errorMessage;
         } catch (parseErr) {
-          errorMessage = `Server error (${res.status}: ${res.statusText}). If you attached a large image, it might be too big.`;
+          errorMessage = `Server error (${res.status}). Please try again or contact support.`;
         }
         throw new Error(errorMessage);
       }
