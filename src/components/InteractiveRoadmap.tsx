@@ -137,10 +137,10 @@ export default function InteractiveRoadmap() {
 
     const tl = gsap.timeline();
 
-    // 1. Draw the SVG line
+    // 1. Draw the SVG line quickly
     tl.to(path, {
       strokeDashoffset: 0,
-      duration: 1.2,
+      duration: 0.6,
       ease: "power2.inOut",
     });
 
@@ -149,17 +149,17 @@ export default function InteractiveRoadmap() {
       opacity: 1,
       scale: 1,
       duration: 0.4,
-      stagger: 0.15,
+      stagger: 0.1,
       ease: "back.out(1.5)",
-    }, "-=0.8");
+    }, "-=0.4");
 
     tl.to(".day-card", {
       opacity: 1,
       y: 0,
       duration: 0.5,
-      stagger: 0.15,
+      stagger: 0.1,
       ease: "power2.out",
-    }, "-=0.8");
+    }, "-=0.4");
 
   }, { scope: containerRef, dependencies: [activePhaseIdx, isMobile, hasEntered] });
 
@@ -240,7 +240,7 @@ export default function InteractiveRoadmap() {
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 60 }}>
           <h2 className="display-text" style={{ fontSize: "clamp(3rem, 10vw, 5rem)", lineHeight: 1 }}>
-            06 <span className="accent-yellow">ROADMAP</span>
+            YOUR <span className="accent-yellow">5-PHASE</span> JOURNEY
           </h2>
         </div>
 
@@ -267,9 +267,10 @@ export default function InteractiveRoadmap() {
                   if (!isActive) e.currentTarget.style.boxShadow = "none";
                 }}
                 style={{
-                  background: isActive ? "var(--accent-primary)" : "var(--surface-glass)",
-                  border: `1px solid ${isActive ? "var(--accent-primary)" : "var(--border-strong)"}`,
-                  color: isActive ? "var(--bg-primary)" : "var(--text-secondary)",
+                  background: isActive ? "rgba(255, 255, 255, 0.05)" : "transparent",
+                  border: `1px solid ${isActive ? "rgba(255, 255, 255, 0.1)" : "transparent"}`,
+                  color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
+                  opacity: isActive ? 1 : 0.4,
                   fontFamily: "var(--font-mono)",
                   fontSize: isMobile ? 12 : 14,
                   fontWeight: isActive ? 700 : 500,
@@ -279,8 +280,7 @@ export default function InteractiveRoadmap() {
                   borderRadius: "var(--radius-full)",
                   cursor: "pointer",
                   transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-                  boxShadow: isActive ? "0 10px 30px var(--border-strong)" : "none",
-                  backdropFilter: "blur(8px)",
+                  boxShadow: "none",
                 }}
               >
                 {isMobile ? `P${phase.id}` : phase.tag}
@@ -318,6 +318,8 @@ export default function InteractiveRoadmap() {
                 height: "100%",
                 pointerEvents: "none",
                 zIndex: 1,
+                opacity: 0.1,
+                filter: "blur(2px)",
               }}
               preserveAspectRatio="none"
             >
@@ -328,13 +330,27 @@ export default function InteractiveRoadmap() {
                 stroke="var(--border-strong)"
                 strokeWidth="2"
               />
+            </svg>
+
+            {/* Active SVG Line Canvas */}
+            <svg
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                pointerEvents: "none",
+                zIndex: 2,
+              }}
+              preserveAspectRatio="none"
+            >
               <path
                 ref={pathRef}
                 d={generatePath()}
                 fill="none"
                 stroke="var(--accent-primary)"
                 strokeWidth="4"
-                style={{ filter: "drop-shadow(0 0 8px var(--accent-primary))" }}
               />
             </svg>
 
@@ -390,6 +406,7 @@ export default function InteractiveRoadmap() {
                   />
 
                   {/* Content Block */}
+                  <div style={{ position: "absolute", left: isMobile ? xPos + 12 : cardLeft + 120, top: isMobile ? yPos : cardTop > yPos ? yPos + 12 : cardTop + 80, width: isMobile ? 28 : 2, height: isMobile ? 2 : cardTop > yPos ? 28 : 80, background: "var(--border-strong)", zIndex: 4 }} />
                   <div
                     className="day-card"
                     style={{
@@ -398,13 +415,13 @@ export default function InteractiveRoadmap() {
                       top: cardTop,
                       width: isMobile ? "calc(100vw - 120px)" : 240,
                       maxWidth: 320,
-                      background: "var(--surface-glass)",
-                      backdropFilter: "blur(12px)",
-                      WebkitBackdropFilter: "blur(12px)",
-                      border: "1px solid var(--border-subtle)",
+                      background: "var(--bg-card)",
+                      backdropFilter: "none",
+                      WebkitBackdropFilter: "none",
+                      border: "1px solid rgba(255, 255, 255, 0.05)",
                       borderRadius: "var(--radius-xl)",
                       padding: "20px",
-                      boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+                      boxShadow: "0 15px 35px rgba(0,0,0,0.4)",
                       borderTop: `2px solid var(--accent-primary)`,
                       transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease",
                     }}

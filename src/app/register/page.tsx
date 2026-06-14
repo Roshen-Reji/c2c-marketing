@@ -313,6 +313,8 @@ export default function RegisterPage() {
         throw new Error(errorMessage);
       }
 
+      // Save registration state locally
+      localStorage.setItem('c2c_registered', 'true');
       setIsSuccess(true);
     } catch (err) {
       console.error("Registration error:", err);
@@ -426,7 +428,7 @@ export default function RegisterPage() {
                     type="button" 
                     className="btn btn-secondary w-full" 
                     onClick={handleGoogleSignIn}
-                    style={{ marginBottom: "var(--space-6)", display: "flex", justifyContent: "center", alignItems: "center", gap: "10px" }}
+                    style={{ marginBottom: "var(--space-4)", display: "flex", justifyContent: "center", alignItems: "center", gap: "10px" }}
                   >
                     <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -437,7 +439,7 @@ export default function RegisterPage() {
                     Continue with Google
                   </button>
 
-                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: 'var(--space-6)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: 'var(--space-4)' }}>
                     <div style={{ flex: 1, height: '1px', background: 'var(--border-subtle)' }}></div>
                     <span style={{ padding: '0 10px', color: 'var(--text-muted)', fontSize: 'var(--text-xs)' }}>OR REGISTER WITH EMAIL</span>
                     <div style={{ flex: 1, height: '1px', background: 'var(--border-subtle)' }}></div>
@@ -451,7 +453,7 @@ export default function RegisterPage() {
                   border: '1px solid var(--border-default)',
                   padding: 'var(--space-3)', 
                   borderRadius: 'var(--radius-md)',
-                  marginBottom: 'var(--space-6)',
+                  marginBottom: 'var(--space-4)',
                   display: 'flex',
                   alignItems: 'center',
                   gap: 'var(--space-3)'
@@ -619,7 +621,7 @@ export default function RegisterPage() {
               )}
 
               <div className="form-actions">
-                <button className="btn btn-primary btn-large" onClick={() => goToStep(2)} id="step1-next-btn">
+                <button type="button" className="btn btn-primary btn-large" onClick={() => goToStep(2)} id="step1-next-btn">
                   Continue to Payment →
                 </button>
               </div>
@@ -658,7 +660,6 @@ export default function RegisterPage() {
 
               <div
                 className={`screenshot-upload ${screenshot ? "has-file" : ""}`}
-                onClick={() => fileInputRef.current?.click()}
                 id="screenshot-upload-area"
               >
                 <input
@@ -700,10 +701,10 @@ export default function RegisterPage() {
               )}
 
               <div className="form-actions">
-                <button className="btn btn-secondary btn-large" onClick={() => goToStep(1)} id="step2-back-btn">
+                <button type="button" className="btn btn-secondary btn-large" onClick={() => goToStep(1)} id="step2-back-btn">
                   ← Back
                 </button>
-                <button className="btn btn-primary btn-large" onClick={() => goToStep(3)} id="step2-next-btn">
+                <button type="button" className="btn btn-primary btn-large" onClick={() => goToStep(3)} id="step2-next-btn">
                   Review →
                 </button>
               </div>
@@ -779,10 +780,11 @@ export default function RegisterPage() {
               )}
 
               <div className="form-actions">
-                <button className="btn btn-secondary btn-large" onClick={() => goToStep(2)} id="step3-back-btn">
+                <button type="button" className="btn btn-secondary btn-large" onClick={() => goToStep(2)} id="step3-back-btn">
                   ← Back
                 </button>
                 <button
+                  type="button"
                   className="btn btn-primary btn-large"
                   onClick={handleSubmit}
                   disabled={isSubmitting}
