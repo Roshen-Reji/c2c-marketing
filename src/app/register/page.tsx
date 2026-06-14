@@ -64,6 +64,72 @@ function validateStep1(data: FormData): FormErrors {
   return errors;
 }
 
+/* ===== Image Compression ===== */
+/**
+ * Compress an image file using the Canvas API.
+ * Resizes to maxDimension and converts to JPEG at the given quality.
+ * This keeps uploads well under Vercel's 4.5MB body limit.
+ */
+function compressImage(file: File, maxDimension = 1200, quality = 0.6): Promise<File> {
+  return new Promise((resolve, reject) => {
+    // If already small enough (<1MB), skip compression
+    if (file.size < 1024 * 1024) {
+      resolve(file);
+      return;
+    }
+
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      try {
+        let { width, height } = img;
+        
+        // Scale down if either dimension exceeds max
+        if (width > maxDimension || height > maxDimension) {
+          const ratio = Math.min(maxDimension / width, maxDimension / height);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          resolve(file); // fallback: send original
+          return;
+        }
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              resolve(file); // fallback
+              return;
+            }
+            const compressed = new File(
+              [blob],
+              file.name.replace(/\.\w+$/, ".jpg"),
+              { type: "image/jpeg" }
+            );
+            resolve(compressed);
+          },
+          "image/jpeg",
+          quality
+        );
+      } catch {
+        resolve(file); // fallback on any error
+      }
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Could not load image for compression"));
+    };
+    img.src = url;
+  });
+}
+
 /* ===== Component ===== */
 export default function RegisterPage() {
   const [step, setStep] = useState(1);
@@ -176,43 +242,41 @@ export default function RegisterPage() {
           submitData.append("googleIdToken", await currentUser.getIdToken());
         }
       }
+      // Upload screenshot: compress client-side then send through server
+      let screenshotUrl = "";
       if (screenshot) {
-        // Vercel limit is 4.5MB. Compress images larger than 1.5MB.
-        if (screenshot.size > 1.5 * 1024 * 1024 && screenshot.type.startsWith("image/")) {
-          try {
-            const compressedBlob = await new Promise<Blob>((resolve, reject) => {
-              const img = new Image();
-              img.onload = () => {
-                const canvas = document.createElement("canvas");
-                let { width, height } = img;
-                const maxDim = 1200;
-                
-                if (width > height && width > maxDim) {
-                  height = Math.round(height * (maxDim / width));
-                  width = maxDim;
-                } else if (height >= width && height > maxDim) {
-                  width = Math.round(width * (maxDim / height));
-                  height = maxDim;
-                }
-                
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext("2d");
-                ctx?.drawImage(img, 0, 0, width, height);
-                canvas.toBlob((b) => b ? resolve(b) : reject(), "image/jpeg", 0.7);
-              };
-              img.onerror = reject;
-              img.src = URL.createObjectURL(screenshot);
-            });
-            submitData.append("screenshot", compressedBlob, "screenshot.jpg");
-          } catch (compressErr) {
-            console.warn("Image compression failed, using original file", compressErr);
-            submitData.append("screenshot", screenshot);
+        try {
+          // Compress image client-side to stay under Vercel's 4.5MB body limit
+          const compressed = await compressImage(screenshot, 1200, 0.6);
+          
+          // Upload compressed image to our server API which proxies to Google Drive
+          const uploadForm = new FormData();
+          uploadForm.append("file", compressed, screenshot.name);
+          uploadForm.append("email", formData.email.trim().toLowerCase());
+
+          const uploadRes = await fetch("/api/upload-url", {
+            method: "POST",
+            body: uploadForm,
+          });
+
+          if (!uploadRes.ok) {
+            const errData = await uploadRes.json().catch(() => ({}));
+            throw new Error(errData.error || "Failed to upload screenshot");
           }
-        } else {
-          submitData.append("screenshot", screenshot);
+
+          const uploadData = await uploadRes.json();
+          screenshotUrl = uploadData.url || "";
+        } catch (uploadErr) {
+          console.error("Screenshot upload failed:", uploadErr);
+          const msg = uploadErr instanceof Error ? uploadErr.message : "Unknown upload error";
+          throw new Error(
+            `Could not upload payment screenshot: ${msg}`
+          );
         }
       }
+
+      // 3. Send registration data (text only — no file) to register API
+      submitData.append("screenshotUrl", screenshotUrl);
 
       const res = await fetch("/api/register", {
         method: "POST",

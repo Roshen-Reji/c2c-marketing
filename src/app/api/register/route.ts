@@ -17,7 +17,9 @@ export async function POST(request: NextRequest) {
     const password = formData.get("password") as string;
     const googleUid = formData.get("googleUid") as string;
     const googleIdToken = formData.get("googleIdToken") as string;
-    const screenshot = formData.get("screenshot") as File | null;
+    // Screenshot is uploaded directly to Google Drive by the browser.
+    // We only receive the Drive URL here.
+    const screenshotUrl = (formData.get("screenshotUrl") as string) || "";
 
     // Validate required fields
     if (!fullName || !phone || !batch || !year || !email) {
@@ -43,25 +45,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    let screenshotUrl = "";
     const timestamp = new Date().toISOString();
-
-    // Try to upload screenshot to Google Drive
-    if (screenshot) {
-      try {
-        const { findOrCreateFolder, uploadFileToDrive } = await import("@/lib/google-drive");
-        const userFolderId = await findOrCreateFolder(email.toLowerCase().trim());
-        const fileName = `payment_screenshot_${Date.now()}.${screenshot.name.split(".").pop()}`;
-        
-        const buffer = Buffer.from(await screenshot.arrayBuffer());
-        const driveFile = await uploadFileToDrive(buffer, fileName, screenshot.type, userFolderId);
-        
-        screenshotUrl = driveFile.webViewLink;
-      } catch (driveErr) {
-        console.warn("Google Drive upload failed (credentials may not be configured):", driveErr);
-        screenshotUrl = "[Screenshot uploaded - storage not configured]";
-      }
-    }
 
     // Try to create Firebase Auth user
     let userId = googleUid;
