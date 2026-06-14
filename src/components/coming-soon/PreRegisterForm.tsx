@@ -17,7 +17,7 @@ export default function PreRegisterForm() {
     setMessage("");
 
     try {
-      const res = await fetch("/api/pre-register", {
+      const res = await fetch("/C2C/api/pre-register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, phone }),
