@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  basePath: '/c2c',
+  basePath: '/',
 
   serverExternalPackages: ["firebase-admin", "jose", "jwks-rsa"],
 };
