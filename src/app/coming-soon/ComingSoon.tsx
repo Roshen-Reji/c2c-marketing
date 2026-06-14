@@ -131,7 +131,7 @@ export default function ComingSoonPage() {
               <span className="cs-footer-label">For Enquiries</span>
               <div className="cs-footer-links">
                 <span className="cs-footer-text">
-                  +91 7592 815 138 <br />
+                  +91 75928 15138 <br />
                   <span className="cs-contact-name">(Arya C Anish)</span>
                 </span>
                 <span className="cs-footer-text" style={{ marginTop: '0.25rem' }}>
@@ -139,7 +139,7 @@ export default function ComingSoonPage() {
                   <span className="cs-contact-name">(Nidha Najeeb)</span>
                 </span>
                 <span className="cs-footer-text" style={{ marginTop: '0.25rem' }}>
-                  +91 884 827 5740 <br />
+                  +91 88482 75740 <br />
                   <span className="cs-contact-name">(A Ansila Safrin)</span>
                 </span>
               </div>

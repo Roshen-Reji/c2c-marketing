@@ -272,7 +272,7 @@ export default function RegisterPage() {
           uploadForm.append("file", compressed, screenshot.name);
           uploadForm.append("email", formData.email.trim().toLowerCase());
 
-          const uploadRes = await fetch("/api/upload-url", {
+          const uploadRes = await fetch("/C2C/api/upload-url", {
             method: "POST",
             body: uploadForm,
           });
@@ -296,7 +296,7 @@ export default function RegisterPage() {
       // 3. Send registration data (text only — no file) to register API
       submitData.append("screenshotUrl", screenshotUrl);
 
-      const res = await fetch("/api/register", {
+      const res = await fetch("/C2C/api/register", {
         method: "POST",
         body: submitData,
       });
