@@ -42,6 +42,10 @@ const adminApp =
 
 export const adminAuth = getAuth(adminApp);
 export const adminDb = getFirestore(adminApp);
-adminDb.settings({ ignoreUndefinedProperties: true });
+try {
+  adminDb.settings({ ignoreUndefinedProperties: true });
+} catch {
+  // Settings already applied on a previous invocation (warm start)
+}
 export const adminStorage = getStorage(adminApp);
 export default adminApp;
