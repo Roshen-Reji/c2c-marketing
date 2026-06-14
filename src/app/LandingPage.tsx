@@ -204,7 +204,7 @@ function HeroSection() {
         <div className="hero-right">
           <div className="hero-info-card">
             <h2 className="hero-info-title">
-              Your Bridge to the <span className="accent-green">Industry</span>
+              Your Bridge to the <span className="accent-blue">Industry</span>
             </h2>
             <p className="hero-info-text">
               A comprehensive multi-session online program organised by the Women In Engineering Branch of IEEE CEK designed specifically for 2nd-year,
@@ -268,6 +268,7 @@ function MarqueeSection() {
 
 function FeesSection() {
   const ref = useScrollReveal();
+  const IS_EARLY_BIRD = true; // Toggle for early bird pricing
 
   return (
     <section className="fees-section" id="fees" ref={ref}>
@@ -278,15 +279,34 @@ function FeesSection() {
             className="section-title"
             style={{ textAlign: "center", maxWidth: "900px", margin: "0 auto var(--space-6)" }}
           >
-            One <span className="accent-purple">Program</span>, Complete <span className="accent-yellow">Transformation</span>
+            One <span className="accent-blue">Program</span>, Complete <span className="accent-blue">Transformation</span>
           </h2>
         </div>
 
         <div className="fees-card animate-reveal">
           <span className="badge badge-green fees-badge">Limited Seats</span>
-          <div className="fees-price">
-            ₹300
-            <div className="fees-price-sub">One-time payment • Full access</div>
+          <div className="fees-price" style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+            {IS_EARLY_BIRD ? (
+              <>
+                <div style={{ fontSize: "1rem", textDecoration: "line-through", color: "var(--text-muted)", marginBottom: "0.5rem", display: "flex", justifyContent: "center", gap: "1rem" }}>
+                  <span>Non-IEEE: ₹499</span>
+                  <span>IEEE: ₹399</span>
+                </div>
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "baseline", gap: "0.5rem" }}>
+                  <span>₹399 <span style={{ fontSize: "1rem", color: "var(--text-secondary)" }}>(Non-IEEE)</span></span>
+                  <span style={{ fontSize: "2rem", color: "var(--text-muted)", margin: "0 0.5rem" }}>/</span>
+                  <span>₹299 <span style={{ fontSize: "1rem", color: "var(--text-secondary)" }}>(IEEE)</span></span>
+                </div>
+                <div style={{ fontSize: "0.875rem", color: "var(--accent-blue)", fontWeight: "bold", marginTop: "0.5rem" }}>Early Bird Pricing Active!</div>
+              </>
+            ) : (
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "baseline", gap: "0.5rem" }}>
+                <span>₹499 <span style={{ fontSize: "1rem", color: "var(--text-secondary)" }}>(Non-IEEE)</span></span>
+                <span style={{ fontSize: "2rem", color: "var(--text-muted)", margin: "0 0.5rem" }}>/</span>
+                <span>₹399 <span style={{ fontSize: "1rem", color: "var(--text-secondary)" }}>(IEEE)</span></span>
+              </div>
+            )}
+            <div className="fees-price-sub" style={{ marginTop: "1rem" }}>One-time payment • Full access</div>
           </div>
           <p className="fees-description">
             Get complete access to all 5 phases, live sessions, hands-on tasks,
@@ -300,6 +320,14 @@ function FeesSection() {
                 {feature}
               </li>
             ))}
+            <li>
+              <span className="fees-check">✓</span>
+              <strong>100% REFUND</strong>
+            </li>
+            <li>
+              <span className="fees-check">✓</span>
+              <strong>100% SCHOLARSHIP AVAILABLE*</strong>
+            </li>
           </ul>
           <Link href="/register" className="btn btn-primary btn-large w-full" id="fees-register-btn">
             Register Now
@@ -342,7 +370,7 @@ function Footer() {
         <div className="footer-motto-wrapper">
           <div className="footer-motto">
             <span className="footer-dot">•</span>
-            SMALL STEPS PAVE THE WAY
+            SMALL <span className="accent-blue">STEPS</span> PAVE THE WAY
             <span className="footer-dot">•</span>
           </div>
         </div>
@@ -371,12 +399,12 @@ function Footer() {
             <span className="footer-label">For Enquiries</span>
             <div className="footer-links">
               <span className="footer-text">
-                +91 123 456 7890 <br/>
-                <span className="footer-contact-name">(John Doe)</span>
+                +91 7592 815 138 <br/>
+                <span className="footer-contact-name">(Arya C Anish)</span>
               </span>
               <span className="footer-text" style={{ marginTop: '0.25rem' }}>
-                +91 987 654 3210 <br/>
-                <span className="footer-contact-name">(Jane Smith)</span>
+                +91 94000 78625 <br/>
+                <span className="footer-contact-name">(Malavika C Biju)</span>
               </span>
             </div>
           </div>

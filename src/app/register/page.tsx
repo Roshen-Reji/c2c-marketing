@@ -21,6 +21,8 @@ interface FormData {
   email: string;
   password?: string;
   googleUid?: string;
+  isIeeeMember: boolean;
+  ieeeNumber: string;
 }
 
 interface FormErrors {
@@ -32,6 +34,7 @@ interface FormErrors {
   password?: string;
   googleUid?: string;
   screenshot?: string;
+  ieeeNumber?: string;
 }
 
 const BATCHES = ["CSE", "ECE", "EEE", "CE", "EI"];
@@ -54,6 +57,10 @@ function validateStep1(data: FormData): FormErrors {
   if (!data.email.trim()) errors.email = "Email is required";
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email))
     errors.email = "Please enter a valid email";
+
+  if (data.isIeeeMember && !data.ieeeNumber.trim()) {
+    errors.ieeeNumber = "IEEE number is required for members";
+  }
 
   if (!data.googleUid) {
     if (!data.password) errors.password = "Password is required";
@@ -140,6 +147,8 @@ export default function RegisterPage() {
     year: "",
     email: "",
     password: "",
+    isIeeeMember: false,
+    ieeeNumber: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [screenshot, setScreenshot] = useState<File | null>(null);
@@ -148,6 +157,11 @@ export default function RegisterPage() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isClosed, setIsClosed] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const IS_EARLY_BIRD = true;
+  const amountToPay = IS_EARLY_BIRD
+    ? (formData.isIeeeMember ? 299 : 399)
+    : (formData.isIeeeMember ? 399 : 499);
 
   useEffect(() => {
     const endStr = process.env.NEXT_PUBLIC_REG_END_DATE;
@@ -231,6 +245,9 @@ export default function RegisterPage() {
       submitData.append("batch", formData.batch);
       submitData.append("year", formData.year);
       submitData.append("email", formData.email.trim().toLowerCase());
+      submitData.append("isIeeeMember", formData.isIeeeMember ? "true" : "false");
+      submitData.append("ieeeNumber", formData.ieeeNumber.trim());
+      submitData.append("amountToPay", amountToPay.toString());
       
       if (formData.password && !formData.googleUid) {
         submitData.append("password", formData.password);
@@ -290,7 +307,7 @@ export default function RegisterPage() {
           data = await res.json();
           errorMessage = data.error || errorMessage;
         } catch (parseErr) {
-          errorMessage = `Server error (${res.status}: ${res.statusText}). If you attached a large image, it might be too big.`;
+          errorMessage = `Server error (${res.status}). Please try again or contact support.`;
         }
         throw new Error(errorMessage);
       }
@@ -526,6 +543,36 @@ export default function RegisterPage() {
                 </div>
               </div>
 
+              <div className="input-group checkbox-group" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: 'var(--space-4)' }}>
+                <input
+                  id="isIeee"
+                  type="checkbox"
+                  checked={formData.isIeeeMember}
+                  onChange={(e) => updateField("isIeeeMember", e.target.checked as any)}
+                  style={{ width: '1.25rem', height: '1.25rem', cursor: 'pointer' }}
+                />
+                <label className="input-label" htmlFor="isIeee" style={{ margin: 0, cursor: 'pointer' }}>
+                  I am an IEEE Member
+                </label>
+              </div>
+
+              {formData.isIeeeMember && (
+                <div className="input-group">
+                  <label className="input-label" htmlFor="ieeeNumber">
+                    IEEE Membership Number <span style={{ color: "var(--accent-tertiary)" }}>*</span>
+                  </label>
+                  <input
+                    id="ieeeNumber"
+                    type="text"
+                    className="input"
+                    placeholder="Enter your IEEE number"
+                    value={formData.ieeeNumber}
+                    onChange={(e) => updateField("ieeeNumber", e.target.value)}
+                  />
+                  {errors.ieeeNumber && <div className="form-error">{errors.ieeeNumber}</div>}
+                </div>
+              )}
+
               <div className="input-group">
                 <label className="input-label" htmlFor="email">
                   Email ID <span style={{ color: "var(--accent-tertiary)" }}>*</span>
@@ -597,7 +644,7 @@ export default function RegisterPage() {
                   marginBottom: "var(--space-6)",
                 }}
               >
-                Pay ₹499 via UPI and upload a screenshot of the payment
+                Pay ₹{amountToPay} via UPI and upload a screenshot of the payment
               </p>
 
               <div className="qr-container">
@@ -699,6 +746,14 @@ export default function RegisterPage() {
               <div className="confirm-row">
                 <span className="confirm-label">Year</span>
                 <span className="confirm-value">{formData.year}</span>
+              </div>
+              <div className="confirm-row">
+                <span className="confirm-label">IEEE Member</span>
+                <span className="confirm-value">{formData.isIeeeMember ? `Yes (${formData.ieeeNumber})` : "No"}</span>
+              </div>
+              <div className="confirm-row">
+                <span className="confirm-label">Amount to Pay</span>
+                <span className="confirm-value">₹{amountToPay}</span>
               </div>
               <div className="confirm-row">
                 <span className="confirm-label">Email</span>

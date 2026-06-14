@@ -7,9 +7,9 @@
   --bg: #0b0b0b;
   --grid-line: rgba(255, 255, 255, 0.04);
   --grid-dot: rgba(255, 255, 255, 0.08);
-  --accent: #3C6255;
-  --accent-light: #A6BB8D;
-  --accent-primary: #89D7B7; /* matching the image mint green */
+  --accent: #0044AA;
+  --accent-light: #66A3FF;
+  --accent-primary: #0066FF; /* matching the image blue */
   --cream: #EAE7B1;
   --white: #ffffff;
 
@@ -179,7 +179,7 @@
   animation: fade-in 1s ease-out 0.8s forwards;
 }
 
-.text-mint {
+.text-blue {
   color: var(--accent-primary);
   font-weight: 700;
 }

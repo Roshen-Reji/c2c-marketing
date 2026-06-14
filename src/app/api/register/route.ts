@@ -17,6 +17,9 @@ export async function POST(request: NextRequest) {
     const password = formData.get("password") as string;
     const googleUid = formData.get("googleUid") as string;
     const googleIdToken = formData.get("googleIdToken") as string;
+    const isIeeeMember = formData.get("isIeeeMember") === "true";
+    const ieeeNumber = (formData.get("ieeeNumber") as string) || "";
+    const amountToPay = (formData.get("amountToPay") as string) || "";
     // Screenshot is uploaded directly to Google Drive by the browser.
     // We only receive the Drive URL here.
     const screenshotUrl = (formData.get("screenshotUrl") as string) || "";
@@ -111,7 +114,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Could not save your registration." }, { status: 500 });
     }
 
-    void appendSheetRecord("registrations", [
+    try {
+      await appendSheetRecord("registrations", [
         userId,
         fullName.trim(),
         email.toLowerCase().trim(),
@@ -121,7 +125,13 @@ export async function POST(request: NextRequest) {
         screenshotUrl,
         timestamp,
         "pending",
-      ]).catch((sheetsErr) => console.warn("Google Sheets registration sync failed:", sheetsErr));
+        isIeeeMember ? "Yes" : "No",
+        ieeeNumber || "N/A",
+        amountToPay || "N/A",
+      ]);
+    } catch (sheetsErr) {
+      console.warn("Google Sheets registration sync failed:", sheetsErr);
+    }
 
     return NextResponse.json({
       success: true,

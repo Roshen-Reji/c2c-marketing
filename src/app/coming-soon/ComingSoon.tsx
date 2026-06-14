@@ -76,7 +76,7 @@ export default function ComingSoonPage() {
 
           <div className="cs-sub-quote">
             WHERE LEARNING ENDS, <br />
-            THE <span className="text-mint">REAL JOURNEY</span> BEGINS.
+            THE <span className="text-blue">REAL JOURNEY</span> BEGINS.
           </div>
         </header>
 
@@ -108,7 +108,7 @@ export default function ComingSoonPage() {
           <div className="cs-minimal-footer">
             <div className="cs-footer-motto">
               <span className="cs-dot">•</span>
-              SMALL STEPS PAVE THE WAY
+              SMALL <span className="text-blue">STEPS</span> PAVE THE WAY
               <span className="cs-dot">•</span>
             </div>
           </div>
