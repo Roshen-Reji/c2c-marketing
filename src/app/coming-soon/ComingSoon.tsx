@@ -99,10 +99,13 @@ export default function ComingSoonPage() {
           </div>
         </div>
 
+        <div style={{ width: '100%', height: '1px', background: 'var(--grid-line)', margin: '4rem 0' }} />
+
         <div className="cs-register-wrapper">
           <PreRegisterForm />
         </div>
 
+        <div style={{ width: '100%', height: '1px', background: 'var(--grid-line)', margin: '4rem 0 0 0' }} />
 
         <footer className="cs-footer">
           <div className="cs-minimal-footer">
@@ -136,12 +139,11 @@ export default function ComingSoonPage() {
                 </span>
               </div>
             </div>
+          </div>
 
-            <div className="cs-footer-right">
-              <img src="/ieee-sb-cek.png" alt="IEEE CE Kidangoor Student Branch" className="cs-footer-logo" />
-              <img src="/ieee-logo.png" alt="IEEE" className="cs-footer-logo" />
-              <img src="/ieee-wie.png" alt="IEEE WIE" className="cs-footer-logo" />
-            </div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', flexWrap: 'wrap', padding: '2rem 0 1rem 0', borderTop: '1px solid var(--grid-line)' }}>
+            <img src="/ieee-sb-cek.png" alt="IEEE CE Kidangoor Student Branch" className="cs-footer-logo" />
+            <img src="/ieee-wie.png" alt="IEEE WIE" className="cs-footer-logo" />
           </div>
         </footer>
       </div>
