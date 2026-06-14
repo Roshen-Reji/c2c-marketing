@@ -15,6 +15,7 @@ import "./register.css";
 /* ===== Types ===== */
 interface FormData {
   fullName: string;
+  phone: string;
   batch: string;
   year: string;
   email: string;
@@ -24,6 +25,7 @@ interface FormData {
 
 interface FormErrors {
   fullName?: string;
+  phone?: string;
   batch?: string;
   year?: string;
   email?: string;
@@ -41,6 +43,10 @@ function validateStep1(data: FormData): FormErrors {
   if (!data.fullName.trim()) errors.fullName = "Full name is required";
   else if (data.fullName.trim().length < 3)
     errors.fullName = "Name must be at least 3 characters";
+
+  if (!data.phone.trim()) errors.phone = "Phone number is required";
+  else if (!/^\d{10}$/.test(data.phone.replace(/\D/g, '')))
+    errors.phone = "Please enter a valid 10-digit phone number";
   
   if (!data.batch) errors.batch = "Please select your branch";
   if (!data.year) errors.year = "Please select your year";
@@ -58,11 +64,78 @@ function validateStep1(data: FormData): FormErrors {
   return errors;
 }
 
+/* ===== Image Compression ===== */
+/**
+ * Compress an image file using the Canvas API.
+ * Resizes to maxDimension and converts to JPEG at the given quality.
+ * This keeps uploads well under Vercel's 4.5MB body limit.
+ */
+function compressImage(file: File, maxDimension = 1200, quality = 0.6): Promise<File> {
+  return new Promise((resolve, reject) => {
+    // If already small enough (<1MB), skip compression
+    if (file.size < 1024 * 1024) {
+      resolve(file);
+      return;
+    }
+
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      try {
+        let { width, height } = img;
+        
+        // Scale down if either dimension exceeds max
+        if (width > maxDimension || height > maxDimension) {
+          const ratio = Math.min(maxDimension / width, maxDimension / height);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          resolve(file); // fallback: send original
+          return;
+        }
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              resolve(file); // fallback
+              return;
+            }
+            const compressed = new File(
+              [blob],
+              file.name.replace(/\.\w+$/, ".jpg"),
+              { type: "image/jpeg" }
+            );
+            resolve(compressed);
+          },
+          "image/jpeg",
+          quality
+        );
+      } catch {
+        resolve(file); // fallback on any error
+      }
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("Could not load image for compression"));
+    };
+    img.src = url;
+  });
+}
+
 /* ===== Component ===== */
 export default function RegisterPage() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
+    phone: "",
     batch: "",
     year: "",
     email: "",
@@ -154,6 +227,7 @@ export default function RegisterPage() {
       // Build FormData for server submission
       const submitData = new FormData();
       submitData.append("fullName", formData.fullName.trim());
+      submitData.append("phone", formData.phone.trim());
       submitData.append("batch", formData.batch);
       submitData.append("year", formData.year);
       submitData.append("email", formData.email.trim().toLowerCase());
@@ -168,9 +242,41 @@ export default function RegisterPage() {
           submitData.append("googleIdToken", await currentUser.getIdToken());
         }
       }
+      // Upload screenshot: compress client-side then send through server
+      let screenshotUrl = "";
       if (screenshot) {
-        submitData.append("screenshot", screenshot);
+        try {
+          // Compress image client-side to stay under Vercel's 4.5MB body limit
+          const compressed = await compressImage(screenshot, 1200, 0.6);
+          
+          // Upload compressed image to our server API which proxies to Google Drive
+          const uploadForm = new FormData();
+          uploadForm.append("file", compressed, screenshot.name);
+          uploadForm.append("email", formData.email.trim().toLowerCase());
+
+          const uploadRes = await fetch("/api/upload-url", {
+            method: "POST",
+            body: uploadForm,
+          });
+
+          if (!uploadRes.ok) {
+            const errData = await uploadRes.json().catch(() => ({}));
+            throw new Error(errData.error || "Failed to upload screenshot");
+          }
+
+          const uploadData = await uploadRes.json();
+          screenshotUrl = uploadData.url || "";
+        } catch (uploadErr) {
+          console.error("Screenshot upload failed:", uploadErr);
+          const msg = uploadErr instanceof Error ? uploadErr.message : "Unknown upload error";
+          throw new Error(
+            `Could not upload payment screenshot: ${msg}`
+          );
+        }
       }
+
+      // 3. Send registration data (text only — no file) to register API
+      submitData.append("screenshotUrl", screenshotUrl);
 
       const res = await fetch("/api/register", {
         method: "POST",
@@ -178,8 +284,15 @@ export default function RegisterPage() {
       });
 
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Registration failed");
+        let data;
+        let errorMessage = "Registration failed";
+        try {
+          data = await res.json();
+          errorMessage = data.error || errorMessage;
+        } catch (parseErr) {
+          errorMessage = `Server error (${res.status}: ${res.statusText}). If you attached a large image, it might be too big.`;
+        }
+        throw new Error(errorMessage);
       }
 
       setIsSuccess(true);
@@ -354,6 +467,21 @@ export default function RegisterPage() {
                   disabled={!!formData.googleUid}
                 />
                 {errors.fullName && <div className="form-error">{errors.fullName}</div>}
+              </div>
+
+              <div className="input-group">
+                <label className="input-label" htmlFor="phone">
+                  Phone Number <span style={{ color: "var(--accent-tertiary)" }}>*</span>
+                </label>
+                <input
+                  id="phone"
+                  type="tel"
+                  className="input"
+                  placeholder="Enter your 10-digit WhatsApp number"
+                  value={formData.phone}
+                  onChange={(e) => updateField("phone", e.target.value)}
+                />
+                {errors.phone && <div className="form-error">{errors.phone}</div>}
               </div>
 
               <div className="form-row">
@@ -559,6 +687,10 @@ export default function RegisterPage() {
               <div className="confirm-row">
                 <span className="confirm-label">Full Name</span>
                 <span className="confirm-value">{formData.fullName}</span>
+              </div>
+              <div className="confirm-row">
+                <span className="confirm-label">Phone</span>
+                <span className="confirm-value">{formData.phone}</span>
               </div>
               <div className="confirm-row">
                 <span className="confirm-label">Branch</span>
