@@ -35,6 +35,7 @@ interface FormErrors {
   googleUid?: string;
   screenshot?: string;
   ieeeNumber?: string;
+  isIeeeMember?: string;
 }
 
 const BATCHES = ["CSE", "ECE", "EEE", "CE", "EI"];
