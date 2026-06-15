@@ -306,7 +306,8 @@ function HeroSection() {
           </h1>
 
           <p className="hero-subtitle">
-            4-6 week online training program for B.Tech students
+            A multi-phase online placement readiness program to help B.Tech students,
+            to secure internships and job opportunities.
           </p>
 
           {/* Stats Bar — repositioned between subtitle and CTAs */}
@@ -317,12 +318,12 @@ function HeroSection() {
             </div>
             <div className="hero-stat-divider" />
             <div className="hero-stat-inline">
-              <span className="stat-number">9+</span>
-              <span className="stat-label">Sessions</span>
+              <span className="stat-number">8+</span>
+              <span className="stat-label"> Live Mentorship Sessions</span>
             </div>
             <div className="hero-stat-divider" />
             <div className="hero-stat-inline">
-              <span className="stat-number">20+</span>
+              <span className="stat-number">60+</span>
               <span className="stat-label">Days</span>
             </div>
           </div>
@@ -342,7 +343,7 @@ function HeroSection() {
         </div>
       </div>
       <ScrollIndicator />
-    </section>
+    </section >
   );
 }
 
@@ -356,26 +357,26 @@ function BridgeSection() {
           Your Bridge to the <span className="accent-blue">Industry</span>
         </h2>
         <p className="bridge-subtitle">
-          A comprehensive online program by IEEE CEK WIE designed for B.Tech students in CSE, ECE, EEE, CE & EL.
+          A comprehensive, multi-phase online placement readiness program by IEEE WIE SB CE Kidangoor in collaboration with IEEE SB CE Kidangoor, designed for B.Tech students.
         </p>
 
         <div className="bridge-features">
           <div className="bridge-feature-card">
             <div className="bridge-feature-icon"><SvgBook /></div>
-            <div className="bridge-feature-title">Structured Learning</div>
-            <div className="bridge-feature-desc">Basics to advanced, structured phase by phase to ensure comprehensive understanding.</div>
+            <div className="bridge-feature-title">End-to-End Placement Preparation</div>
+            <div className="bridge-feature-desc">Participants receive comprehensive training covering every stage of the recruitment process</div>
           </div>
-          
-          <div className="bridge-feature-card">
-            <div className="bridge-feature-icon"><SvgMic /></div>
-            <div className="bridge-feature-title">Mock Interviews</div>
-            <div className="bridge-feature-desc">Real-world simulations with experts to help you ace your technical and HR rounds.</div>
-          </div>
-          
+
           <div className="bridge-feature-card">
             <div className="bridge-feature-icon"><SvgUsers /></div>
-            <div className="bridge-feature-title">Professional Skills</div>
-            <div className="bridge-feature-desc">Master Group Discussions, resume building, and optimize your LinkedIn profile.</div>
+            <div className="bridge-feature-title">Learn Directly from Industry Professionals</div>
+            <div className="bridge-feature-desc">Gain practical insights from industry professionals ,to understand recruitment processes, employer expectations, career opportunities, and interview strategies.</div>
+          </div>
+
+          <div className="bridge-feature-card">
+            <div className="bridge-feature-icon"><SvgMic /></div>
+            <div className="bridge-feature-title">Performance Tracking & Recognition</div>
+            <div className="bridge-feature-desc">Regular assessments, leaderboards, and feedback help participants measure their progress, stay motivated, and continuously improve throughout the program.</div>
           </div>
         </div>
       </div>
@@ -449,6 +450,27 @@ function FooterCTA() {
             <div className="fees-tier-price" style={{ margin: 0 }}>
               ₹399
             </div>
+          </div>
+        </div>
+
+        <div className="animate-reveal" style={{ textAlign: "center", marginBottom: "var(--space-12)" }}>
+          <div style={{
+            display: "inline-flex",
+            flexDirection: "column",
+            gap: "12px",
+            background: "rgba(13, 0, 255, 0.19)",
+            border: "1px solid  rgba(13, 0, 255, 0.2)",
+            padding: "24px 48px",
+            borderRadius: "var(--radius-xl)",
+            boxShadow: "0 0 30px  rgba(13, 0, 255, 0.1)",
+            backdropFilter: "blur(10px)"
+          }}>
+            <h4 style={{ color: "#0065ff", margin: 0, fontSize: "1.25rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px", display: "flex", alignItems: "center", gap: "10px", justifyContent: "center" }}>
+              <SvgCheck /> 100% Refund
+            </h4>
+            <h4 style={{ color: "#0065ff", margin: 0, fontSize: "1.25rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px", display: "flex", alignItems: "center", gap: "10px", justifyContent: "center" }}>
+              <SvgCheck /> 100% Scholarship<br /> Available
+            </h4>
           </div>
         </div>
 

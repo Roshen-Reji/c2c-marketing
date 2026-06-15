@@ -10,10 +10,10 @@ if (typeof window !== "undefined") {
 }
 
 const PILLARS = [
-  { title: "Structured Learning", desc: "5-Phase training from basics to mock interviews" },
-  { title: "Aptitude & Core", desc: "Branch-specific technical and aptitude prep" },
-  { title: "Professional Skills", desc: "Communication, GDs, & LinkedIn optimization" },
-  { title: "Placement Ready", desc: "Mock interviews, resumes, & application strategies" },
+  { title: "Structured Learning with Continuous Evaluation" },
+  { title: "Interact with Working Professionals" },
+  { title: "Industry-Ready Skills & Confidence" },
+  { title: "Complete Placement Preparation" },
 ];
 
 
@@ -21,7 +21,6 @@ const PILLARS = [
 export default function CurriculumOrbit() {
   const containerRef = useRef<HTMLDivElement>(null);
   const orbitGroupRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -139,10 +138,9 @@ export default function CurriculumOrbit() {
                     boxShadow: "var(--shadow-md)"
                   }}
                 >
-                  <h4 style={{ fontFamily: "var(--font-heading)", fontSize: isMobile ? 14 : 20, color: "var(--accent-primary)", marginBottom: 8 }}>
+                  <h4 style={{ fontFamily: "var(--font-heading)", fontSize: isMobile ? 14 : 20, color: "var(--text-primary)", marginBottom: 8 }}>
                     {pillar.title}
                   </h4>
-                  {!isMobile && <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.5 }}>{pillar.desc}</p>}
                 </div>
               </div>
             );
@@ -151,7 +149,6 @@ export default function CurriculumOrbit() {
 
         {/* Center Logo */}
         <div
-          ref={logoRef}
           style={{
             position: "absolute",
             width: isMobile ? 120 : 180,
