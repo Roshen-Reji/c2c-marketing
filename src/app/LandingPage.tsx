@@ -19,18 +19,19 @@ const GlassCubeScene = dynamic(() => import("@/components/coming-soon/GlassCubeS
 
 
 const MARQUEE_ITEMS = [
-  "Resume Building",
-  "Aptitude Training",
-  "Technical Core",
-  "Mock Interviews",
-  "Professional Skills",
-  "LinkedIn Optimization",
-  "Group Discussions",
-  "Domain Selection",
-  "Communication",
-  "Placement Prep",
-  "Core Subjects",
-  "Self Introduction",
+  "Career Compass",
+  "Explore",
+  "Decide",
+  "Grow",
+  "Think Faster",
+  "Solve Better",
+  "Master Core Concepts",
+  "Speak",
+  "Connect",
+  "Succeed",
+  "Master Technical Interviews",
+  "Career Launch",
+  "Skill Up",
 ];
 
 const FEES_FEATURES = [
@@ -306,8 +307,7 @@ function HeroSection() {
           </h1>
 
           <p className="hero-subtitle">
-            A multi-phase online placement readiness program to help B.Tech students,
-            to secure internships and job opportunities.
+            A multi-phase online placement readiness program for B-Tech students to secure internships and job opportunities.
           </p>
 
           {/* Stats Bar — repositioned between subtitle and CTAs */}
@@ -357,7 +357,7 @@ function BridgeSection() {
           Your Bridge to the <span className="accent-blue">Industry</span>
         </h2>
         <p className="bridge-subtitle">
-          A comprehensive, multi-phase online placement readiness program by IEEE WIE SB CE Kidangoor in collaboration with IEEE SB CE Kidangoor, designed for B.Tech students.
+          A comprehensive, multi-phase online placement readiness program by IEEE WIE SB CE Kidangoor in collaboration with IEEE SB CE Kidangoor, designed for B-Tech students.
         </p>
 
         <div className="bridge-features">
@@ -369,7 +369,7 @@ function BridgeSection() {
 
           <div className="bridge-feature-card">
             <div className="bridge-feature-icon"><SvgUsers /></div>
-            <div className="bridge-feature-title">Learn Directly from Industry Professionals</div>
+            <div className="bridge-feature-title">Interact Directly with Industry Professionals</div>
             <div className="bridge-feature-desc">Gain practical insights from industry professionals ,to understand recruitment processes, employer expectations, career opportunities, and interview strategies.</div>
           </div>
 
