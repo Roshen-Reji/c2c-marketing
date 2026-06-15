@@ -514,37 +514,6 @@ function FooterCTA() {
   );
 }
 
-/* ===== Sticky CTA Bar ===== */
-function StickyCTABar() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      // Show after scrolling past hero (roughly 100vh)
-      const heroEl = document.getElementById("hero");
-      if (heroEl) {
-        const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
-        setVisible(window.scrollY > heroBottom - 100);
-      } else {
-        setVisible(window.scrollY > window.innerHeight * 0.8);
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <div className={`sticky-cta-bar ${visible ? "visible" : ""}`} id="sticky-cta">
-      <span className="sticky-cta-text">Ready to transform your career?</span>
-      <Link href="/register" className="btn btn-primary" id="sticky-register-btn">
-        Register Now
-      </Link>
-    </div>
-  );
-}
-
-
 /* ===== Main Page ===== */
 export default function LandingPage() {
   /* Global scroll reveal observer */
@@ -578,12 +547,11 @@ export default function LandingPage() {
       <div className="section-divider" />
       <div id="phases"><InteractiveRoadmap /></div>
       <div className="section-divider" />
-      <div id="features"><CurriculumOrbit /></div>
+      <CurriculumOrbit />
       <div className="section-divider" />
       <FeesSection />
       <FooterCTA />
       <Footer />
-      <StickyCTABar />
     </main>
   );
 }

@@ -89,20 +89,21 @@ export default function CurriculumOrbit() {
         pin: true,
         scrub: 1.5,
         start: "top top",
-        end: "+=2500",
+        end: "+=1500",
+        anticipatePin: 1,
       }
     });
 
     // 1. Orbit animation
     tl.to(orbitGroupRef.current, {
-      rotation: 360,
+      rotation: 220,
       ease: "none",
       duration: 2,
     }, 0);
 
     // Keep the cards upright
     tl.to(".orbit-card-inner", {
-      rotation: -360,
+      rotation: -220,
       ease: "none",
       duration: 2,
     }, 0);
@@ -146,10 +147,11 @@ export default function CurriculumOrbit() {
 
   return (
     <section
+      id="features"
       ref={containerRef}
       style={{
         height: "100vh",
-        width: "100vw",
+        width: "100%",
         background: "var(--bg-secondary)",
         position: "relative",
         overflow: "hidden",
@@ -255,7 +257,7 @@ export default function CurriculumOrbit() {
             position: "absolute",
             width: "100%",
             maxWidth: 1400,
-            padding: "0 24px",
+            padding: "0 12px",
             zIndex: 10,
           }}
         >
@@ -281,7 +283,7 @@ export default function CurriculumOrbit() {
                   WebkitBackdropFilter: "none",
                   border: "1px solid var(--border-strong)",
                   borderRadius: "var(--radius-2xl)",
-                  padding: "32px 24px",
+                  padding: "24px 16px",
                   display: "flex",
                   flexDirection: "column",
                   transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, box-shadow 0.4s",
