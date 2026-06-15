@@ -98,6 +98,15 @@ export default function InteractiveRoadmap() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // When phase changes, the DOM height changes. We MUST refresh ScrollTrigger 
+  // so the pinned CurriculumOrbit component below it updates its start/end markers.
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [activePhaseIdx, isMobile]);
+
   const activePhase = PHASES[activePhaseIdx];
   const numDays = activePhase.days.length;
 
@@ -308,7 +317,7 @@ export default function InteractiveRoadmap() {
         </div>
 
         {/* The Timeline Canvas */}
-        <div style={{ width: "100%", overflowX: isMobile ? "hidden" : "auto", overflowY: "hidden", paddingBottom: 40, WebkitOverflowScrolling: "touch" }}>
+        <div style={{ width: "100%", overflowX: isMobile ? "visible" : "auto", overflowY: "visible", paddingBottom: 40, WebkitOverflowScrolling: "touch" }}>
           <div
             ref={timelineCanvasRef}
             style={{
@@ -424,7 +433,7 @@ export default function InteractiveRoadmap() {
                       position: "absolute",
                       left: cardLeft,
                       top: cardTop,
-                      width: isMobile ? "calc(100vw - 120px)" : 240,
+                      width: isMobile ? "calc(100vw - 130px)" : 240,
                       maxWidth: 320,
                       background: "var(--bg-card)",
                       backdropFilter: "none",
@@ -453,9 +462,8 @@ export default function InteractiveRoadmap() {
                     ) : (
                       <span className="day-type-badge badge-session">Session</span>
                     )}
-                    <div className="mono-text" style={{ fontSize: 12, color: "var(--accent-primary)", marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <span>{dayObj.day}</span>
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.6 }}><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <div className="mono-text" style={{ fontSize: 12, color: "var(--accent-primary)", marginBottom: 12 }}>
+                      {dayObj.day}
                     </div>
                     <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                       {dayObj.topics.map((topic, tIdx) => (
