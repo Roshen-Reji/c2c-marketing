@@ -3,7 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Footer from "@/components/Footer";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 import "./landing.css";
 
 const InteractiveRoadmap = dynamic(() => import("@/components/InteractiveRoadmap"), { ssr: false });
@@ -408,105 +414,47 @@ function MarqueeSection() {
 
 // Sections removed in favor of InteractiveRoadmap and CurriculumOrbit components
 
-function FeesSection() {
-  const ref = useScrollReveal();
-  const IS_EARLY_BIRD = true; // Toggle for early bird pricing
 
-  return (
-    <section className="fees-section" id="fees" ref={ref}>
-      <div className="container">
-        <div className="animate-reveal" style={{ textAlign: "center", marginBottom: "var(--space-16)" }}>
-          <p className="section-label" style={{ textAlign: "center" }}>Investment</p>
-          <h2
-            className="section-title"
-            style={{ textAlign: "center", maxWidth: "900px", margin: "0 auto var(--space-6)" }}
-          >
-            One <span className="accent-blue">Program</span>, Complete <span className="accent-blue">Transformation</span>
-          </h2>
-        </div>
-
-        <div className="fees-card animate-reveal">
-          <span className="badge badge-green fees-badge">Limited Seats</span>
-
-          {/* Dual-Price Tier Cards */}
-          <div className="fees-price-cards">
-            <div className="fees-tier-card">
-              <div className="fees-tier-label">Non-IEEE</div>
-              <div className="fees-tier-price">
-                {IS_EARLY_BIRD ? "\u20B9399" : "\u20B9499"}
-              </div>
-              {IS_EARLY_BIRD && (
-                <div className="fees-tier-original">{"\u20B9499"}</div>
-              )}
-            </div>
-            <div className="fees-tier-card featured">
-              <span className="fees-tier-badge">Best Value</span>
-              <div className="fees-tier-label">IEEE Member</div>
-              <div className="fees-tier-price">
-                {IS_EARLY_BIRD ? "\u20B9299" : "\u20B9399"}
-              </div>
-              {IS_EARLY_BIRD && (
-                <div className="fees-tier-original">{"\u20B9399"}</div>
-              )}
-            </div>
-          </div>
-
-          {IS_EARLY_BIRD && (
-            <div style={{ fontSize: "0.875rem", color: "var(--accent-primary)", fontWeight: "bold", marginBottom: "var(--space-4)", textAlign: "center" }}>
-              Early Bird Pricing Active!
-            </div>
-          )}
-
-          <div className="fees-price-sub" style={{ marginBottom: "var(--space-6)", textAlign: "center" }}>One-time payment &bull; Full access</div>
-
-          <p className="fees-description">
-            Get complete access to all 5 phases, live sessions, hands-on tasks,
-            mock interviews, and your completion certificate &mdash; all for less than
-            the cost of a textbook.
-          </p>
-          <ul className="fees-features">
-            {FEES_FEATURES.map((feature, i) => (
-              <li key={i}>
-                <span className="fees-check-icon"><SvgCheck /></span>
-                {feature}
-              </li>
-            ))}
-            <li>
-              <span className="fees-check-icon"><SvgCheck /></span>
-              <strong>100% REFUND</strong>
-            </li>
-            <li>
-              <span className="fees-check-icon"><SvgCheck /></span>
-              <strong>100% SCHOLARSHIP AVAILABLE*</strong>
-            </li>
-          </ul>
-          <Link href="/register" className="btn btn-primary btn-large w-full" id="fees-register-btn">
-            Register Now
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function FooterCTA() {
   const ref = useScrollReveal();
 
   return (
-    <section className="footer-cta" ref={ref}>
+    <section className="footer-cta" id="fees" ref={ref} style={{ padding: "100px 20px" }}>
       <div className="container">
-        <div className="animate-reveal">
+        <div className="animate-reveal" style={{ textAlign: "center", marginBottom: "var(--space-12)" }}>
           <h2 className="footer-cta-title">
             Start Your
             <br />
             Journey
           </h2>
-          <p className="footer-cta-sub">
+          <p className="footer-cta-sub" style={{ maxWidth: 600, margin: "0 auto" }}>
             Don&apos;t wait until placements are around the corner. Start preparing now and
             be the candidate everyone wants to hire.
           </p>
+        </div>
+
+        <div className="fees-price-cards animate-reveal" style={{ marginTop: "var(--space-10)", marginBottom: "var(--space-16)" }}>
+          {/* IEEE Members Tier */}
+          <div className="fees-tier-card featured" style={{ padding: "var(--space-10) var(--space-6)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <h3 className="fees-tier-label">IEEE Members</h3>
+            <div className="fees-tier-price" style={{ margin: 0 }}>
+              ₹299
+            </div>
+          </div>
+
+          {/* Non-IEEE Members Tier */}
+          <div className="fees-tier-card" style={{ padding: "var(--space-10) var(--space-6)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <h3 className="fees-tier-label">Non-IEEE Members</h3>
+            <div className="fees-tier-price" style={{ margin: 0 }}>
+              ₹399
+            </div>
+          </div>
+        </div>
+
+        <div className="animate-reveal" style={{ textAlign: "center" }}>
           <Link href="/register" className="btn btn-primary btn-large" id="footer-register-btn">
-            Register for C2C
+            Register for C2C Now
           </Link>
         </div>
       </div>
@@ -533,7 +481,18 @@ export default function LandingPage() {
       observer.observe(el);
     });
 
-    return () => observer.disconnect();
+    // Robust refresh for GSAP ScrollTrigger to prevent pinning glitches
+    let count = 0;
+    const interval = setInterval(() => {
+      ScrollTrigger.refresh();
+      count++;
+      if (count > 5) clearInterval(interval);
+    }, 500);
+
+    return () => {
+      observer.disconnect();
+      clearInterval(interval);
+    };
   }, []);
 
   return (
@@ -548,8 +507,7 @@ export default function LandingPage() {
       <div id="phases"><InteractiveRoadmap /></div>
       <div className="section-divider" />
       <CurriculumOrbit />
-      <div className="section-divider" />
-      <FeesSection />
+
       <FooterCTA />
       <Footer />
     </main>
