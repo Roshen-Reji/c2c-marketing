@@ -122,6 +122,13 @@ const SHEETS = {
       "Starts At", "Ends At", "Updated At",
     ],
   },
+  scholarships: {
+    title: "Scholarships",
+    headers: [
+      "Student ID", "Full Name", "Email", "Phone",
+      "Q1 (Financial)", "Q2 (Hours)", "Q3 (Why)", "Q4 (Roadblock)", "Applied At"
+    ],
+  },
 } as const;
 
 export type SheetKey = keyof typeof SHEETS;

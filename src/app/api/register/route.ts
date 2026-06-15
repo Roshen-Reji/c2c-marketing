@@ -20,6 +20,11 @@ export async function POST(request: NextRequest) {
     const isIeeeMember = formData.get("isIeeeMember") === "true";
     const ieeeNumber = (formData.get("ieeeNumber") as string) || "";
     const amountToPay = (formData.get("amountToPay") as string) || "";
+    const isApplyingScholarship = formData.get("isApplyingScholarship") === "true";
+    const q1Financial = (formData.get("q1Financial") as string) || "";
+    const q2Hours = (formData.get("q2Hours") as string) || "";
+    const q3Why = (formData.get("q3Why") as string) || "";
+    const q4Roadblock = (formData.get("q4Roadblock") as string) || "";
     // Screenshot is uploaded directly to Google Drive by the browser.
     // We only receive the Drive URL here.
     const screenshotUrl = (formData.get("screenshotUrl") as string) || "";
@@ -98,6 +103,13 @@ export async function POST(request: NextRequest) {
         status: "pending",
         role: "student",
         paymentScreenshot: screenshotUrl,
+        isApplyingScholarship,
+        scholarshipData: isApplyingScholarship ? {
+          q1Financial,
+          q2Hours,
+          q3Why,
+          q4Roadblock,
+        } : null,
         registeredAt: new Date(),
         totalPoints: 0,
         streak: 0,
@@ -122,13 +134,27 @@ export async function POST(request: NextRequest) {
         phone.trim(),
         batch,
         year,
-        screenshotUrl,
+        isApplyingScholarship ? "Scholarship Applied" : screenshotUrl,
         timestamp,
         "pending",
         isIeeeMember ? "Yes" : "No",
         ieeeNumber || "N/A",
-        amountToPay || "N/A",
+        isApplyingScholarship ? "Scholarship" : amountToPay || "N/A",
       ]);
+
+      if (isApplyingScholarship) {
+        await appendSheetRecord("scholarships", [
+          userId,
+          fullName.trim(),
+          email.toLowerCase().trim(),
+          phone.trim(),
+          q1Financial,
+          q2Hours,
+          q3Why,
+          q4Roadblock,
+          timestamp,
+        ]);
+      }
     } catch (sheetsErr) {
       console.warn("Google Sheets registration sync failed:", sheetsErr);
     }

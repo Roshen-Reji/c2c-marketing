@@ -23,6 +23,11 @@ interface FormData {
   googleUid?: string;
   isIeeeMember: boolean;
   ieeeNumber: string;
+  isApplyingScholarship: boolean;
+  q1Financial: string;
+  q2Hours: string;
+  q3Why: string;
+  q4Roadblock: string;
 }
 
 interface FormErrors {
@@ -36,6 +41,11 @@ interface FormErrors {
   screenshot?: string;
   ieeeNumber?: string;
   isIeeeMember?: string;
+  isApplyingScholarship?: string;
+  q1Financial?: string;
+  q2Hours?: string;
+  q3Why?: string;
+  q4Roadblock?: string;
 }
 
 const BATCHES = ["CSE", "ECE", "EEE", "CE", "EI"];
@@ -150,6 +160,11 @@ export default function RegisterPage() {
     password: "",
     isIeeeMember: false,
     ieeeNumber: "",
+    isApplyingScholarship: false,
+    q1Financial: "",
+    q2Hours: "",
+    q3Why: "",
+    q4Roadblock: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [screenshot, setScreenshot] = useState<File | null>(null);
@@ -227,9 +242,22 @@ export default function RegisterPage() {
         return;
       }
     }
-    if (targetStep === 3 && !screenshot) {
-      setErrors({ screenshot: "Please upload your payment screenshot" });
-      return;
+    if (targetStep === 3) {
+      if (formData.isApplyingScholarship) {
+        let hasErrors = false;
+        const newErrors: FormErrors = {};
+        if (formData.q1Financial.trim().length < 20) { newErrors.q1Financial = "Please provide a more detailed answer."; hasErrors = true; }
+        if (formData.q2Hours.trim().length < 20) { newErrors.q2Hours = "Please provide a more detailed answer."; hasErrors = true; }
+        if (formData.q3Why.trim().length < 20) { newErrors.q3Why = "Please provide a more detailed answer."; hasErrors = true; }
+        if (formData.q4Roadblock.trim().length < 20) { newErrors.q4Roadblock = "Please provide a more detailed answer."; hasErrors = true; }
+        if (hasErrors) {
+          setErrors(newErrors);
+          return;
+        }
+      } else if (!screenshot) {
+        setErrors({ screenshot: "Please upload your payment screenshot" });
+        return;
+      }
     }
     setStep(targetStep);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -249,6 +277,11 @@ export default function RegisterPage() {
       submitData.append("isIeeeMember", formData.isIeeeMember ? "true" : "false");
       submitData.append("ieeeNumber", formData.ieeeNumber.trim());
       submitData.append("amountToPay", amountToPay.toString());
+      submitData.append("isApplyingScholarship", formData.isApplyingScholarship ? "true" : "false");
+      submitData.append("q1Financial", formData.q1Financial.trim());
+      submitData.append("q2Hours", formData.q2Hours.trim());
+      submitData.append("q3Why", formData.q3Why.trim());
+      submitData.append("q4Roadblock", formData.q4Roadblock.trim());
       
       if (formData.password && !formData.googleUid) {
         submitData.append("password", formData.password);
@@ -335,23 +368,50 @@ export default function RegisterPage() {
           <div className="register-card">
             <div className="success-container">
               <div className="success-icon"><IconStar size={44} /></div>
-              <h2 className="success-title">
-                You&apos;re <span className="accent-green">In!</span>
-              </h2>
-              <p className="success-text">
-                Registration successful! You can now log in using your{" "}
-                {formData.googleUid ? "Google account" : "email and password"}.
-              </p>
-              <p className="success-text" style={{ fontSize: "var(--text-sm)" }}>
-                Your account is pending admin approval. Once your payment is
-                verified, you&apos;ll get full access to the student portal.
-              </p>
+              {formData.isApplyingScholarship ? (
+                <>
+                  <h2 className="success-title" style={{ fontSize: "var(--text-2xl)" }}>
+                    Submission <span className="accent-green">Successful</span>
+                  </h2>
+                  <p className="success-text" style={{ marginBottom: "var(--space-4)" }}>
+                    Thank you for completing the first phase of the C2C Scholarship Application. Your responses have been recorded.
+                  </p>
+                  <div style={{ textAlign: "left", background: "var(--surface-glass)", padding: "var(--space-4)", borderRadius: "var(--radius-md)", marginBottom: "var(--space-6)" }}>
+                    <h4 style={{ color: "var(--accent-primary)", marginBottom: "var(--space-2)" }}>Next Steps:</h4>
+                    <ul style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)", display: "flex", flexDirection: "column", gap: "var(--space-2)", paddingLeft: "var(--space-4)" }}>
+                      <li><strong style={{ color: "var(--text-primary)" }}>Evaluation Status:</strong> This selection process requires the completion of two distinct tasks. Your application will be evaluated based on your performance across both rounds.</li>
+                      <li><strong style={{ color: "var(--text-primary)" }}>Task 2 Notification:</strong> Detailed instructions for Task 2 will be issued shortly.</li>
+                      <li><strong style={{ color: "var(--text-primary)" }}>Communications:</strong> Please closely monitor your registered email address and WhatsApp number for further updates.</li>
+                    </ul>
+                    <p style={{ color: "var(--text-muted)", fontSize: "var(--text-xs)", marginTop: "var(--space-4)", fontStyle: "italic" }}>
+                      — Organizing Committee, Team C2C
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h2 className="success-title" style={{ fontSize: "var(--text-2xl)" }}>
+                    Submission <span className="accent-green">Successful</span>
+                  </h2>
+                  <p className="success-text" style={{ marginBottom: "var(--space-4)" }}>
+                    Thank you for registering for the event. Your responses have been securely recorded.
+                  </p>
+                  <div style={{ textAlign: "left", background: "var(--surface-glass)", padding: "var(--space-4)", borderRadius: "var(--radius-md)", marginBottom: "var(--space-6)" }}>
+                    <h4 style={{ color: "var(--accent-primary)", marginBottom: "var(--space-2)" }}>Next Steps:</h4>
+                    <ul style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)", display: "flex", flexDirection: "column", gap: "var(--space-2)", paddingLeft: "var(--space-4)" }}>
+                      <li><strong style={{ color: "var(--text-primary)" }}>Payment Verification:</strong> Your application will be officially confirmed once your payment has been verified by our team.</li>
+                      <li><strong style={{ color: "var(--text-primary)" }}>Communications:</strong> Please closely monitor your registered email address and WhatsApp number for onboarding updates.</li>
+                      <li><strong style={{ color: "var(--text-primary)" }}>Further Updates:</strong> Kindly check the official WhatsApp group regularly for all real-time announcements.</li>
+                    </ul>
+                    <p style={{ color: "var(--text-muted)", fontSize: "var(--text-xs)", marginTop: "var(--space-4)", fontStyle: "italic" }}>
+                      — Organizing Committee, Team C2C
+                    </p>
+                  </div>
+                </>
+              )}
               <div style={{ display: "flex", gap: "var(--space-4)", justifyContent: "center" }}>
-                <Link href="/" className="btn btn-secondary">
+                <Link href="/" className="btn btn-primary">
                   ← Back Home
-                </Link>
-                <Link href="/login" className="btn btn-primary">
-                  Go to Login
                 </Link>
               </div>
             </div>
@@ -638,8 +698,29 @@ export default function RegisterPage() {
                   marginBottom: "var(--space-2)",
                 }}
               >
-                Scan &amp; Pay
+                Payment & Scholarship
               </h3>
+
+              <div className="input-group" style={{ marginBottom: "var(--space-6)" }}>
+                <label className="input-label" htmlFor="scholarshipOptIn">
+                  Are you applying for the C2C Financial Aid Scholarship?
+                </label>
+                <select
+                  id="scholarshipOptIn"
+                  className="input select"
+                  value={formData.isApplyingScholarship ? "yes" : "no"}
+                  onChange={(e) => {
+                    updateField("isApplyingScholarship", (e.target.value === "yes") as any);
+                  }}
+                  style={{ whiteSpace: 'normal', height: 'auto', padding: '12px', minHeight: '60px' }}
+                >
+                  <option value="no">Option A: No, I will pay the ₹{amountToPay} registration fee (100% refundable upon successful course completion).</option>
+                  <option value="yes">Option B: Yes, I am applying for the scholarship to waive the upfront fee due to genuine financial constraints.</option>
+                </select>
+              </div>
+
+              {!formData.isApplyingScholarship ? (
+                <>
               <p
                 style={{
                   fontSize: "var(--text-sm)",
@@ -699,6 +780,51 @@ export default function RegisterPage() {
                   {errors.screenshot}
                 </div>
               )}
+              </>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
+                  <div className="input-group">
+                    <label className="input-label">1. Please briefly describe your current financial situation or constraints that make the upfront ₹{amountToPay} fee a barrier for you right now. <span style={{ color: "var(--accent-tertiary)" }}>*</span></label>
+                    <textarea 
+                      className="input" 
+                      rows={3} 
+                      value={formData.q1Financial}
+                      onChange={(e) => updateField("q1Financial", e.target.value)}
+                    />
+                    {errors.q1Financial && <div className="form-error">{errors.q1Financial}</div>}
+                  </div>
+                  <div className="input-group">
+                    <label className="input-label">2. This 5-month bootcamp requires consistency. How many hours per week do you plan to dedicate to C2C, and how will you balance this with your college curriculum/exams? <span style={{ color: "var(--accent-tertiary)" }}>*</span></label>
+                    <textarea 
+                      className="input" 
+                      rows={3} 
+                      value={formData.q2Hours}
+                      onChange={(e) => updateField("q2Hours", e.target.value)}
+                    />
+                    {errors.q2Hours && <div className="form-error">{errors.q2Hours}</div>}
+                  </div>
+                  <div className="input-group">
+                    <label className="input-label">3. (The Personal &apos;Why&apos;) Where do you see yourself technically and professionally 5 months from now, and why is the C2C bootcamp the exact vehicle you need to get there? <span style={{ color: "var(--accent-tertiary)" }}>*</span></label>
+                    <textarea 
+                      className="input" 
+                      rows={3} 
+                      value={formData.q3Why}
+                      onChange={(e) => updateField("q3Why", e.target.value)}
+                    />
+                    {errors.q3Why && <div className="form-error">{errors.q3Why}</div>}
+                  </div>
+                  <div className="input-group">
+                    <label className="input-label">4. (The Problem-Solving Mindset) Tell us about a time you encountered a tough technical roadblock (a bug, a difficult concept, or a failed project). How did you go about solving it, and what did you learn about your own learning process? <span style={{ color: "var(--accent-tertiary)" }}>*</span></label>
+                    <textarea 
+                      className="input" 
+                      rows={4} 
+                      value={formData.q4Roadblock}
+                      onChange={(e) => updateField("q4Roadblock", e.target.value)}
+                    />
+                    {errors.q4Roadblock && <div className="form-error">{errors.q4Roadblock}</div>}
+                  </div>
+                </div>
+              )}
 
               <div className="form-actions">
                 <button type="button" className="btn btn-secondary btn-large" onClick={() => goToStep(1)} id="step2-back-btn">
@@ -755,7 +881,7 @@ export default function RegisterPage() {
               </div>
               <div className="confirm-row">
                 <span className="confirm-label">Amount to Pay</span>
-                <span className="confirm-value">₹{amountToPay}</span>
+                <span className="confirm-value">{formData.isApplyingScholarship ? "₹0 (Scholarship Applied)" : `₹${amountToPay}`}</span>
               </div>
               <div className="confirm-row">
                 <span className="confirm-label">Email</span>
@@ -768,11 +894,11 @@ export default function RegisterPage() {
                 </div>
               )}
               <div className="confirm-row">
-                <span className="confirm-label">Payment</span>
-                <span className="confirm-value accent-green">Screenshot Attached</span>
+                <span className="confirm-label">{formData.isApplyingScholarship ? "Scholarship" : "Payment"}</span>
+                <span className="confirm-value accent-green">{formData.isApplyingScholarship ? "Applied for Financial Aid" : "Screenshot Attached"}</span>
               </div>
 
-              {screenshotPreview && (
+              {!formData.isApplyingScholarship && screenshotPreview && (
                 <div className="confirm-screenshot">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={screenshotPreview} alt="Payment screenshot" />
