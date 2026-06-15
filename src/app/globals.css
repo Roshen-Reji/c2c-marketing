@@ -33,7 +33,7 @@
   --accent-tertiary: #FFF4E1;
   --accent-blue: #0066FF;
   --accent-purple: #0044AA;
-  --accent-cyan: #00E5FF;
+  --accent-cyan: #0066FF; /* Aliased to primary — cyan eliminated */
   
   /* Borders */
   --border-subtle: rgba(0, 102, 255, 0.15);
