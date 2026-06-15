@@ -13,6 +13,7 @@ const PHASES = [
   {
     id: 1,
     title: "FOUNDATION - Know the placement path",
+    shortName: "Foundation",
     tag: "PHASE 01",
     days: [
       { day: "Day 1", topics: ["Introduction, Hiring Process, Domain Selection"] },
@@ -24,6 +25,7 @@ const PHASES = [
   {
     id: 2,
     title: "APTITUDE TRAINING - Train your brain",
+    shortName: "Aptitude",
     tag: "PHASE 02",
     days: [
       { day: "Day 1", topics: ["Aptitude Fundamentals, Types of Questions, Strategy"] },
@@ -35,6 +37,7 @@ const PHASES = [
   {
     id: 3,
     title: "TECHNICAL CORE - Build your technical strength",
+    shortName: "Core",
     tag: "PHASE 03",
     days: [
       { day: "Day 1", topics: ["Core Subject Prep, Interview Skills, Importance of Projects"] },
@@ -46,6 +49,7 @@ const PHASES = [
   {
     id: 4,
     title: "PROFESSIONAL SKILLS - Build your profile",
+    shortName: "Skills",
     tag: "PHASE 04",
     days: [
       { day: "Day 1", topics: ["Communication Skills & Group Discussion (GD)"] },
@@ -57,6 +61,7 @@ const PHASES = [
   {
     id: 5,
     title: "FINAL READINESS - Face real interviews",
+    shortName: "Final",
     tag: "PHASE 05",
     days: [
       { day: "Day 1", topics: ["Application Strategies (On/Off-Campus)"] },
@@ -166,7 +171,7 @@ export default function InteractiveRoadmap() {
   // Generate SVG Path based on layout
   const generatePath = () => {
     if (isMobile) {
-      const canvasHeight = Math.max(600, numDays * 180);
+      const canvasHeight = Math.max(500, numDays * 130);
       const startOffsetY = 80;
       const step = (canvasHeight - 160) / (numDays - 1 || 1);
       const centerX = 40;
@@ -272,18 +277,24 @@ export default function InteractiveRoadmap() {
                   color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
                   opacity: isActive ? 1 : 0.4,
                   fontFamily: "var(--font-mono)",
-                  fontSize: isMobile ? 12 : 14,
-                  fontWeight: isActive ? 700 : 500,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.1em",
-                  padding: "12px 28px",
-                  borderRadius: "var(--radius-full)",
+                  padding: "8px 24px",
+                  borderRadius: "var(--radius-lg)",
                   cursor: "pointer",
                   transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
                   boxShadow: "none",
                 }}
               >
-                {isMobile ? `P${phase.id}` : phase.tag}
+                {isMobile ? (
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2px", lineHeight: 1 }}>
+                    <span style={{ fontSize: "14px", fontWeight: 800 }}>0{phase.id}</span>
+                    <span style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "0.05em" }}>{phase.shortName.substring(0, 5)}.</span>
+                  </div>
+                ) : (
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", lineHeight: 1 }}>
+                    <span style={{ fontSize: "11px", opacity: 0.8, letterSpacing: "0.1em" }}>PHASE 0{phase.id}</span>
+                    <span style={{ fontSize: "15px", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>{phase.shortName}</span>
+                  </div>
+                )}
               </button>
             );
           })}
@@ -359,7 +370,7 @@ export default function InteractiveRoadmap() {
               let xPos, yPos, cardLeft, cardTop;
 
               if (isMobile) {
-                const canvasHeight = Math.max(600, numDays * 180);
+                const canvasHeight = Math.max(500, numDays * 130);
                 const step = (canvasHeight - 160) / (numDays - 1 || 1);
                 xPos = 40;
                 yPos = i * step + 80;
@@ -423,24 +434,35 @@ export default function InteractiveRoadmap() {
                       padding: "20px",
                       boxShadow: "0 15px 35px rgba(0,0,0,0.4)",
                       borderTop: `2px solid var(--accent-primary)`,
-                      transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease",
+                      transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease",
+                      cursor: "pointer",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = "translateY(-4px)";
                       e.currentTarget.style.boxShadow = "0 15px 35px rgba(0,0,0,0.2)";
+                      e.currentTarget.style.borderColor = "var(--accent-primary)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.transform = "translateY(0)";
                       e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.15)";
+                      e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.05)";
                     }}
                   >
-                    <div className="mono-text" style={{ fontSize: 12, color: "var(--accent-primary)", marginBottom: 12 }}>
-                      {dayObj.day}
+                    {dayObj.topics.some(t => t.startsWith("Task:")) ? (
+                      <span className="day-type-badge badge-task">Task</span>
+                    ) : (
+                      <span className="day-type-badge badge-session">Session</span>
+                    )}
+                    <div className="mono-text" style={{ fontSize: 12, color: "var(--accent-primary)", marginBottom: 12, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <span>{dayObj.day}</span>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.6 }}><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </div>
                     <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                       {dayObj.topics.map((topic, tIdx) => (
                         <li key={tIdx} style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)", marginBottom: 8, display: "flex", alignItems: "flex-start", gap: 8 }}>
-                          <span style={{ color: "var(--accent-primary)", fontSize: 10, marginTop: 4 }}>▹</span>
+                          <span style={{ color: "var(--accent-primary)", width: 10, height: 10, flexShrink: 0, marginTop: 4 }}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                          </span>
                           <span style={{ lineHeight: 1.4 }}>{topic}</span>
                         </li>
                       ))}

@@ -8,6 +8,7 @@ import "./landing.css";
 
 const InteractiveRoadmap = dynamic(() => import("@/components/InteractiveRoadmap"), { ssr: false });
 const CurriculumOrbit = dynamic(() => import("@/components/CurriculumOrbit"), { ssr: false });
+const GlassCubeScene = dynamic(() => import("@/components/coming-soon/GlassCubeScene"), { ssr: false });
 
 
 
@@ -36,6 +37,95 @@ const FEES_FEATURES = [
   "Completion certificate",
   "Lifetime access to materials",
 ];
+
+/* ===== Inline SVG Icons ===== */
+
+function SvgSun() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="5" />
+      <line x1="12" y1="1" x2="12" y2="3" />
+      <line x1="12" y1="21" x2="12" y2="23" />
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+      <line x1="1" y1="12" x2="3" y2="12" />
+      <line x1="21" y1="12" x2="23" y2="12" />
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+    </svg>
+  );
+}
+
+function SvgMoon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  );
+}
+
+function SvgChevronDown({ size = 24 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  );
+}
+
+function SvgCheck() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
+
+function SvgDiamond() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2L22 12L12 22L2 12Z" />
+    </svg>
+  );
+}
+
+function SvgBook() {
+  return (
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
+    </svg>
+  );
+}
+
+function SvgMic() {
+  return (
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+      <path d="M19 10v2a7 7 0 01-14 0v-2" />
+      <line x1="12" y1="19" x2="12" y2="23" />
+      <line x1="8" y1="23" x2="16" y2="23" />
+    </svg>
+  );
+}
+
+function SvgUsers() {
+  return (
+    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 00-3-3.87" />
+      <path d="M16 3.13a4 4 0 010 7.75" />
+    </svg>
+  );
+}
+
+function SvgChevronRight() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  );
+}
 
 /* ===== Scroll Reveal Hook ===== */
 function useScrollReveal() {
@@ -140,11 +230,11 @@ function Header() {
             title="Toggle theme"
             onClick={toggleTheme}
           >
-            {isLightMode ? "☾" : "☀"}
+            {isLightMode ? <SvgMoon /> : <SvgSun />}
           </button>
           {isRegistered ? (
-            <span className="hide-mobile" style={{ padding: '10px 20px', background: 'rgba(255,255,255,0.05)', borderRadius: '100px', fontSize: '14px', color: 'var(--text-secondary)', border: '1px solid rgba(255,255,255,0.1)' }}>
-              ✓ Registration Complete
+            <span className="hide-mobile" style={{ padding: '10px 20px', background: 'rgba(255,255,255,0.05)', borderRadius: '100px', fontSize: '14px', color: 'var(--text-secondary)', border: '1px solid rgba(255,255,255,0.1)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <SvgCheck /> Registration Complete
             </span>
           ) : (
             <Link href="/register" className="btn btn-primary hide-mobile" id="nav-register-btn">
@@ -183,8 +273,11 @@ function ScrollIndicator() {
             </text>
           </svg>
         </div>
-        <span className="scroll-indicator-arrow">↓</span>
+        <span className="scroll-indicator-arrow">
+          <SvgChevronDown size={24} />
+        </span>
       </div>
+      <span className="scroll-indicator-label">Scroll to explore</span>
     </div>
   );
 }
@@ -207,10 +300,28 @@ function HeroSection() {
           </h1>
 
           <p className="hero-subtitle">
-            4 to 6 Weeks Online Training Program — B.Tech Students
+            4-6 week online training program for B.Tech students
           </p>
 
-          <div className="hero-cta-group" style={{ marginTop: '4rem' }}>
+          {/* Stats Bar — repositioned between subtitle and CTAs */}
+          <div className="hero-stats-inline">
+            <div className="hero-stat-inline">
+              <span className="stat-number">5</span>
+              <span className="stat-label">Phases</span>
+            </div>
+            <div className="hero-stat-divider" />
+            <div className="hero-stat-inline">
+              <span className="stat-number">9+</span>
+              <span className="stat-label">Sessions</span>
+            </div>
+            <div className="hero-stat-divider" />
+            <div className="hero-stat-inline">
+              <span className="stat-number">20+</span>
+              <span className="stat-label">Days</span>
+            </div>
+          </div>
+
+          <div className="hero-cta-group" style={{ marginTop: '2rem' }}>
             <Link href="/register" className="btn btn-cta btn-large" id="hero-register-btn">
               Register Now
             </Link>
@@ -221,39 +332,47 @@ function HeroSection() {
         </div>
 
         <div className="hero-right">
-          <div className="hero-info-card">
-            <h2 className="hero-info-title">
-              Your Bridge to the <span className="accent-blue">Industry</span>
-            </h2>
-            <div className="hero-info-text">
-              <p style={{ marginBottom: '1rem' }}>
-                A comprehensive online program by IEEE CEK WIE designed for B.Tech students in CSE, ECE, EEE, CE & EL.
-              </p>
-              <ul className="hero-info-list" style={{ listStyle: 'none', padding: 0 }}>
-                <li><span style={{ color: 'var(--accent-primary)' }}>▹</span> <strong>Structured Learning:</strong> From basics to advanced concepts.</li>
-                <li><span style={{ color: 'var(--accent-primary)' }}>▹</span> <strong>Mock Interviews:</strong> Real-world simulations with industry experts.</li>
-                <li><span style={{ color: 'var(--accent-primary)' }}>▹</span> <strong>Professional Skills:</strong> GDs, resumes, and LinkedIn prep.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <div className="hero-stat-number">5</div>
-              <div className="hero-stat-label">Phases</div>
-            </div>
-            <div className="hero-stat">
-              <div className="hero-stat-number">9+</div>
-              <div className="hero-stat-label">Sessions</div>
-            </div>
-            <div className="hero-stat">
-              <div className="hero-stat-number">20+</div>
-              <div className="hero-stat-label">Days</div>
-            </div>
-          </div>
+          <GlassCubeScene />
         </div>
       </div>
       <ScrollIndicator />
+    </section>
+  );
+}
+
+function BridgeSection() {
+  const ref = useScrollReveal();
+
+  return (
+    <section className="bridge-section" id="bridge" ref={ref}>
+      <div className="container bridge-container animate-reveal">
+        <h2 className="bridge-title">
+          Your Bridge to the <span className="accent-blue">Industry</span>
+        </h2>
+        <p className="bridge-subtitle">
+          A comprehensive online program by IEEE CEK WIE designed for B.Tech students in CSE, ECE, EEE, CE & EL.
+        </p>
+
+        <div className="bridge-features">
+          <div className="bridge-feature-card">
+            <div className="bridge-feature-icon"><SvgBook /></div>
+            <div className="bridge-feature-title">Structured Learning</div>
+            <div className="bridge-feature-desc">Basics to advanced, structured phase by phase to ensure comprehensive understanding.</div>
+          </div>
+          
+          <div className="bridge-feature-card">
+            <div className="bridge-feature-icon"><SvgMic /></div>
+            <div className="bridge-feature-title">Mock Interviews</div>
+            <div className="bridge-feature-desc">Real-world simulations with experts to help you ace your technical and HR rounds.</div>
+          </div>
+          
+          <div className="bridge-feature-card">
+            <div className="bridge-feature-icon"><SvgUsers /></div>
+            <div className="bridge-feature-title">Professional Skills</div>
+            <div className="bridge-feature-desc">Master Group Discussions, resume building, and optimize your LinkedIn profile.</div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
@@ -268,7 +387,7 @@ function MarqueeSection() {
           {items.map((item, i) => (
             <span className="marquee-item" key={`l-${i}`}>
               {item}
-              <span className="marquee-separator">◆</span>
+              <span className="marquee-separator"><SvgDiamond /></span>
             </span>
           ))}
         </div>
@@ -278,7 +397,7 @@ function MarqueeSection() {
           {items.map((item, i) => (
             <span className="marquee-item" key={`r-${i}`}>
               {item}
-              <span className="marquee-separator">◆</span>
+              <span className="marquee-separator"><SvgDiamond /></span>
             </span>
           ))}
         </div>
@@ -308,47 +427,56 @@ function FeesSection() {
 
         <div className="fees-card animate-reveal">
           <span className="badge badge-green fees-badge">Limited Seats</span>
-          <div className="fees-price" style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            {IS_EARLY_BIRD ? (
-              <>
-                <div style={{ fontSize: "1rem", textDecoration: "line-through", color: "var(--text-muted)", marginBottom: "0.5rem", display: "flex", justifyContent: "center", gap: "1rem" }}>
-                  <span>Non-IEEE: ₹499</span>
-                  <span>IEEE: ₹399</span>
-                </div>
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "baseline", gap: "0.5rem" }}>
-                  <span>₹399 <span style={{ fontSize: "1rem", color: "var(--text-secondary)" }}>(Non-IEEE)</span></span>
-                  <span style={{ fontSize: "2rem", color: "var(--text-muted)", margin: "0 0.5rem" }}>/</span>
-                  <span style={{ color: "var(--accent-cyan)", fontSize: "3rem", fontWeight: 900 }}>₹299 <span style={{ fontSize: "1.2rem", color: "var(--accent-cyan)" }}>(IEEE)</span></span>
-                </div>
-                <div style={{ fontSize: "0.875rem", color: "var(--accent-blue)", fontWeight: "bold", marginTop: "0.5rem" }}>Early Bird Pricing Active!</div>
-              </>
-            ) : (
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "baseline", gap: "0.5rem" }}>
-                <span>₹499 <span style={{ fontSize: "1rem", color: "var(--text-secondary)" }}>(Non-IEEE)</span></span>
-                <span style={{ fontSize: "2rem", color: "var(--text-muted)", margin: "0 0.5rem" }}>/</span>
-                <span>₹399 <span style={{ fontSize: "1rem", color: "var(--text-secondary)" }}>(IEEE)</span></span>
+
+          {/* Dual-Price Tier Cards */}
+          <div className="fees-price-cards">
+            <div className="fees-tier-card">
+              <div className="fees-tier-label">Non-IEEE</div>
+              <div className="fees-tier-price">
+                {IS_EARLY_BIRD ? "\u20B9399" : "\u20B9499"}
               </div>
-            )}
-            <div className="fees-price-sub" style={{ marginTop: "1rem" }}>One-time payment • Full access</div>
+              {IS_EARLY_BIRD && (
+                <div className="fees-tier-original">{"\u20B9499"}</div>
+              )}
+            </div>
+            <div className="fees-tier-card featured">
+              <span className="fees-tier-badge">Best Value</span>
+              <div className="fees-tier-label">IEEE Member</div>
+              <div className="fees-tier-price">
+                {IS_EARLY_BIRD ? "\u20B9299" : "\u20B9399"}
+              </div>
+              {IS_EARLY_BIRD && (
+                <div className="fees-tier-original">{"\u20B9399"}</div>
+              )}
+            </div>
           </div>
+
+          {IS_EARLY_BIRD && (
+            <div style={{ fontSize: "0.875rem", color: "var(--accent-primary)", fontWeight: "bold", marginBottom: "var(--space-4)", textAlign: "center" }}>
+              Early Bird Pricing Active!
+            </div>
+          )}
+
+          <div className="fees-price-sub" style={{ marginBottom: "var(--space-6)", textAlign: "center" }}>One-time payment &bull; Full access</div>
+
           <p className="fees-description">
             Get complete access to all 5 phases, live sessions, hands-on tasks,
-            mock interviews, and your completion certificate — all for less than
+            mock interviews, and your completion certificate &mdash; all for less than
             the cost of a textbook.
           </p>
           <ul className="fees-features">
             {FEES_FEATURES.map((feature, i) => (
               <li key={i}>
-                <span className="fees-check">✓</span>
+                <span className="fees-check-icon"><SvgCheck /></span>
                 {feature}
               </li>
             ))}
             <li>
-              <span className="fees-check">✓</span>
+              <span className="fees-check-icon"><SvgCheck /></span>
               <strong>100% REFUND</strong>
             </li>
             <li>
-              <span className="fees-check">✓</span>
+              <span className="fees-check-icon"><SvgCheck /></span>
               <strong>100% SCHOLARSHIP AVAILABLE*</strong>
             </li>
           </ul>
@@ -386,6 +514,36 @@ function FooterCTA() {
   );
 }
 
+/* ===== Sticky CTA Bar ===== */
+function StickyCTABar() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      // Show after scrolling past hero (roughly 100vh)
+      const heroEl = document.getElementById("hero");
+      if (heroEl) {
+        const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
+        setVisible(window.scrollY > heroBottom - 100);
+      } else {
+        setVisible(window.scrollY > window.innerHeight * 0.8);
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <div className={`sticky-cta-bar ${visible ? "visible" : ""}`} id="sticky-cta">
+      <span className="sticky-cta-text">Ready to transform your career?</span>
+      <Link href="/register" className="btn btn-primary" id="sticky-register-btn">
+        Register Now
+      </Link>
+    </div>
+  );
+}
+
 
 /* ===== Main Page ===== */
 export default function LandingPage() {
@@ -414,6 +572,8 @@ export default function LandingPage() {
       <Header />
       <HeroSection />
       <div className="section-divider" />
+      <BridgeSection />
+      <div className="section-divider" />
       <MarqueeSection />
       <div className="section-divider" />
       <div id="phases"><InteractiveRoadmap /></div>
@@ -423,6 +583,7 @@ export default function LandingPage() {
       <FeesSection />
       <FooterCTA />
       <Footer />
+      <StickyCTABar />
     </main>
   );
 }

@@ -27,7 +27,7 @@ export default function Footer() {
           <div className="cs-footer-links">
             <a href="https://www.linkedin.com/company/ieeesbcekidangoor/" className="cs-footer-link">LinkedIn</a>
             <a href="https://ieee.ce-kgr.org/" className="cs-footer-link">Web</a>
-            <a href="https://www.instagram.com/ieeesbcekgr?igsh=MWczc3o1d21hdGxzcg==" className="cs-footer-link">Instagram</a>
+            <a href="https://www.instagram.com/ieeesbcekgr" className="cs-footer-link">Instagram</a>
           </div>
         </div>
 
