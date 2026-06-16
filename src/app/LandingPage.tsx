@@ -3,7 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Footer from "@/components/Footer";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 import "./landing.css";
 
 const InteractiveRoadmap = dynamic(() => import("@/components/InteractiveRoadmap"), { ssr: false });
@@ -13,18 +19,19 @@ const GlassCubeScene = dynamic(() => import("@/components/coming-soon/GlassCubeS
 
 
 const MARQUEE_ITEMS = [
-  "Resume Building",
-  "Aptitude Training",
-  "Technical Core",
-  "Mock Interviews",
-  "Professional Skills",
-  "LinkedIn Optimization",
-  "Group Discussions",
-  "Domain Selection",
-  "Communication",
-  "Placement Prep",
-  "Core Subjects",
-  "Self Introduction",
+  "Career Compass",
+  "Explore",
+  "Decide",
+  "Grow",
+  "Think Faster",
+  "Solve Better",
+  "Master Core Concepts",
+  "Speak",
+  "Connect",
+  "Succeed",
+  "Master Technical Interviews",
+  "Career Launch",
+  "Skill Up",
 ];
 
 const FEES_FEATURES = [
@@ -300,7 +307,7 @@ function HeroSection() {
           </h1>
 
           <p className="hero-subtitle">
-            4-6 week online training program for B.Tech students
+            A comprehensive, multi-phase online placement readiness program by IEEE WIE SBC and IEEE SB CE Kidangoor, explicitly designed to help B-Tech students secure internships and job opportunities.
           </p>
 
           {/* Stats Bar — repositioned between subtitle and CTAs */}
@@ -311,12 +318,12 @@ function HeroSection() {
             </div>
             <div className="hero-stat-divider" />
             <div className="hero-stat-inline">
-              <span className="stat-number">9+</span>
-              <span className="stat-label">Sessions</span>
+              <span className="stat-number">8+</span>
+              <span className="stat-label"> Live Mentorship Sessions</span>
             </div>
             <div className="hero-stat-divider" />
             <div className="hero-stat-inline">
-              <span className="stat-number">20+</span>
+              <span className="stat-number">60+</span>
               <span className="stat-label">Days</span>
             </div>
           </div>
@@ -336,7 +343,7 @@ function HeroSection() {
         </div>
       </div>
       <ScrollIndicator />
-    </section>
+    </section >
   );
 }
 
@@ -349,27 +356,23 @@ function BridgeSection() {
         <h2 className="bridge-title">
           Your Bridge to the <span className="accent-blue">Industry</span>
         </h2>
-        <p className="bridge-subtitle">
-          A comprehensive online program by IEEE CEK WIE designed for B.Tech students in CSE, ECE, EEE, CE & EL.
-        </p>
-
         <div className="bridge-features">
           <div className="bridge-feature-card">
             <div className="bridge-feature-icon"><SvgBook /></div>
-            <div className="bridge-feature-title">Structured Learning</div>
-            <div className="bridge-feature-desc">Basics to advanced, structured phase by phase to ensure comprehensive understanding.</div>
+            <div className="bridge-feature-title">End-to-End Placement Preparation</div>
+            <div className="bridge-feature-desc">Participants receive comprehensive training covering every stage of the recruitment process</div>
           </div>
-          
-          <div className="bridge-feature-card">
-            <div className="bridge-feature-icon"><SvgMic /></div>
-            <div className="bridge-feature-title">Mock Interviews</div>
-            <div className="bridge-feature-desc">Real-world simulations with experts to help you ace your technical and HR rounds.</div>
-          </div>
-          
+
           <div className="bridge-feature-card">
             <div className="bridge-feature-icon"><SvgUsers /></div>
-            <div className="bridge-feature-title">Professional Skills</div>
-            <div className="bridge-feature-desc">Master Group Discussions, resume building, and optimize your LinkedIn profile.</div>
+            <div className="bridge-feature-title">Interact Directly with Industry Professionals</div>
+            <div className="bridge-feature-desc">Gain practical insights from industry professionals ,to understand recruitment processes, employer expectations, career opportunities, and interview strategies.</div>
+          </div>
+
+          <div className="bridge-feature-card">
+            <div className="bridge-feature-icon"><SvgMic /></div>
+            <div className="bridge-feature-title">Performance Tracking & Recognition</div>
+            <div className="bridge-feature-desc">Regular assessments, leaderboards, and feedback help participants measure their progress, stay motivated, and continuously improve throughout the program.</div>
           </div>
         </div>
       </div>
@@ -408,142 +411,119 @@ function MarqueeSection() {
 
 // Sections removed in favor of InteractiveRoadmap and CurriculumOrbit components
 
-function FeesSection() {
-  const ref = useScrollReveal();
-  const IS_EARLY_BIRD = true; // Toggle for early bird pricing
 
-  return (
-    <section className="fees-section" id="fees" ref={ref}>
-      <div className="container">
-        <div className="animate-reveal" style={{ textAlign: "center", marginBottom: "var(--space-16)" }}>
-          <p className="section-label" style={{ textAlign: "center" }}>Investment</p>
-          <h2
-            className="section-title"
-            style={{ textAlign: "center", maxWidth: "900px", margin: "0 auto var(--space-6)" }}
-          >
-            One <span className="accent-blue">Program</span>, Complete <span className="accent-blue">Transformation</span>
-          </h2>
-        </div>
-
-        <div className="fees-card animate-reveal">
-          <span className="badge badge-green fees-badge">Limited Seats</span>
-
-          {/* Dual-Price Tier Cards */}
-          <div className="fees-price-cards">
-            <div className="fees-tier-card">
-              <div className="fees-tier-label">Non-IEEE</div>
-              <div className="fees-tier-price">
-                {IS_EARLY_BIRD ? "\u20B9399" : "\u20B9499"}
-              </div>
-              {IS_EARLY_BIRD && (
-                <div className="fees-tier-original">{"\u20B9499"}</div>
-              )}
-            </div>
-            <div className="fees-tier-card featured">
-              <span className="fees-tier-badge">Best Value</span>
-              <div className="fees-tier-label">IEEE Member</div>
-              <div className="fees-tier-price">
-                {IS_EARLY_BIRD ? "\u20B9299" : "\u20B9399"}
-              </div>
-              {IS_EARLY_BIRD && (
-                <div className="fees-tier-original">{"\u20B9399"}</div>
-              )}
-            </div>
-          </div>
-
-          {IS_EARLY_BIRD && (
-            <div style={{ fontSize: "0.875rem", color: "var(--accent-primary)", fontWeight: "bold", marginBottom: "var(--space-4)", textAlign: "center" }}>
-              Early Bird Pricing Active!
-            </div>
-          )}
-
-          <div className="fees-price-sub" style={{ marginBottom: "var(--space-6)", textAlign: "center" }}>One-time payment &bull; Full access</div>
-
-          <p className="fees-description">
-            Get complete access to all 5 phases, live sessions, hands-on tasks,
-            mock interviews, and your completion certificate &mdash; all for less than
-            the cost of a textbook.
-          </p>
-          <ul className="fees-features">
-            {FEES_FEATURES.map((feature, i) => (
-              <li key={i}>
-                <span className="fees-check-icon"><SvgCheck /></span>
-                {feature}
-              </li>
-            ))}
-            <li>
-              <span className="fees-check-icon"><SvgCheck /></span>
-              <strong>100% REFUND</strong>
-            </li>
-            <li>
-              <span className="fees-check-icon"><SvgCheck /></span>
-              <strong>100% SCHOLARSHIP AVAILABLE*</strong>
-            </li>
-          </ul>
-          <Link href="/register" className="btn btn-primary btn-large w-full" id="fees-register-btn">
-            Register Now
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function FooterCTA() {
   const ref = useScrollReveal();
+  const [isEarlyBird, setIsEarlyBird] = useState(true);
+
+  useEffect(() => {
+    const earlyBirdEndStr = process.env.NEXT_PUBLIC_EARLY_BIRD_END_DATE;
+    if (earlyBirdEndStr && Date.now() > new Date(earlyBirdEndStr).getTime()) {
+      setIsEarlyBird(false);
+    }
+  }, []);
 
   return (
-    <section className="footer-cta" ref={ref}>
+    <section className="footer-cta" id="fees" ref={ref} style={{ padding: "100px 20px" }}>
       <div className="container">
-        <div className="animate-reveal">
+        <div className="animate-reveal" style={{ textAlign: "center", marginBottom: "var(--space-12)" }}>
           <h2 className="footer-cta-title">
             Start Your
             <br />
             Journey
           </h2>
-          <p className="footer-cta-sub">
+          <p className="footer-cta-sub" style={{ maxWidth: 600, margin: "0 auto" }}>
             Don&apos;t wait until placements are around the corner. Start preparing now and
             be the candidate everyone wants to hire.
           </p>
+        </div>
+
+        <div className="fees-price-cards animate-reveal" style={{ marginTop: "var(--space-10)", marginBottom: "var(--space-16)" }}>
+          {/* IEEE Members Tier */}
+          <div className="fees-tier-card featured" style={{ padding: "var(--space-10) var(--space-6)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <h3 className="fees-tier-label">IEEE Members</h3>
+            <div className="fees-tier-price" style={{ margin: 0 }}>
+              {isEarlyBird ? (
+                <>
+                  <span style={{ textDecoration: 'line-through', color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.6em', marginRight: '8px' }}>₹399</span>
+                  ₹299
+                </>
+              ) : (
+                <>₹399</>
+              )}
+            </div>
+            {isEarlyBird && <div style={{ color: 'var(--accent-yellow)', fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>Early Bird Price</div>}
+          </div>
+
+          {/* Non-IEEE Members Tier */}
+          <div className="fees-tier-card" style={{ padding: "var(--space-10) var(--space-6)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <h3 className="fees-tier-label">Non-IEEE Members</h3>
+            <div className="fees-tier-price" style={{ margin: 0 }}>
+              {isEarlyBird ? (
+                <>
+                  <span style={{ textDecoration: 'line-through', color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.6em', marginRight: '8px' }}>₹499</span>
+                  ₹399
+                </>
+              ) : (
+                <>₹499</>
+              )}
+            </div>
+            {isEarlyBird && <div style={{ color: 'var(--accent-yellow)', fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>Early Bird Price</div>}
+          </div>
+        </div>
+
+        <div className="animate-reveal" style={{ textAlign: "center", marginBottom: "var(--space-12)" }}>
+          <div style={{
+            display: "inline-flex",
+            flexDirection: "column",
+            gap: "16px",
+            background: "#000000",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            padding: "24px 48px",
+            borderRadius: "var(--radius-xl)",
+            backdropFilter: "blur(10px)",
+            boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
+            textAlign: "left"
+          }}>
+            <h4 style={{ color: "#ffffff", margin: 0, fontSize: "1.25rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px", display: "flex", alignItems: "flex-start", gap: "12px" }}>
+              <span style={{ color: "var(--accent-primary)", marginTop: "2px" }}><SvgCheck /></span> <span>100% Refund</span>
+            </h4>
+            <h4 style={{ color: "#ffffff", margin: 0, fontSize: "1.25rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px", display: "flex", alignItems: "flex-start", gap: "12px" }}>
+              <span style={{ color: "var(--accent-primary)", marginTop: "2px" }}><SvgCheck /></span> <span>100% Scholarship<br /> Available</span>
+            </h4>
+          </div>
+        </div>
+
+        <div className="animate-reveal" style={{ textAlign: "center" }}>
           <Link href="/register" className="btn btn-primary btn-large" id="footer-register-btn">
-            Register for C2C
+            Register for C2C Now
           </Link>
+        </div>
+        <div className="animate-reveal" style={{ textAlign: "center", marginTop: "var(--space-8)" }}>
+          <div style={{ background: "var(--surface-glass)", padding: "var(--space-6)", borderRadius: "var(--radius-xl)", border: "1px solid var(--border-subtle)", maxWidth: "600px", margin: "0 auto" }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", marginBottom: "var(--space-4)" }}>
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style={{ color: "var(--accent-yellow)" }}>
+                <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72l5 2.73 5-2.73v3.72z" />
+              </svg>
+              <h3 style={{ fontSize: "1.5rem", color: "var(--text-primary)", margin: 0, lineHeight: 1.2, textAlign: "center" }}>
+                Scholarship Registration
+              </h3>
+            </div>
+            <p style={{ color: "var(--text-secondary)", marginBottom: "var(--space-4)" }}>
+              If you are applying for the C2C financial aid track, click the button below to submit your application.
+              <br /><br />
+              <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>Note: Applicants using this track do not need to register through the standard registration portal.</span>
+            </p>
+            <Link href="/scholarship" className="btn btn-secondary">
+              Apply for Scholarship
+            </Link>
+          </div>
         </div>
       </div>
     </section>
   );
 }
-
-/* ===== Sticky CTA Bar ===== */
-function StickyCTABar() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      // Show after scrolling past hero (roughly 100vh)
-      const heroEl = document.getElementById("hero");
-      if (heroEl) {
-        const heroBottom = heroEl.offsetTop + heroEl.offsetHeight;
-        setVisible(window.scrollY > heroBottom - 100);
-      } else {
-        setVisible(window.scrollY > window.innerHeight * 0.8);
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  return (
-    <div className={`sticky-cta-bar ${visible ? "visible" : ""}`} id="sticky-cta">
-      <span className="sticky-cta-text">Ready to transform your career?</span>
-      <Link href="/register" className="btn btn-primary" id="sticky-register-btn">
-        Register Now
-      </Link>
-    </div>
-  );
-}
-
 
 /* ===== Main Page ===== */
 export default function LandingPage() {
@@ -564,7 +544,18 @@ export default function LandingPage() {
       observer.observe(el);
     });
 
-    return () => observer.disconnect();
+    // Robust refresh for GSAP ScrollTrigger to prevent pinning glitches
+    let count = 0;
+    const interval = setInterval(() => {
+      ScrollTrigger.refresh();
+      count++;
+      if (count > 5) clearInterval(interval);
+    }, 500);
+
+    return () => {
+      observer.disconnect();
+      clearInterval(interval);
+    };
   }, []);
 
   return (
@@ -578,12 +569,10 @@ export default function LandingPage() {
       <div className="section-divider" />
       <div id="phases"><InteractiveRoadmap /></div>
       <div className="section-divider" />
-      <div id="features"><CurriculumOrbit /></div>
-      <div className="section-divider" />
-      <FeesSection />
+      <CurriculumOrbit />
+
       <FooterCTA />
       <Footer />
-      <StickyCTABar />
     </main>
   );
 }

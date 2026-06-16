@@ -10,7 +10,7 @@ import {
   IconProfile,
   IconStar,
 } from "@/components/SvgIcons";
-import "./register.css";
+import "../register/register.css";
 
 /* ===== Types ===== */
 interface FormData {
@@ -145,7 +145,7 @@ function compressImage(file: File, maxDimension = 1200, quality = 0.6): Promise<
 }
 
 /* ===== Component ===== */
-export default function RegisterPage() {
+export default function ScholarshipPage() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
@@ -156,7 +156,7 @@ export default function RegisterPage() {
     email: "",
     isIeeeMember: false,
     ieeeNumber: "",
-    isApplyingScholarship: false,
+    isApplyingScholarship: true,
     q1Financial: "",
     q2Hours: "",
     q3Why: "",
@@ -243,7 +243,18 @@ export default function RegisterPage() {
       }
     }
     if (targetStep === 3) {
-      if (!screenshot) {
+      if (formData.isApplyingScholarship) {
+        let hasErrors = false;
+        const newErrors: FormErrors = {};
+        if (formData.q1Financial.trim().length < 20) { newErrors.q1Financial = "Please provide a more detailed answer."; hasErrors = true; }
+        if (formData.q2Hours.trim().length < 20) { newErrors.q2Hours = "Please provide a more detailed answer."; hasErrors = true; }
+        if (formData.q3Why.trim().length < 20) { newErrors.q3Why = "Please provide a more detailed answer."; hasErrors = true; }
+        if (formData.q4Roadblock.trim().length < 20) { newErrors.q4Roadblock = "Please provide a more detailed answer."; hasErrors = true; }
+        if (hasErrors) {
+          setErrors(newErrors);
+          return;
+        }
+      } else if (!screenshot) {
         setErrors({ screenshot: "Please upload your payment screenshot" });
         return;
       }
@@ -355,35 +366,49 @@ export default function RegisterPage() {
           <div className="register-card">
             <div className="success-container">
               <div className="success-icon"><IconStar size={44} /></div>
-
-              <h2 className="success-title" style={{ fontSize: "var(--text-2xl)" }}>
-                Submission <span className="accent-green">Successful</span>
-              </h2>
-              <p className="success-text" style={{ marginBottom: "var(--space-4)" }}>
-                Thank you for registering for the event. Your responses have been securely recorded.
-              </p>
-              <div style={{ textAlign: "left", background: "var(--surface-glass)", padding: "var(--space-4)", borderRadius: "var(--radius-md)", marginBottom: "var(--space-6)" }}>
-                <h4 style={{ color: "var(--accent-primary)", marginBottom: "var(--space-2)" }}>Next Steps:</h4>
-                <ul style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)", display: "flex", flexDirection: "column", gap: "var(--space-2)", paddingLeft: "var(--space-4)" }}>
-                  <li><strong style={{ color: "var(--text-primary)" }}>Payment Verification:</strong> Your application will be officially confirmed once your payment has been verified by our team.</li>
-                  <li><strong style={{ color: "var(--text-primary)" }}>Communications:</strong> Please closely monitor your registered email address and WhatsApp number for onboarding updates.</li>
-                  <li><strong style={{ color: "var(--text-primary)" }}>Further Updates:</strong> Kindly check the official WhatsApp group regularly for all real-time announcements.</li>
-                </ul>
-                <p style={{ color: "var(--text-muted)", fontSize: "var(--text-xs)", marginTop: "var(--space-4)", fontStyle: "italic" }}>
-                  — Organizing Committee, Team C2C
-                </p>
-              </div>
-
+              {formData.isApplyingScholarship ? (
+                <>
+                  <h2 className="success-title" style={{ fontSize: "var(--text-2xl)" }}>
+                    Submission <span className="accent-green">Successful</span>
+                  </h2>
+                  <p className="success-text" style={{ marginBottom: "var(--space-4)" }}>
+                    Thank you for completing the first phase of the C2C Scholarship Application. Your responses have been recorded.
+                  </p>
+                  <div style={{ textAlign: "left", background: "var(--surface-glass)", padding: "var(--space-4)", borderRadius: "var(--radius-md)", marginBottom: "var(--space-6)" }}>
+                    <h4 style={{ color: "var(--accent-primary)", marginBottom: "var(--space-2)" }}>Next Steps:</h4>
+                    <ul style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)", display: "flex", flexDirection: "column", gap: "var(--space-2)", paddingLeft: "var(--space-4)" }}>
+                      <li><strong style={{ color: "var(--text-primary)" }}>Evaluation Status:</strong> This selection process requires the completion of two distinct tasks. Your application will be evaluated based on your performance across both rounds.</li>
+                      <li><strong style={{ color: "var(--text-primary)" }}>Task 2 Notification:</strong> Detailed instructions for Task 2 will be issued shortly.</li>
+                      <li><strong style={{ color: "var(--text-primary)" }}>Communications:</strong> Please closely monitor your registered email address and WhatsApp number for further updates.</li>
+                    </ul>
+                    <p style={{ color: "var(--text-muted)", fontSize: "var(--text-xs)", marginTop: "var(--space-4)", fontStyle: "italic" }}>
+                      — Organizing Committee, Team C2C
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h2 className="success-title" style={{ fontSize: "var(--text-2xl)" }}>
+                    Submission <span className="accent-green">Successful</span>
+                  </h2>
+                  <p className="success-text" style={{ marginBottom: "var(--space-4)" }}>
+                    Thank you for registering for the event. Your responses have been securely recorded.
+                  </p>
+                  <div style={{ textAlign: "left", background: "var(--surface-glass)", padding: "var(--space-4)", borderRadius: "var(--radius-md)", marginBottom: "var(--space-6)" }}>
+                    <h4 style={{ color: "var(--accent-primary)", marginBottom: "var(--space-2)" }}>Next Steps:</h4>
+                    <ul style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)", display: "flex", flexDirection: "column", gap: "var(--space-2)", paddingLeft: "var(--space-4)" }}>
+                      <li><strong style={{ color: "var(--text-primary)" }}>Payment Verification:</strong> Your application will be officially confirmed once your payment has been verified by our team.</li>
+                      <li><strong style={{ color: "var(--text-primary)" }}>Communications:</strong> Please closely monitor your registered email address and WhatsApp number for onboarding updates.</li>
+                      <li><strong style={{ color: "var(--text-primary)" }}>Further Updates:</strong> Kindly check the official WhatsApp group regularly for all real-time announcements.</li>
+                    </ul>
+                    <p style={{ color: "var(--text-muted)", fontSize: "var(--text-xs)", marginTop: "var(--space-4)", fontStyle: "italic" }}>
+                      — Organizing Committee, Team C2C
+                    </p>
+                  </div>
+                </>
+              )}
               <div style={{ display: "flex", gap: "var(--space-4)", justifyContent: "center" }}>
-                <a
-                  href={process.env.NEXT_PUBLIC_WHATSAPP_LINK || "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn"
-                  style={{ backgroundColor: "#25D366", color: "white" }}
-                >
-                  Continue to WhatsApp
-                </a>
+
                 <Link href="/" className="btn btn-primary">
                   ← Back Home
                 </Link>
@@ -427,7 +452,7 @@ export default function RegisterPage() {
         </Link>
 
         <h1 className="register-title">
-          Register <span className="accent-yellow">Now</span>
+          Apply for <span className="accent-yellow">Scholarship</span>
         </h1>
         <p className="register-subtitle">
           Join the Campus 2 Corporate program and start your transformation.
@@ -657,7 +682,7 @@ export default function RegisterPage() {
             </div>
           )}
 
-          {/* Step 2: Payment */}
+          {/* Step 2: Questionnaire */}
           {step === 2 && (
             <div className="register-form payment-section">
               <h3
@@ -667,106 +692,51 @@ export default function RegisterPage() {
                   marginBottom: "var(--space-2)",
                 }}
               >
-                Payment & Scholarship
+                Financial Aid Application
               </h3>
 
-              <div style={{ marginBottom: "var(--space-6)" }}>
-                <h4 style={{ fontSize: "var(--text-lg)", color: "var(--text-primary)", marginBottom: "var(--space-2)" }}>Registration Fee</h4>
-                <p
-                  style={{
-                    fontSize: "var(--text-sm)",
-                    color: "var(--text-secondary)",
-                    marginBottom: "var(--space-6)",
-                  }}
-                >
-                  {isEarlyBird ? (
-                    <>
-                      Pay <span style={{ textDecoration: 'line-through', color: 'var(--text-muted)', marginRight: '8px' }}>₹{formData.isIeeeMember ? 399 : 499}</span>
-                      <strong>₹{amountToPay}</strong> (Early Bird Price) via UPI and upload a screenshot of the payment
-                    </>
-                  ) : (
-                    <>Pay ₹{amountToPay} via UPI and upload a screenshot of the payment</>
-                  )}
-                </p>
-
-                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--space-6)' }}>
-                  {amountToPay === 299 && (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-2)', width: '100%', maxWidth: '200px' }}>
-                      <div className="qr-container" style={{ margin: 0, width: '100%', aspectRatio: '1/1', height: 'auto' }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src="/C2C/QR/qr-299.png" alt="Payment QR Code ₹299" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} />
-                      </div>
-                      <div className="upi-id" style={{ margin: 0, padding: '8px', fontSize: '0.9rem', width: '100%', textAlign: 'center' }}>
-                        <strong>paytm.s1wsfli@pty</strong>
-                      </div>
-                    </div>
-                  )}
-                  {amountToPay === 399 && (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-2)', width: '100%', maxWidth: '200px' }}>
-                      <div className="qr-container" style={{ margin: 0, width: '100%', aspectRatio: '1/1', height: 'auto' }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src="/C2C/QR/qr-399.png" alt="Payment QR Code ₹399" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} />
-                      </div>
-                      <div className="upi-id" style={{ margin: 0, padding: '8px', fontSize: '0.9rem', width: '100%', textAlign: 'center' }}>
-                        <strong>paytm.s1wsfli@pty</strong>
-                      </div>
-                    </div>
-                  )}
-                  {amountToPay === 499 && (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-2)', width: '100%', maxWidth: '200px' }}>
-                      <div className="qr-container" style={{ margin: 0, width: '100%', aspectRatio: '1/1', height: 'auto' }}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src="/C2C/QR/qr-499.png" alt="Payment QR Code ₹499" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} />
-                      </div>
-                      <div className="upi-id" style={{ margin: 0, padding: '8px', fontSize: '0.9rem', width: '100%', textAlign: 'center' }}>
-                        <strong>paytm.s1wsfli@pty</strong>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div
-                  className={`screenshot-upload ${screenshot ? "has-file" : ""}`}
-                  id="screenshot-upload-area"
-                >
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    tabIndex={-1}
-                  />
-
-                  {screenshot ? (
-                    <>
-                      <div className="upload-icon"><IconCheckCircle size={28} /></div>
-                      <div className="upload-text">{screenshot.name}</div>
-                      <div className="upload-hint">Click to change file</div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="upload-icon"><IconFileDown size={28} /></div>
-                      <div className="upload-text">
-                        Click to upload payment screenshot
-                      </div>
-                      <div className="upload-hint">PNG, JPG, JPEG — Max 10MB</div>
-                    </>
-                  )}
-                </div>
-
-                {screenshotPreview && (
-                  <div className="screenshot-preview">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={screenshotPreview} alt="Payment screenshot preview" />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)', marginBottom: 'var(--space-6)', marginTop: 'var(--space-4)' }}>
+                  <div className="input-group">
+                    <label className="input-label">1. Please briefly describe your current financial situation or constraints that make the upfront ₹{amountToPay} fee a barrier for you right now. <span style={{ color: "var(--accent-tertiary)" }}>*</span></label>
+                    <textarea
+                      className="input"
+                      rows={3}
+                      value={formData.q1Financial}
+                      onChange={(e) => updateField("q1Financial", e.target.value)}
+                    />
+                    {errors.q1Financial && <div className="form-error">{errors.q1Financial}</div>}
                   </div>
-                )}
-
-                {errors.screenshot && (
-                  <div className="form-error" style={{ marginTop: "var(--space-2)" }}>
-                    {errors.screenshot}
+                  <div className="input-group">
+                    <label className="input-label">2. This 5-month bootcamp requires consistency. How many hours per week do you plan to dedicate to C2C, and how will you balance this with your college curriculum/exams? <span style={{ color: "var(--accent-tertiary)" }}>*</span></label>
+                    <textarea
+                      className="input"
+                      rows={3}
+                      value={formData.q2Hours}
+                      onChange={(e) => updateField("q2Hours", e.target.value)}
+                    />
+                    {errors.q2Hours && <div className="form-error">{errors.q2Hours}</div>}
                   </div>
-                )}
-              </div>
+                  <div className="input-group">
+                    <label className="input-label">3. (The Personal &apos;Why&apos;) Where do you see yourself technically and professionally 5 months from now, and why is the C2C bootcamp the exact vehicle you need to get there? <span style={{ color: "var(--accent-tertiary)" }}>*</span></label>
+                    <textarea
+                      className="input"
+                      rows={3}
+                      value={formData.q3Why}
+                      onChange={(e) => updateField("q3Why", e.target.value)}
+                    />
+                    {errors.q3Why && <div className="form-error">{errors.q3Why}</div>}
+                  </div>
+                  <div className="input-group">
+                    <label className="input-label">4. (The Problem-Solving Mindset) Tell us about a time you encountered a tough technical roadblock (a bug, a difficult concept, or a failed project). How did you go about solving it, and what did you learn about your own learning process? <span style={{ color: "var(--accent-tertiary)" }}>*</span></label>
+                    <textarea
+                      className="input"
+                      rows={4}
+                      value={formData.q4Roadblock}
+                      onChange={(e) => updateField("q4Roadblock", e.target.value)}
+                    />
+                    {errors.q4Roadblock && <div className="form-error">{errors.q4Roadblock}</div>}
+                  </div>
+                </div>
 
               <div className="form-actions">
                 <button type="button" className="btn btn-secondary btn-large" onClick={() => goToStep(1)} id="step2-back-btn">
@@ -823,7 +793,7 @@ export default function RegisterPage() {
               </div>
               <div className="confirm-row">
                 <span className="confirm-label">Amount to Pay</span>
-                <span className="confirm-value">₹{amountToPay}</span>
+                <span className="confirm-value">{formData.isApplyingScholarship ? "₹0 (Scholarship Applied)" : `₹${amountToPay}`}</span>
               </div>
               <div className="confirm-row">
                 <span className="confirm-label">Email</span>
@@ -836,11 +806,11 @@ export default function RegisterPage() {
                 </div>
               )}
               <div className="confirm-row">
-                <span className="confirm-label">Payment</span>
-                <span className="confirm-value accent-green">Screenshot Attached</span>
+                <span className="confirm-label">{formData.isApplyingScholarship ? "Scholarship" : "Payment"}</span>
+                <span className="confirm-value accent-green">{formData.isApplyingScholarship ? "Applied for Financial Aid" : "Screenshot Attached"}</span>
               </div>
 
-              {screenshotPreview && (
+              {!formData.isApplyingScholarship && screenshotPreview && (
                 <div className="confirm-screenshot">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={screenshotPreview} alt="Payment screenshot" />

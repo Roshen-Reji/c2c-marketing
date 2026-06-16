@@ -53,10 +53,6 @@ export default function Footer() {
               <span className="cs-contact-name">(Arya C Anish)</span>
             </span>
             <span className="cs-footer-text" style={{ marginTop: '0.25rem' }}>
-              +91 79071 97146 <br />
-              <span className="cs-contact-name">(Nidha Najeeb)</span>
-            </span>
-            <span className="cs-footer-text" style={{ marginTop: '0.25rem' }}>
               +91 88482 75740 <br />
               <span className="cs-contact-name">(A Ansila Safrin)</span>
             </span>

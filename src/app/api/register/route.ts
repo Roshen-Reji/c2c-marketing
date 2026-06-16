@@ -14,12 +14,16 @@ export async function POST(request: NextRequest) {
     const batch = formData.get("batch") as string;
     const year = formData.get("year") as string;
     const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
     const googleUid = formData.get("googleUid") as string;
     const googleIdToken = formData.get("googleIdToken") as string;
     const isIeeeMember = formData.get("isIeeeMember") === "true";
     const ieeeNumber = (formData.get("ieeeNumber") as string) || "";
     const amountToPay = (formData.get("amountToPay") as string) || "";
+    const isApplyingScholarship = formData.get("isApplyingScholarship") === "true";
+    const q1Financial = (formData.get("q1Financial") as string) || "";
+    const q2Hours = (formData.get("q2Hours") as string) || "";
+    const q3Why = (formData.get("q3Why") as string) || "";
+    const q4Roadblock = (formData.get("q4Roadblock") as string) || "";
     // Screenshot is uploaded directly to Google Drive by the browser.
     // We only receive the Drive URL here.
     const screenshotUrl = (formData.get("screenshotUrl") as string) || "";
@@ -32,13 +36,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Require password if not using Google Auth
-    if (!googleUid && (!password || password.length < 6)) {
-      return NextResponse.json(
-        { error: "Password must be at least 6 characters" },
-        { status: 400 }
-      );
-    }
 
     // Validate email format
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -70,7 +67,6 @@ export async function POST(request: NextRequest) {
       try {
         const userRecord = await adminAuth.createUser({
           email: email.toLowerCase(),
-          password: password,
           displayName: fullName,
         });
         userId = userRecord.uid;
@@ -98,6 +94,13 @@ export async function POST(request: NextRequest) {
         status: "pending",
         role: "student",
         paymentScreenshot: screenshotUrl,
+        isApplyingScholarship,
+        scholarshipData: isApplyingScholarship ? {
+          q1Financial,
+          q2Hours,
+          q3Why,
+          q4Roadblock,
+        } : null,
         registeredAt: new Date(),
         totalPoints: 0,
         streak: 0,
@@ -122,13 +125,27 @@ export async function POST(request: NextRequest) {
         phone.trim(),
         batch,
         year,
-        screenshotUrl,
+        isApplyingScholarship ? "Scholarship Applied" : screenshotUrl,
         timestamp,
         "pending",
         isIeeeMember ? "Yes" : "No",
         ieeeNumber || "N/A",
-        amountToPay || "N/A",
+        isApplyingScholarship ? "Scholarship" : amountToPay || "N/A",
       ]);
+
+      if (isApplyingScholarship) {
+        await appendSheetRecord("scholarships", [
+          userId,
+          fullName.trim(),
+          email.toLowerCase().trim(),
+          phone.trim(),
+          q1Financial,
+          q2Hours,
+          q3Why,
+          q4Roadblock,
+          timestamp,
+        ]);
+      }
     } catch (sheetsErr) {
       console.warn("Google Sheets registration sync failed:", sheetsErr);
     }
