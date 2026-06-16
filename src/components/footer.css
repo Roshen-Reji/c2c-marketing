@@ -85,7 +85,8 @@
 }
 
 .cs-footer-logo {
-  height: 120px;
+  height: 160px !important;
+  max-width: 100% !important;
   width: auto;
   object-fit: contain;
   opacity: 0.6;
@@ -110,7 +111,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
+  gap: 0.25rem;
 }
 
 .cs-footer-location {
@@ -211,7 +212,7 @@
     width: calc(100% - 2rem);
     margin-left: 1rem;
     margin-right: 1rem;
-    padding: 1.5rem;
+    padding: 1.25rem;
     margin-bottom: 1rem;
   }
 
@@ -240,18 +241,19 @@
     text-align: center;
     gap: 0.5rem;
     margin-top: 0;
-    padding: 0 1rem;
+    padding: 0 0.25rem;
     width: 100%;
   }
 
   .cs-footer-logos {
-    gap: 1rem;
+    gap: 0.25rem;
     margin-top: 0;
     margin-bottom: 0;
     width: 100%;
   }
 
   .cs-footer-logo {
-    height: 100px;
+    height: 120px !important;
+    max-width: 100% !important;
   }
 }

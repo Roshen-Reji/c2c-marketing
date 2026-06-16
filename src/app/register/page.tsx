@@ -356,23 +356,23 @@ export default function RegisterPage() {
             <div className="success-container">
               <div className="success-icon"><IconStar size={44} /></div>
 
-                  <h2 className="success-title" style={{ fontSize: "var(--text-2xl)" }}>
-                    Submission <span className="accent-green">Successful</span>
-                  </h2>
-                  <p className="success-text" style={{ marginBottom: "var(--space-4)" }}>
-                    Thank you for registering for the event. Your responses have been securely recorded.
-                  </p>
-                  <div style={{ textAlign: "left", background: "var(--surface-glass)", padding: "var(--space-4)", borderRadius: "var(--radius-md)", marginBottom: "var(--space-6)" }}>
-                    <h4 style={{ color: "var(--accent-primary)", marginBottom: "var(--space-2)" }}>Next Steps:</h4>
-                    <ul style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)", display: "flex", flexDirection: "column", gap: "var(--space-2)", paddingLeft: "var(--space-4)" }}>
-                      <li><strong style={{ color: "var(--text-primary)" }}>Payment Verification:</strong> Your application will be officially confirmed once your payment has been verified by our team.</li>
-                      <li><strong style={{ color: "var(--text-primary)" }}>Communications:</strong> Please closely monitor your registered email address and WhatsApp number for onboarding updates.</li>
-                      <li><strong style={{ color: "var(--text-primary)" }}>Further Updates:</strong> Kindly check the official WhatsApp group regularly for all real-time announcements.</li>
-                    </ul>
-                    <p style={{ color: "var(--text-muted)", fontSize: "var(--text-xs)", marginTop: "var(--space-4)", fontStyle: "italic" }}>
-                      — Organizing Committee, Team C2C
-                    </p>
-                  </div>
+              <h2 className="success-title" style={{ fontSize: "var(--text-2xl)" }}>
+                Submission <span className="accent-green">Successful</span>
+              </h2>
+              <p className="success-text" style={{ marginBottom: "var(--space-4)" }}>
+                Thank you for registering for the event. Your responses have been securely recorded.
+              </p>
+              <div style={{ textAlign: "left", background: "var(--surface-glass)", padding: "var(--space-4)", borderRadius: "var(--radius-md)", marginBottom: "var(--space-6)" }}>
+                <h4 style={{ color: "var(--accent-primary)", marginBottom: "var(--space-2)" }}>Next Steps:</h4>
+                <ul style={{ color: "var(--text-secondary)", fontSize: "var(--text-sm)", display: "flex", flexDirection: "column", gap: "var(--space-2)", paddingLeft: "var(--space-4)" }}>
+                  <li><strong style={{ color: "var(--text-primary)" }}>Payment Verification:</strong> Your application will be officially confirmed once your payment has been verified by our team.</li>
+                  <li><strong style={{ color: "var(--text-primary)" }}>Communications:</strong> Please closely monitor your registered email address and WhatsApp number for onboarding updates.</li>
+                  <li><strong style={{ color: "var(--text-primary)" }}>Further Updates:</strong> Kindly check the official WhatsApp group regularly for all real-time announcements.</li>
+                </ul>
+                <p style={{ color: "var(--text-muted)", fontSize: "var(--text-xs)", marginTop: "var(--space-4)", fontStyle: "italic" }}>
+                  — Organizing Committee, Team C2C
+                </p>
+              </div>
 
               <div style={{ display: "flex", gap: "var(--space-4)", justifyContent: "center" }}>
                 <a
@@ -672,80 +672,101 @@ export default function RegisterPage() {
 
               <div style={{ marginBottom: "var(--space-6)" }}>
                 <h4 style={{ fontSize: "var(--text-lg)", color: "var(--text-primary)", marginBottom: "var(--space-2)" }}>Registration Fee</h4>
-                  <p
-                    style={{
-                      fontSize: "var(--text-sm)",
-                      color: "var(--text-secondary)",
-                      marginBottom: "var(--space-6)",
-                    }}
-                  >
-                    {isEarlyBird ? (
-                      <>
-                        Pay <span style={{ textDecoration: 'line-through', color: 'var(--text-muted)', marginRight: '8px' }}>₹{formData.isIeeeMember ? 399 : 499}</span>
-                        <strong>₹{amountToPay}</strong> (Early Bird Price) via UPI and upload a screenshot of the payment
-                      </>
-                    ) : (
-                      <>Pay ₹{amountToPay} via UPI and upload a screenshot of the payment</>
-                    )}
-                  </p>
+                <p
+                  style={{
+                    fontSize: "var(--text-sm)",
+                    color: "var(--text-secondary)",
+                    marginBottom: "var(--space-6)",
+                  }}
+                >
+                  {isEarlyBird ? (
+                    <>
+                      Pay <span style={{ textDecoration: 'line-through', color: 'var(--text-muted)', marginRight: '8px' }}>₹{formData.isIeeeMember ? 399 : 499}</span>
+                      <strong>₹{amountToPay}</strong> (Early Bird Price) via UPI and upload a screenshot of the payment
+                    </>
+                  ) : (
+                    <>Pay ₹{amountToPay} via UPI and upload a screenshot of the payment</>
+                  )}
+                </p>
 
-                  <div className="qr-container">
-                    {process.env.NEXT_PUBLIC_PAYMENT_QR_IMAGE_URL ? (
-                      <>
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--space-6)' }}>
+                  {amountToPay === 299 && (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-2)', width: '100%', maxWidth: '200px' }}>
+                      <div className="qr-container" style={{ margin: 0, width: '100%', aspectRatio: '1/1', height: 'auto' }}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={process.env.NEXT_PUBLIC_PAYMENT_QR_IMAGE_URL} alt="Payment QR Code" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                      </>
-                    ) : (
-                      <div className="qr-placeholder"><IconProfile size={34} /></div>
-                    )}
-                  </div>
-
-                  <div className="upi-id">
-                    UPI ID: <strong>{process.env.NEXT_PUBLIC_PAYMENT_UPI_ID || "c2c.ieee@upi"}</strong>
-                  </div>
-
-                  <div
-                    className={`screenshot-upload ${screenshot ? "has-file" : ""}`}
-                    id="screenshot-upload-area"
-                  >
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      tabIndex={-1}
-                    />
-
-                    {screenshot ? (
-                      <>
-                        <div className="upload-icon"><IconCheckCircle size={28} /></div>
-                        <div className="upload-text">{screenshot.name}</div>
-                        <div className="upload-hint">Click to change file</div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="upload-icon"><IconFileDown size={28} /></div>
-                        <div className="upload-text">
-                          Click to upload payment screenshot
-                        </div>
-                        <div className="upload-hint">PNG, JPG, JPEG — Max 10MB</div>
-                      </>
-                    )}
-                  </div>
-
-                  {screenshotPreview && (
-                    <div className="screenshot-preview">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={screenshotPreview} alt="Payment screenshot preview" />
+                        <img src="/C2C/QR/qr-299.png" alt="Payment QR Code ₹299" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} />
+                      </div>
+                      <div className="upi-id" style={{ margin: 0, padding: '8px', fontSize: '0.9rem', width: '100%', textAlign: 'center' }}>
+                        <strong>paytm.s1wsfli@pty</strong>
+                      </div>
                     </div>
                   )}
-
-                  {errors.screenshot && (
-                    <div className="form-error" style={{ marginTop: "var(--space-2)" }}>
-                      {errors.screenshot}
+                  {amountToPay === 399 && (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-2)', width: '100%', maxWidth: '200px' }}>
+                      <div className="qr-container" style={{ margin: 0, width: '100%', aspectRatio: '1/1', height: 'auto' }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src="/C2C/QR/qr-399.png" alt="Payment QR Code ₹399" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} />
+                      </div>
+                      <div className="upi-id" style={{ margin: 0, padding: '8px', fontSize: '0.9rem', width: '100%', textAlign: 'center' }}>
+                        <strong>paytm.s1wsfli@pty</strong>
+                      </div>
+                    </div>
+                  )}
+                  {amountToPay === 499 && (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-2)', width: '100%', maxWidth: '200px' }}>
+                      <div className="qr-container" style={{ margin: 0, width: '100%', aspectRatio: '1/1', height: 'auto' }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src="/C2C/QR/qr-499.png" alt="Payment QR Code ₹499" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} />
+                      </div>
+                      <div className="upi-id" style={{ margin: 0, padding: '8px', fontSize: '0.9rem', width: '100%', textAlign: 'center' }}>
+                        <strong>paytm.s1wsfli@pty</strong>
+                      </div>
                     </div>
                   )}
                 </div>
+
+                <div
+                  className={`screenshot-upload ${screenshot ? "has-file" : ""}`}
+                  id="screenshot-upload-area"
+                >
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    tabIndex={-1}
+                  />
+
+                  {screenshot ? (
+                    <>
+                      <div className="upload-icon"><IconCheckCircle size={28} /></div>
+                      <div className="upload-text">{screenshot.name}</div>
+                      <div className="upload-hint">Click to change file</div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="upload-icon"><IconFileDown size={28} /></div>
+                      <div className="upload-text">
+                        Click to upload payment screenshot
+                      </div>
+                      <div className="upload-hint">PNG, JPG, JPEG — Max 10MB</div>
+                    </>
+                  )}
+                </div>
+
+                {screenshotPreview && (
+                  <div className="screenshot-preview">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={screenshotPreview} alt="Payment screenshot preview" />
+                  </div>
+                )}
+
+                {errors.screenshot && (
+                  <div className="form-error" style={{ marginTop: "var(--space-2)" }}>
+                    {errors.screenshot}
+                  </div>
+                )}
+              </div>
 
               <div className="form-actions">
                 <button type="button" className="btn btn-secondary btn-large" onClick={() => goToStep(1)} id="step2-back-btn">

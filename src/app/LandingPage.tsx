@@ -307,7 +307,7 @@ function HeroSection() {
           </h1>
 
           <p className="hero-subtitle">
-            A comprehensive, multi-phase online placement readiness program by IEEE WIE SBC and IEEE SB CE Kidangoor, explicitly designed to help B.Tech students secure internships and job opportunities.
+            A comprehensive, multi-phase online placement readiness program by IEEE WIE SBC and IEEE SB CE Kidangoor, explicitly designed to help B-Tech students secure internships and job opportunities.
           </p>
 
           {/* Stats Bar — repositioned between subtitle and CTAs */}
@@ -477,19 +477,20 @@ function FooterCTA() {
           <div style={{
             display: "inline-flex",
             flexDirection: "column",
-            gap: "12px",
-            background: "rgba(13, 0, 255, 0.19)",
-            border: "1px solid  rgba(13, 0, 255, 0.2)",
+            gap: "16px",
+            background: "#000000",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
             padding: "24px 48px",
             borderRadius: "var(--radius-xl)",
-            boxShadow: "0 0 30px  rgba(13, 0, 255, 0.1)",
-            backdropFilter: "blur(10px)"
+            backdropFilter: "blur(10px)",
+            boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
+            textAlign: "left"
           }}>
-            <h4 style={{ color: "#0065ff", margin: 0, fontSize: "1.25rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px", display: "flex", alignItems: "center", gap: "10px", justifyContent: "center" }}>
-              <SvgCheck /> 100% Refund
+            <h4 style={{ color: "#ffffff", margin: 0, fontSize: "1.25rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px", display: "flex", alignItems: "flex-start", gap: "12px" }}>
+              <span style={{ color: "var(--accent-primary)", marginTop: "2px" }}><SvgCheck /></span> <span>100% Refund</span>
             </h4>
-            <h4 style={{ color: "#0065ff", margin: 0, fontSize: "1.25rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px", display: "flex", alignItems: "center", gap: "10px", justifyContent: "center" }}>
-              <SvgCheck /> 100% Scholarship<br /> Available
+            <h4 style={{ color: "#ffffff", margin: 0, fontSize: "1.25rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "1px", display: "flex", alignItems: "flex-start", gap: "12px" }}>
+              <span style={{ color: "var(--accent-primary)", marginTop: "2px" }}><SvgCheck /></span> <span>100% Scholarship<br /> Available</span>
             </h4>
           </div>
         </div>
@@ -503,8 +504,8 @@ function FooterCTA() {
           <div style={{ background: "var(--surface-glass)", padding: "var(--space-6)", borderRadius: "var(--radius-xl)", border: "1px solid var(--border-subtle)", maxWidth: "600px", margin: "0 auto" }}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", marginBottom: "var(--space-4)" }}>
               <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style={{ color: "var(--accent-yellow)" }}>
-                <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72l5 2.73 5-2.73v3.72z"/>
-              </svg> 
+                <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72l5 2.73 5-2.73v3.72z" />
+              </svg>
               <h3 style={{ fontSize: "1.5rem", color: "var(--text-primary)", margin: 0, lineHeight: 1.2, textAlign: "center" }}>
                 Scholarship Registration
               </h3>

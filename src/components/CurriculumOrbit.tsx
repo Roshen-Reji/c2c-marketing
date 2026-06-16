@@ -39,11 +39,9 @@ export default function CurriculumOrbit() {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
-        pin: true,
-        scrub: 1.5,
-        start: "top top",
-        end: "+=800",
-        anticipatePin: 1,
+        scrub: 1,
+        start: "top center",
+        end: "bottom top",
       }
     });
 
@@ -72,7 +70,9 @@ export default function CurriculumOrbit() {
       id="features"
       ref={containerRef}
       style={{
-        height: "100vh",
+        minHeight: isMobile ? 500 : 600,
+        height: "auto",
+        padding: "40px 0 20px 0",
         width: "100%",
         background: "var(--bg-secondary)",
         position: "relative",
@@ -82,7 +82,7 @@ export default function CurriculumOrbit() {
       }}
     >
       {/* Title */}
-      <div style={{ position: "absolute", top: isMobile ? 40 : 80, left: 0, width: "100%", textAlign: "center", zIndex: 1 }}>
+      <div style={{ position: "relative", width: "100%", textAlign: "center", zIndex: 1 }}>
         <p className="mono-text" style={{ color: "var(--accent-primary)", fontSize: "var(--text-xs)", letterSpacing: 4, marginBottom: 16, opacity: 0.8 }}>THE REASON</p>
         <h2 className="display-text" style={{ fontSize: isMobile ? "clamp(3rem, 10vw, 4rem)" : "clamp(4.5rem, 8vw, 7rem)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 0.85, textTransform: "uppercase", opacity: 0.15 }}>
           WHY <span className="accent-green">C2C</span>
@@ -90,7 +90,7 @@ export default function CurriculumOrbit() {
       </div>
 
       {/* Animation Area */}
-      <div style={{ flex: 1, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", marginTop: 140 }}>
+      <div style={{ flex: 1, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", marginTop: isMobile ? 40 : 80 }}>
 
         {/* Orbit Group */}
         <div

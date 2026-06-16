@@ -182,7 +182,7 @@ export default function InteractiveRoadmap() {
     <section
       ref={containerRef}
       style={{
-        padding: "100px 20px",
+        padding: "80px 20px 20px 20px",
         background: "var(--bg-primary)",
         position: "relative",
         overflow: "hidden", 
@@ -343,21 +343,21 @@ export default function InteractiveRoadmap() {
                       left: cardLeft,
                       top: cardTop,
                       width: isMobile ? "calc(100vw - 130px)" : 240,
+                      height: 150,
                       maxWidth: 320,
-                      background: "var(--bg-card)",
-                      backdropFilter: "none",
-                      WebkitBackdropFilter: "none",
-                      border: "1px solid rgba(255, 255, 255, 0.05)",
+                      background: "linear-gradient(135deg, rgba(30, 30, 35, 0.9) 0%, rgba(10, 10, 12, 0.95) 100%)",
+                      backdropFilter: "blur(10px)",
+                      WebkitBackdropFilter: "blur(10px)",
+                      border: "1px solid rgba(255, 255, 255, 0.08)",
                       borderRadius: "var(--radius-xl)",
-                      padding: "24px",
-                      boxShadow: "0 15px 35px rgba(0,0,0,0.4)",
-                      borderTop: `2px solid var(--accent-primary)`,
+                      padding: "20px 24px",
+                      boxShadow: "0 20px 40px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1)",
+                      borderTop: `3px solid var(--accent-primary)`,
                       transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease",
                       cursor: "pointer",
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "center",
-                      minHeight: "100px",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = "translateY(-4px)";
@@ -382,10 +382,10 @@ export default function InteractiveRoadmap() {
                       {phase.title}
                     </h4>
                     <p style={{ 
-                      color: "var(--text-primary)", 
-                      fontSize: 18, 
-                      fontWeight: 600,
-                      lineHeight: 1.3,
+                      color: "var(--text-secondary)", 
+                      fontSize: 16, 
+                      fontWeight: 400,
+                      lineHeight: 1.4,
                       margin: 0
                     }}>
                       "{phase.subtitle}"
