@@ -92,7 +92,7 @@ const SHEETS = {
   registrations: {
     title: "Registrations",
     headers: [
-      "Student ID", "Full Name", "Email", "Phone", "Branch", "Year",
+      "Student ID", "Full Name", "Email", "Phone", "College", "Branch", "Year",
       "Payment Proof", "Registered At", "Status",
       "IEEE Member", "IEEE Number", "Amount Paid", "Payment Type"
     ],
@@ -125,7 +125,7 @@ const SHEETS = {
   scholarships: {
     title: "Scholarships",
     headers: [
-      "Student ID", "Full Name", "Email", "Phone",
+      "Student ID", "Full Name", "Email", "Phone", "College",
       "Q1 (Financial)", "Q2 (Hours)", "Q3 (Why)", "Q4 (Roadblock)", "Applied At"
     ],
   },

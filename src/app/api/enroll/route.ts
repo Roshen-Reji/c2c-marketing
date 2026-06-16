@@ -11,6 +11,7 @@ export async function POST(request: NextRequest) {
 
     const fullName = formData.get("fullName") as string;
     const phone = formData.get("phone") as string;
+    const college = formData.get("college") as string;
     const batch = formData.get("batch") as string;
     const year = formData.get("year") as string;
     const email = formData.get("email") as string;
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
     const screenshotUrl = (formData.get("screenshotUrl") as string) || "";
 
     // Validate required fields
-    if (!fullName || !phone || !batch || !year || !email) {
+    if (!fullName || !phone || !college || !batch || !year || !email) {
       return NextResponse.json(
         { error: "All fields are required" },
         { status: 400 }
@@ -75,6 +76,7 @@ export async function POST(request: NextRequest) {
         fullName: fullName.trim(),
         email: email.toLowerCase().trim(),
         phone: phone.trim(),
+        college: college.trim(),
         batch,
         year,
         status: "pending",
@@ -109,6 +111,7 @@ export async function POST(request: NextRequest) {
         fullName.trim(),
         email.toLowerCase().trim(),
         phone.trim(),
+        college.trim(),
         batch,
         year,
         isApplyingScholarship ? "Scholarship Applied" : screenshotUrl,
@@ -126,6 +129,7 @@ export async function POST(request: NextRequest) {
           fullName.trim(),
           email.toLowerCase().trim(),
           phone.trim(),
+          college.trim(),
           q1Financial,
           q2Hours,
           q3Why,
