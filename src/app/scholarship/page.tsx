@@ -327,7 +327,7 @@ export default function ScholarshipPage() {
       // 3. Send registration data (text only — no file) to register API
       submitData.append("screenshotUrl", screenshotUrl);
 
-      const res = await fetch("/C2C/api/register", {
+      const res = await fetch("/C2C/api/enroll", {
         method: "POST",
         body: submitData,
       });
