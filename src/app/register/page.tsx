@@ -690,11 +690,16 @@ export default function RegisterPage() {
                   </p>
 
                   <div className="qr-container">
-                    <div className="qr-placeholder"><IconProfile size={34} /></div>
+                    {process.env.NEXT_PUBLIC_PAYMENT_QR_IMAGE_URL ? (
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={process.env.NEXT_PUBLIC_PAYMENT_QR_IMAGE_URL} alt="Payment QR Code" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    ) : (
+                      <div className="qr-placeholder"><IconProfile size={34} /></div>
+                    )}
                   </div>
 
                   <div className="upi-id">
-                    UPI ID: <strong>c2c.ieee@upi</strong>
+                    UPI ID: <strong>{process.env.NEXT_PUBLIC_PAYMENT_UPI_ID || "c2c.ieee@upi"}</strong>
                   </div>
 
                   <div
