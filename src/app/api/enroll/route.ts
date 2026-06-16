@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
     const ieeeNumber = (formData.get("ieeeNumber") as string) || "";
     const amountToPay = (formData.get("amountToPay") as string) || "";
     const isApplyingScholarship = formData.get("isApplyingScholarship") === "true";
+    const isEarlyBird = formData.get("isEarlyBird") === "true";
     const q1Financial = (formData.get("q1Financial") as string) || "";
     const q2Hours = (formData.get("q2Hours") as string) || "";
     const q3Why = (formData.get("q3Why") as string) || "";
@@ -116,6 +117,7 @@ export async function POST(request: NextRequest) {
         isIeeeMember ? "Yes" : "No",
         ieeeNumber || "N/A",
         isApplyingScholarship ? "Scholarship" : amountToPay || "N/A",
+        isApplyingScholarship ? "N/A" : (isEarlyBird ? "Early Bird" : "Full Payment"),
       ]);
 
       if (isApplyingScholarship) {

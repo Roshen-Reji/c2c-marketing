@@ -94,11 +94,11 @@ const SHEETS = {
     headers: [
       "Student ID", "Full Name", "Email", "Phone", "Branch", "Year",
       "Payment Proof", "Registered At", "Status",
-      "IEEE Member", "IEEE Number", "Amount Paid",
+      "IEEE Member", "IEEE Number", "Amount Paid", "Payment Type"
     ],
   },
   preRegistrations: {
-    title: "Pre-Registrations",
+    title: "Notifications",
     headers: ["Name", "Email", "Phone", "Requested At", "Status"],
   },
   submissions: {
