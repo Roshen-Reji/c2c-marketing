@@ -16,6 +16,7 @@ import "./register.css";
 interface FormData {
   fullName: string;
   phone: string;
+  college: string;
   batch: string;
   otherBranch?: string;
   year: string;
@@ -33,6 +34,7 @@ interface FormData {
 interface FormErrors {
   fullName?: string;
   phone?: string;
+  college?: string;
   batch?: string;
   otherBranch?: string;
   year?: string;
@@ -61,6 +63,8 @@ function validateStep1(data: FormData): FormErrors {
   if (!data.phone.trim()) errors.phone = "Phone number is required";
   else if (!/^\d{10}$/.test(data.phone.replace(/\D/g, '')))
     errors.phone = "Please enter a valid 10-digit phone number";
+
+  if (!data.college.trim()) errors.college = "College name is required";
 
   if (!data.batch) errors.batch = "Please select your branch";
   else if (data.batch === "Others.." && !data.otherBranch?.trim()) errors.batch = "Please specify your branch";
@@ -150,6 +154,7 @@ export default function RegisterPage() {
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
     phone: "",
+    college: "",
     batch: "",
     otherBranch: "",
     year: "",
@@ -238,6 +243,7 @@ export default function RegisterPage() {
       const submitData = new FormData();
       submitData.append("fullName", formData.fullName.trim());
       submitData.append("phone", formData.phone.trim());
+      submitData.append("college", formData.college.trim());
       submitData.append("batch", formData.batch === "Others.." ? (formData.otherBranch || "").trim() : formData.batch);
       submitData.append("year", formData.year);
       submitData.append("email", formData.email.trim().toLowerCase());
@@ -459,6 +465,21 @@ export default function RegisterPage() {
                   onChange={(e) => updateField("phone", e.target.value)}
                 />
                 {errors.phone && <div className="form-error">{errors.phone}</div>}
+              </div>
+
+              <div className="input-group">
+                <label className="input-label" htmlFor="college">
+                  College Name <span style={{ color: "var(--accent-tertiary)" }}>*</span>
+                </label>
+                <input
+                  id="college"
+                  type="text"
+                  className="input"
+                  placeholder="Enter Your College Name"
+                  value={formData.college}
+                  onChange={(e) => updateField("college", e.target.value)}
+                />
+                {errors.college && <div className="form-error">{errors.college}</div>}
               </div>
 
               <div className="form-row">
@@ -730,6 +751,10 @@ export default function RegisterPage() {
               <div className="confirm-row">
                 <span className="confirm-label">Phone</span>
                 <span className="confirm-value">{formData.phone}</span>
+              </div>
+              <div className="confirm-row">
+                <span className="confirm-label">College</span>
+                <span className="confirm-value">{formData.college}</span>
               </div>
               <div className="confirm-row">
                 <span className="confirm-label">Branch</span>
