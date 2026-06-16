@@ -307,7 +307,7 @@ function HeroSection() {
           </h1>
 
           <p className="hero-subtitle">
-            A multi-phase online placement readiness program for B-Tech students to secure internships and job opportunities.
+            A comprehensive, multi-phase online placement readiness program by IEEE WIE SBC and IEEE SB CE Kidangoor, explicitly designed to help B.Tech students secure internships and job opportunities.
           </p>
 
           {/* Stats Bar — repositioned between subtitle and CTAs */}
@@ -356,10 +356,6 @@ function BridgeSection() {
         <h2 className="bridge-title">
           Your Bridge to the <span className="accent-blue">Industry</span>
         </h2>
-        <p className="bridge-subtitle">
-          A comprehensive, multi-phase online placement readiness program by IEEE WIE SB CE Kidangoor in collaboration with IEEE SB CE Kidangoor, designed for B-Tech students.
-        </p>
-
         <div className="bridge-features">
           <div className="bridge-feature-card">
             <div className="bridge-feature-icon"><SvgBook /></div>
@@ -419,6 +415,14 @@ function MarqueeSection() {
 
 function FooterCTA() {
   const ref = useScrollReveal();
+  const [isEarlyBird, setIsEarlyBird] = useState(true);
+
+  useEffect(() => {
+    const earlyBirdEndStr = process.env.NEXT_PUBLIC_EARLY_BIRD_END_DATE;
+    if (earlyBirdEndStr && Date.now() > new Date(earlyBirdEndStr).getTime()) {
+      setIsEarlyBird(false);
+    }
+  }, []);
 
   return (
     <section className="footer-cta" id="fees" ref={ref} style={{ padding: "100px 20px" }}>
@@ -440,16 +444,32 @@ function FooterCTA() {
           <div className="fees-tier-card featured" style={{ padding: "var(--space-10) var(--space-6)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <h3 className="fees-tier-label">IEEE Members</h3>
             <div className="fees-tier-price" style={{ margin: 0 }}>
-              ₹299
+              {isEarlyBird ? (
+                <>
+                  <span style={{ textDecoration: 'line-through', color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.6em', marginRight: '8px' }}>₹399</span>
+                  ₹299
+                </>
+              ) : (
+                <>₹399</>
+              )}
             </div>
+            {isEarlyBird && <div style={{ color: 'var(--accent-yellow)', fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>Early Bird Price</div>}
           </div>
 
           {/* Non-IEEE Members Tier */}
           <div className="fees-tier-card" style={{ padding: "var(--space-10) var(--space-6)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <h3 className="fees-tier-label">Non-IEEE Members</h3>
             <div className="fees-tier-price" style={{ margin: 0 }}>
-              ₹399
+              {isEarlyBird ? (
+                <>
+                  <span style={{ textDecoration: 'line-through', color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.6em', marginRight: '8px' }}>₹499</span>
+                  ₹399
+                </>
+              ) : (
+                <>₹499</>
+              )}
             </div>
+            {isEarlyBird && <div style={{ color: 'var(--accent-yellow)', fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>Early Bird Price</div>}
           </div>
         </div>
 
@@ -478,6 +498,26 @@ function FooterCTA() {
           <Link href="/register" className="btn btn-primary btn-large" id="footer-register-btn">
             Register for C2C Now
           </Link>
+        </div>
+        <div className="animate-reveal" style={{ textAlign: "center", marginTop: "var(--space-8)" }}>
+          <div style={{ background: "var(--surface-glass)", padding: "var(--space-6)", borderRadius: "var(--radius-xl)", border: "1px solid var(--border-subtle)", maxWidth: "600px", margin: "0 auto" }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", marginBottom: "var(--space-4)" }}>
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style={{ color: "var(--accent-yellow)" }}>
+                <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72l5 2.73 5-2.73v3.72z"/>
+              </svg> 
+              <h3 style={{ fontSize: "1.5rem", color: "var(--text-primary)", margin: 0, lineHeight: 1.2, textAlign: "center" }}>
+                Scholarship Registration
+              </h3>
+            </div>
+            <p style={{ color: "var(--text-secondary)", marginBottom: "var(--space-4)" }}>
+              If you are applying for the C2C financial aid track, click the button below to submit your application.
+              <br /><br />
+              <span style={{ fontSize: "var(--text-xs)", color: "var(--text-muted)" }}>Note: Applicants using this track do not need to register through the standard registration portal.</span>
+            </p>
+            <Link href="/scholarship" className="btn btn-secondary">
+              Apply for Scholarship
+            </Link>
+          </div>
         </div>
       </div>
     </section>

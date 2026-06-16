@@ -14,7 +14,6 @@ export async function POST(request: NextRequest) {
     const batch = formData.get("batch") as string;
     const year = formData.get("year") as string;
     const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
     const googleUid = formData.get("googleUid") as string;
     const googleIdToken = formData.get("googleIdToken") as string;
     const isIeeeMember = formData.get("isIeeeMember") === "true";
@@ -37,13 +36,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Require password if not using Google Auth
-    if (!googleUid && (!password || password.length < 6)) {
-      return NextResponse.json(
-        { error: "Password must be at least 6 characters" },
-        { status: 400 }
-      );
-    }
 
     // Validate email format
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -75,7 +67,6 @@ export async function POST(request: NextRequest) {
       try {
         const userRecord = await adminAuth.createUser({
           email: email.toLowerCase(),
-          password: password,
           displayName: fullName,
         });
         userId = userRecord.uid;
