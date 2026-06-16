@@ -408,15 +408,7 @@ export default function ScholarshipPage() {
                 </>
               )}
               <div style={{ display: "flex", gap: "var(--space-4)", justifyContent: "center" }}>
-                <a
-                  href={process.env.NEXT_PUBLIC_WHATSAPP_LINK || "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn"
-                  style={{ backgroundColor: "#25D366", color: "white" }}
-                >
-                  Continue to WhatsApp
-                </a>
+
                 <Link href="/" className="btn btn-primary">
                   ← Back Home
                 </Link>
