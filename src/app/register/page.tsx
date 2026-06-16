@@ -245,6 +245,7 @@ export default function RegisterPage() {
       submitData.append("ieeeNumber", formData.ieeeNumber.trim());
       submitData.append("amountToPay", amountToPay.toString());
       submitData.append("isApplyingScholarship", formData.isApplyingScholarship ? "true" : "false");
+      submitData.append("isEarlyBird", isEarlyBird ? "true" : "false");
       submitData.append("q1Financial", formData.q1Financial.trim());
       submitData.append("q2Hours", formData.q2Hours.trim());
       submitData.append("q3Why", formData.q3Why.trim());
