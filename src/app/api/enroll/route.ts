@@ -14,8 +14,7 @@ export async function POST(request: NextRequest) {
     const batch = formData.get("batch") as string;
     const year = formData.get("year") as string;
     const email = formData.get("email") as string;
-    const googleUid = formData.get("googleUid") as string;
-    const googleIdToken = formData.get("googleIdToken") as string;
+
     const isIeeeMember = formData.get("isIeeeMember") === "true";
     const ieeeNumber = (formData.get("ieeeNumber") as string) || "";
     const amountToPay = (formData.get("amountToPay") as string) || "";
@@ -47,41 +46,27 @@ export async function POST(request: NextRequest) {
 
     const timestamp = new Date().toISOString();
 
-    // Try to create Firebase Auth user
-    let userId = googleUid;
+    // Create Firebase Auth user
+    let userId = "";
     let createdPasswordUser = false;
 
-    if (googleUid) {
-      if (!googleIdToken) {
-        return NextResponse.json({ error: "Google sign-in could not be verified." }, { status: 401 });
+    try {
+      const userRecord = await adminAuth.createUser({
+        email: email.toLowerCase(),
+        displayName: fullName,
+      });
+      userId = userRecord.uid;
+      createdPasswordUser = true;
+    } catch (authErr: unknown) {
+      const error = authErr as { code?: string };
+      if (error.code === 'auth/email-already-exists') {
+        return NextResponse.json(
+          { error: "Email is already registered. Please log in instead." },
+          { status: 400 }
+        );
       }
-      try {
-        const decoded = await adminAuth.verifyIdToken(googleIdToken);
-        if (decoded.uid !== googleUid || decoded.email?.toLowerCase() !== email.toLowerCase().trim()) {
-          return NextResponse.json({ error: "Google account details do not match." }, { status: 401 });
-        }
-      } catch {
-        return NextResponse.json({ error: "Google sign-in has expired. Please sign in again." }, { status: 401 });
-      }
-    } else {
-      try {
-        const userRecord = await adminAuth.createUser({
-          email: email.toLowerCase(),
-          displayName: fullName,
-        });
-        userId = userRecord.uid;
-        createdPasswordUser = true;
-      } catch (authErr: unknown) {
-        const error = authErr as { code?: string };
-        if (error.code === 'auth/email-already-exists') {
-          return NextResponse.json(
-            { error: "Email is already registered. Please log in instead." },
-            { status: 400 }
-          );
-        }
-        console.error("Firebase Auth user creation failed:", authErr);
-        return NextResponse.json({ error: "Could not create your account." }, { status: 500 });
-      }
+      console.error("Firebase Auth user creation failed:", authErr);
+      return NextResponse.json({ error: "Could not create your account." }, { status: 500 });
     }
 
     try {

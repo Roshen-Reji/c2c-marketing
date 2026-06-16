@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase";
+import { auth } from "@/lib/firebase";
 import {
   IconCheckCircle,
   IconFileDown,
@@ -195,29 +195,7 @@ export default function ScholarshipPage() {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
 
-      setFormData((prev) => ({
-        ...prev,
-        fullName: user.displayName || prev.fullName,
-        email: user.email || prev.email,
-        googleUid: user.uid,
-      }));
-
-      // Clear errors for fields we just populated
-      setErrors((prev) => ({
-        ...prev,
-        fullName: undefined,
-        email: undefined,
-      }));
-    } catch (error) {
-      console.error("Google sign in failed:", error);
-      alert("Failed to sign in with Google. You can still register manually.");
-    }
-  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -284,13 +262,7 @@ export default function ScholarshipPage() {
       submitData.append("q4Roadblock", formData.q4Roadblock.trim());
 
 
-      if (formData.googleUid) {
-        submitData.append("googleUid", formData.googleUid);
-        const currentUser = auth.currentUser;
-        if (currentUser) {
-          submitData.append("googleIdToken", await currentUser.getIdToken());
-        }
-      }
+
       // Upload screenshot: compress client-side then send through server
       let screenshotUrl = "";
       if (screenshot) {
@@ -481,56 +453,7 @@ export default function ScholarshipPage() {
           {step === 1 && (
             <div className="register-form">
 
-              {!formData.googleUid && (
-                <>
-                  <button
-                    type="button"
-                    className="btn btn-secondary w-full"
-                    onClick={handleGoogleSignIn}
-                    style={{ marginBottom: "var(--space-4)", display: "flex", justifyContent: "center", alignItems: "center", gap: "10px" }}
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
-                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
-                    </svg>
-                    Continue with Google
-                  </button>
 
-                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: 'var(--space-4)' }}>
-                    <div style={{ flex: 1, height: '1px', background: 'var(--border-subtle)' }}></div>
-                    <span style={{ padding: '0 10px', color: 'var(--text-muted)', fontSize: 'var(--text-xs)' }}>OR REGISTER WITH EMAIL</span>
-                    <div style={{ flex: 1, height: '1px', background: 'var(--border-subtle)' }}></div>
-                  </div>
-                </>
-              )}
-
-              {formData.googleUid && (
-                <div style={{
-                  background: 'var(--border-subtle)',
-                  border: '1px solid var(--border-default)',
-                  padding: 'var(--space-3)',
-                  borderRadius: 'var(--radius-md)',
-                  marginBottom: 'var(--space-4)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 'var(--space-3)'
-                }}>
-                  <IconCheckCircle size={20} color="var(--accent-secondary)" />
-                  <div>
-                    <div style={{ fontWeight: 600, color: 'var(--accent-secondary)' }}>Google Account Linked</div>
-                    <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)' }}>{formData.email}</div>
-                  </div>
-                  <button
-                    className="btn btn-ghost"
-                    style={{ marginLeft: 'auto', fontSize: 'var(--text-xs)', padding: '4px 8px' }}
-                    onClick={() => setFormData(prev => ({ ...prev, googleUid: undefined }))}
-                  >
-                    Unlink
-                  </button>
-                </div>
-              )}
 
               <div className="input-group">
                 <label className="input-label" htmlFor="fullName">
@@ -543,7 +466,6 @@ export default function ScholarshipPage() {
                   placeholder="Enter Your Full Name"
                   value={formData.fullName}
                   onChange={(e) => updateField("fullName", e.target.value)}
-                  disabled={!!formData.googleUid}
                 />
                 {errors.fullName && <div className="form-error">{errors.fullName}</div>}
               </div>
@@ -657,7 +579,6 @@ export default function ScholarshipPage() {
                   placeholder="Enter Your Email"
                   value={formData.email}
                   onChange={(e) => updateField("email", e.target.value)}
-                  disabled={!!formData.googleUid}
                 />
                 <span
                   className="mono-text"
@@ -799,12 +720,7 @@ export default function ScholarshipPage() {
                 <span className="confirm-label">Email</span>
                 <span className="confirm-value">{formData.email}</span>
               </div>
-              {formData.googleUid && (
-                <div className="confirm-row">
-                  <span className="confirm-label">Authentication</span>
-                  <span className="confirm-value">Google Sign-In</span>
-                </div>
-              )}
+
               <div className="confirm-row">
                 <span className="confirm-label">{formData.isApplyingScholarship ? "Scholarship" : "Payment"}</span>
                 <span className="confirm-value accent-green">{formData.isApplyingScholarship ? "Applied for Financial Aid" : "Screenshot Attached"}</span>
