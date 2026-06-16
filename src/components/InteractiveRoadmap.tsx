@@ -136,10 +136,10 @@ export default function InteractiveRoadmap() {
   // Generate SVG Path
   const generatePath = () => {
     if (isMobile) {
-      const canvasHeight = Math.max(500, numPhases * 160);
+      const canvasHeight = Math.max(450, numPhases * 135);
       const startOffsetY = 80;
       const step = (canvasHeight - 160) / (numPhases - 1 || 1);
-      const centerX = 40;
+      const centerX = 12;
 
       let d = `M ${centerX} 0 L ${centerX} ${startOffsetY}`;
       for (let i = 0; i < numPhases; i++) {
@@ -216,7 +216,7 @@ export default function InteractiveRoadmap() {
             ref={timelineCanvasRef}
             style={{
               position: "relative",
-              height: isMobile ? Math.max(600, numPhases * 180) : 550,
+              height: isMobile ? Math.max(450, numPhases * 135) : 550,
               minWidth: isMobile ? "100%" : Math.max(containerWidth, (numPhases - 1) * Math.max(220, (containerWidth - 280) / (numPhases - 1 || 1)) + 280),
               margin: "0 auto",
               padding: isMobile ? "0 20px" : "0 40px",
@@ -271,12 +271,12 @@ export default function InteractiveRoadmap() {
               const isTop = i % 2 === 0;
 
               if (isMobile) {
-                const canvasHeight = Math.max(500, numPhases * 160);
+                const canvasHeight = Math.max(450, numPhases * 135);
                 const step = (canvasHeight - 160) / (numPhases - 1 || 1);
-                xPos = 40;
+                xPos = 12;
                 yPos = i * step + 80;
-                cardLeft = xPos + 40;
-                cardTop = yPos - 50; 
+                cardLeft = xPos + 24;
+                cardTop = yPos - 55; 
               } else {
                 const startOffsetX = 140;
                 const endOffsetX = 140;
@@ -329,7 +329,7 @@ export default function InteractiveRoadmap() {
                     position: "absolute", 
                     left: isMobile ? xPos + 16 : cardLeft + 119, 
                     top: isMobile ? yPos - 1 : isTop ? yPos - 120 : yPos, 
-                    width: isMobile ? 24 : 2, 
+                    width: isMobile ? 8 : 2, 
                     height: isMobile ? 2 : 120, 
                     background: "var(--border-strong)", 
                     zIndex: 1 
@@ -342,17 +342,16 @@ export default function InteractiveRoadmap() {
                       zIndex: 10,
                       left: cardLeft,
                       top: cardTop,
-                      width: isMobile ? "calc(100vw - 130px)" : 240,
-                      height: 150,
+                      width: isMobile ? "calc(100vw - 56px)" : 240,
+                      height: isMobile ? 110 : 150,
                       maxWidth: 320,
                       background: "linear-gradient(135deg, rgba(30, 30, 35, 0.9) 0%, rgba(10, 10, 12, 0.95) 100%)",
                       backdropFilter: "blur(10px)",
                       WebkitBackdropFilter: "blur(10px)",
                       border: "1px solid rgba(255, 255, 255, 0.08)",
                       borderRadius: "var(--radius-xl)",
-                      padding: "20px 24px",
+                      padding: isMobile ? "12px 16px" : "20px 24px",
                       boxShadow: "0 20px 40px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1)",
-                      borderTop: `3px solid var(--accent-primary)`,
                       transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease",
                       cursor: "pointer",
                       display: "flex",
@@ -372,9 +371,9 @@ export default function InteractiveRoadmap() {
                   >
                     <h4 style={{ 
                       fontFamily: "var(--font-heading)", 
-                      fontSize: 16, 
+                      fontSize: isMobile ? 14 : 16, 
                       color: "var(--accent-primary)", 
-                      marginBottom: 12,
+                      marginBottom: isMobile ? 8 : 12,
                       textTransform: "uppercase",
                       letterSpacing: "0.05em",
                       lineHeight: 1.2
@@ -383,9 +382,9 @@ export default function InteractiveRoadmap() {
                     </h4>
                     <p style={{ 
                       color: "var(--text-secondary)", 
-                      fontSize: 16, 
+                      fontSize: isMobile ? 14 : 16, 
                       fontWeight: 400,
-                      lineHeight: 1.4,
+                      lineHeight: isMobile ? 1.2 : 1.4,
                       margin: 0
                     }}>
                       "{phase.subtitle}"
