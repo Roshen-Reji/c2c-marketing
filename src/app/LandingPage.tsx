@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Footer from "@/components/Footer";
+import FAQ from "@/components/FAQ";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -572,6 +573,7 @@ export default function LandingPage() {
       <CurriculumOrbit />
 
       <FooterCTA />
+      <FAQ />
       <Footer />
     </main>
   );
