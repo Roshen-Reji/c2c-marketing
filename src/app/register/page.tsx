@@ -24,6 +24,7 @@ interface FormData {
   googleUid?: string;
   isIeeeMember: boolean;
   ieeeNumber: string;
+  referralCode?: string;
   isApplyingScholarship: boolean;
   q1Financial: string;
   q2Hours: string;
@@ -42,6 +43,7 @@ interface FormErrors {
   googleUid?: string;
   screenshot?: string;
   ieeeNumber?: string;
+  referralCode?: string;
   isIeeeMember?: string;
   isApplyingScholarship?: string;
   q1Financial?: string;
@@ -161,6 +163,7 @@ export default function RegisterPage() {
     email: "",
     isIeeeMember: false,
     ieeeNumber: "",
+    referralCode: "",
     isApplyingScholarship: false,
     q1Financial: "",
     q2Hours: "",
@@ -177,9 +180,16 @@ export default function RegisterPage() {
 
   const [isEarlyBird, setIsEarlyBird] = useState(true);
 
-  const amountToPay = isEarlyBird
+  let amountToPay = isEarlyBird
     ? (formData.isIeeeMember ? 299 : 399)
     : (formData.isIeeeMember ? 399 : 499);
+
+  const validCodes = (process.env.NEXT_PUBLIC_REFERRAL_CODES || "").split(",").map(c => c.trim().toLowerCase());
+  const isValidReferral = !!formData.referralCode && validCodes.includes(formData.referralCode.trim().toLowerCase());
+
+  if (!isEarlyBird && isValidReferral) {
+    amountToPay = amountToPay - 20;
+  }
 
   useEffect(() => {
     const endStr = process.env.NEXT_PUBLIC_REG_END_DATE;
@@ -220,6 +230,14 @@ export default function RegisterPage() {
   const goToStep = (targetStep: number) => {
     if (targetStep === 2) {
       const stepErrors = validateStep1(formData);
+      
+      if (formData.referralCode && formData.referralCode.trim()) {
+        const validCodes = (process.env.NEXT_PUBLIC_REFERRAL_CODES || "").split(",").map(c => c.trim().toLowerCase());
+        if (!validCodes.includes(formData.referralCode.trim().toLowerCase())) {
+          stepErrors.referralCode = "Invalid referral code";
+        }
+      }
+
       if (Object.keys(stepErrors).length > 0) {
         setErrors(stepErrors);
         return;
@@ -249,6 +267,7 @@ export default function RegisterPage() {
       submitData.append("email", formData.email.trim().toLowerCase());
       submitData.append("isIeeeMember", formData.isIeeeMember ? "true" : "false");
       submitData.append("ieeeNumber", formData.ieeeNumber.trim());
+      submitData.append("referralCode", (formData.referralCode || "").trim());
       submitData.append("amountToPay", amountToPay.toString());
       submitData.append("isApplyingScholarship", formData.isApplyingScholarship ? "true" : "false");
       submitData.append("isEarlyBird", isEarlyBird ? "true" : "false");
@@ -568,6 +587,21 @@ export default function RegisterPage() {
               )}
 
               <div className="input-group">
+                <label className="input-label" htmlFor="referralCode">
+                  Referral Code (Optional)
+                </label>
+                <input
+                  id="referralCode"
+                  type="text"
+                  className="input"
+                  placeholder="Enter Referral Code"
+                  value={formData.referralCode}
+                  onChange={(e) => updateField("referralCode", e.target.value)}
+                />
+                {errors.referralCode && <div className="form-error">{errors.referralCode}</div>}
+              </div>
+
+              <div className="input-group">
                 <label className="input-label" htmlFor="email">
                   Email ID <span style={{ color: "var(--accent-tertiary)" }}>*</span>
                 </label>
@@ -646,22 +680,22 @@ export default function RegisterPage() {
                       </div>
                     </div>
                   )}
-                  {amountToPay === 399 && (
+                  {(amountToPay === 399 || amountToPay === 379) && (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-2)', width: '100%', maxWidth: '200px' }}>
                       <div className="qr-container" style={{ margin: 0, width: '100%', aspectRatio: '1/1', height: 'auto' }}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src="/C2C/QR/qr-399.png" alt="Payment QR Code ₹399" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} />
+                        <img src={`/C2C/QR/qr-${amountToPay}.png`} alt={`Payment QR Code ₹${amountToPay}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} />
                       </div>
                       <div className="upi-id" style={{ margin: 0, padding: '8px', fontSize: '0.9rem', width: '100%', textAlign: 'center' }}>
                         <strong>paytm.s1wsfli@pty</strong>
                       </div>
                     </div>
                   )}
-                  {amountToPay === 499 && (
+                  {(amountToPay === 499 || amountToPay === 479) && (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-2)', width: '100%', maxWidth: '200px' }}>
                       <div className="qr-container" style={{ margin: 0, width: '100%', aspectRatio: '1/1', height: 'auto' }}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src="/C2C/QR/qr-499.png" alt="Payment QR Code ₹499" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} />
+                        <img src={`/C2C/QR/qr-${amountToPay}.png`} alt={`Payment QR Code ₹${amountToPay}`} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} />
                       </div>
                       <div className="upi-id" style={{ margin: 0, padding: '8px', fontSize: '0.9rem', width: '100%', textAlign: 'center' }}>
                         <strong>paytm.s1wsfli@pty</strong>
@@ -769,6 +803,10 @@ export default function RegisterPage() {
               <div className="confirm-row">
                 <span className="confirm-label">IEEE Member</span>
                 <span className="confirm-value">{formData.isIeeeMember ? `Yes (${formData.ieeeNumber})` : "No"}</span>
+              </div>
+              <div className="confirm-row">
+                <span className="confirm-label">Referral Code</span>
+                <span className="confirm-value">{formData.referralCode ? formData.referralCode.trim() : "No Referral"}</span>
               </div>
               <div className="confirm-row">
                 <span className="confirm-label">Amount to Pay</span>
