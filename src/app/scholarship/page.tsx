@@ -456,7 +456,7 @@ export default function ScholarshipPage() {
           <div className={`step-line ${step > 1 ? "completed" : ""}`} />
           <div className={`step-dot ${step >= 2 ? "active" : ""} ${step > 2 ? "completed" : ""}`}>
             <div className="step-number">{step > 2 ? <IconCheckCircle size={18} /> : "2"}</div>
-            <span className="step-label">Payment</span>
+            <span className="step-label">Questions</span>
           </div>
           <div className={`step-line ${step > 2 ? "completed" : ""}`} />
           <div className={`step-dot ${step >= 3 ? "active" : ""}`}>
@@ -629,7 +629,7 @@ export default function ScholarshipPage() {
 
               <div className="form-actions">
                 <button type="button" className="btn btn-primary btn-large" onClick={() => goToStep(2)} id="step1-next-btn">
-                  Continue to Payment →
+                  Continue to Questions →
                 </button>
               </div>
             </div>
