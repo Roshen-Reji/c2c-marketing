@@ -188,7 +188,7 @@ export default function RegisterPage() {
   const isValidReferral = !!formData.referralCode && validCodes.includes(formData.referralCode.trim().toLowerCase());
 
   if (!isEarlyBird && isValidReferral) {
-    amountToPay = Math.floor(amountToPay * 0.95);
+    amountToPay = amountToPay - 20;
   }
 
   useEffect(() => {
@@ -691,7 +691,7 @@ export default function RegisterPage() {
                       </div>
                     </div>
                   )}
-                  {(amountToPay === 499 || amountToPay === 474) && (
+                  {(amountToPay === 499 || amountToPay === 479) && (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-2)', width: '100%', maxWidth: '200px' }}>
                       <div className="qr-container" style={{ margin: 0, width: '100%', aspectRatio: '1/1', height: 'auto' }}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
