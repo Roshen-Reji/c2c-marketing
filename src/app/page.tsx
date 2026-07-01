@@ -1,12 +1,13 @@
 "use client";
 
-import Image from "next/image";
-import "./closed.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import ComingSoonPage from "./coming-soon/ComingSoon";
+import LandingPage from "./LandingPage";
 import Footer from "@/components/Footer";
 import GlassCubeScene from "@/components/coming-soon/GlassCubeScene";
+import "./closed.css";
 
-export default function RegistrationsClosed() {
+function RegistrationsClosed() {
   useEffect(() => {
     // Explicitly enforce dark mode for this page
     document.body.style.backgroundColor = '#0f0f0f';
@@ -56,4 +57,42 @@ export default function RegistrationsClosed() {
       </div>
     </div>
   );
+}
+
+export default function MarketingRoot() {
+  const [isPreLaunch, setIsPreLaunch] = useState<boolean | null>(null);
+  const [isClosed, setIsClosed] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const checkDates = () => {
+      const launchDateStr = process.env.NEXT_PUBLIC_LAUNCH_DATE;
+      const endDateStr = process.env.NEXT_PUBLIC_REG_END_DATE;
+      const now = Date.now();
+      
+      const launchTarget = launchDateStr ? new Date(launchDateStr).getTime() : 0;
+      const endTarget = endDateStr ? new Date(endDateStr).getTime() : Infinity;
+
+      setIsPreLaunch(now < launchTarget);
+      setIsClosed(now > endTarget);
+    };
+
+    checkDates();
+
+    const interval = setInterval(checkDates, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  if (isPreLaunch === null || isClosed === null) {
+    return null;
+  }
+
+  if (isPreLaunch) {
+    return <ComingSoonPage />;
+  }
+
+  if (isClosed) {
+    return <RegistrationsClosed />;
+  }
+
+  return <LandingPage />;
 }
