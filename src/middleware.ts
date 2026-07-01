@@ -7,10 +7,19 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Allow next internals and static files
+  // Allow next internals, static files, and API routes
   if (
     request.nextUrl.pathname.startsWith('/_next') ||
+    request.nextUrl.pathname.startsWith('/api') ||
     request.nextUrl.pathname.includes('.')
+  ) {
+    return NextResponse.next()
+  }
+
+  // Allow registration and scholarship pages
+  if (
+    request.nextUrl.pathname.startsWith('/register') ||
+    request.nextUrl.pathname.startsWith('/scholarship')
   ) {
     return NextResponse.next()
   }
