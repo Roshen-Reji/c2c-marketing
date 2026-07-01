@@ -192,11 +192,6 @@ export default function RegisterPage() {
   }
 
   useEffect(() => {
-    const endStr = process.env.NEXT_PUBLIC_REG_END_DATE;
-    if (endStr && Date.now() > new Date(endStr).getTime()) {
-      setTimeout(() => setIsClosed(true), 0);
-    }
-
     const earlyBirdEndStr = process.env.NEXT_PUBLIC_EARLY_BIRD_END_DATE;
     if (earlyBirdEndStr && Date.now() > new Date(earlyBirdEndStr).getTime()) {
       setIsEarlyBird(false);
